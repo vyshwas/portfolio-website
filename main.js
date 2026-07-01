@@ -101,10 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.set(screenOverlay, { 
         transformOrigin: 'center center',
         xPercent: -50,
-        yPercent: -50
+        yPercent: -50,
+        x: 0,
+        y: 0
       });
       tl.to(screenOverlay, {
         scale: FINAL_SCALE,
+        xPercent: -50,
+        yPercent: -50,
+        x: 0,
+        y: 0,
         duration: 1,
       }, 0);
 
@@ -514,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let activeHoverIndex = -1;
 
-  const updateActivePreview = (index) => {
+  const updateActivePreview = (index, event) => {
     activeHoverIndex = index;
     
     // Toggle frame visibility class
@@ -522,10 +528,10 @@ document.addEventListener('DOMContentLoaded', () => {
       previewFrame?.classList.remove('visible');
       previewItems.forEach(item => item.classList.remove('active'));
       
-      // Reset frame position back to 0
       gsap.to(previewFrame, {
-        y: 0,
-        duration: 0.4,
+        scale: 0.95,
+        duration: 0.3,
+        ease: 'power2.out',
         overwrite: 'auto'
       });
       return;
@@ -539,47 +545,97 @@ document.addEventListener('DOMContentLoaded', () => {
       item.classList.toggle('active', idx === index);
     });
 
-    // Move preview frame to vertically align with the active project row
+    // Animate scale in
+    gsap.to(previewFrame, {
+      scale: 1,
+      duration: 0.4,
+      ease: 'back.out(1.2)',
+      overwrite: 'auto'
+    });
+
+    // Position immediately or update if keyboard event
     const row = workRows[index];
-    if (row && previewFrame && listColumn) {
-      const rowRect = row.getBoundingClientRect();
-      const listRect = listColumn.getBoundingClientRect();
-      
-      // Calculate top relative to the listColumn
-      const relativeRowCenter = (rowRect.top - listRect.top) + (rowRect.height / 2);
-      const targetY = relativeRowCenter - (previewFrame.offsetHeight / 2);
+    if (row && previewFrame) {
+      const frameW = previewFrame.offsetWidth || 400;
+      const frameH = previewFrame.offsetHeight || 250;
+
+      // Check if it's a focus (keyboard) event
+      const isKeyboard = event && event.type === 'focus';
+
+      if (isKeyboard) {
+        // Keyboard: Align preview to the right side of the focused row
+        const rowRect = row.getBoundingClientRect();
+        
+        // Target layout position
+        const targetX = window.innerWidth - frameW - (window.innerWidth * 0.08); // Right side with margin
+        const targetY = rowRect.top + (rowRect.height / 2) - (frameH / 2);
+
+        gsap.to(previewFrame, {
+          x: targetX,
+          y: targetY,
+          duration: 0.4,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      } else if (event) {
+        // Mouse: Position center vertically with mouse cursor, offset horizontally to the right
+        let targetX = event.clientX + 35;
+        if (targetX + frameW > window.innerWidth - 20) {
+          targetX = event.clientX - frameW - 35; // Flip to the left
+        }
+        
+        let targetY = event.clientY - (frameH / 2);
+        if (targetY < 20) targetY = 20;
+        else if (targetY + frameH > window.innerHeight - 20) targetY = window.innerHeight - frameH - 20;
+
+        gsap.set(previewFrame, {
+          x: targetX,
+          y: targetY
+        });
+      }
+    }
+  };
+
+  // Follow mouse cursor inside listColumn
+  listColumn?.addEventListener('mousemove', (e) => {
+    if (activeHoverIndex !== -1 && previewFrame) {
+      const frameW = previewFrame.offsetWidth || 400;
+      const frameH = previewFrame.offsetHeight || 250;
+
+      let targetX = e.clientX + 35;
+      if (targetX + frameW > window.innerWidth - 20) {
+        targetX = e.clientX - frameW - 35; // Flip to the left
+      }
+
+      let targetY = e.clientY - (frameH / 2);
+      if (targetY < 20) targetY = 20;
+      else if (targetY + frameH > window.innerHeight - 20) targetY = window.innerHeight - frameH - 20;
 
       gsap.to(previewFrame, {
+        x: targetX,
         y: targetY,
-        duration: 0.45,
+        duration: 0.35, // Inertial smooth lag
         ease: 'power2.out',
         overwrite: 'auto'
       });
     }
-  };
+  });
 
   workRows.forEach((row, idx) => {
     // Mouse hover activation
-    row.addEventListener('mouseenter', () => {
-      updateActivePreview(idx);
+    row.addEventListener('mouseenter', (e) => {
+      updateActivePreview(idx, e);
     });
     
     // Accessibility focus activation
-    row.addEventListener('focus', () => {
-      updateActivePreview(idx);
+    row.addEventListener('focus', (e) => {
+      updateActivePreview(idx, e);
     });
   });
 
   // When mouse leaves the list column, reset to default state
   listColumn?.addEventListener('mouseleave', () => {
     updateActivePreview(-1);
-  });
-
-  // Handle clicking on the preview frame itself
-  previewFrame?.addEventListener('click', (e) => {
-    if (activeHoverIndex !== -1) {
-      openProjectDrawer(activeHoverIndex);
-    }
   });
 
   // Keyboard navigation for work section
