@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vishwas Mehta — Experince Designer</title>
-  <meta name="description" content="Portfolio of Vishwas Mehta, an experince designer translating user insights and business goals into experiences that compound trust over time.">
+  <title>Vishwas Mehta — Experience Designer</title>
+  <meta name="description" content="Portfolio of Vishwas Mehta, an experience designer translating user insights and business goals into experiences that compound trust over time.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
@@ -69,6 +69,7 @@
       top: 55.5%;
       width:  23.5vw;
       height: 17.5vw;
+      max-width: 90vw;
       transform: translate(-50%, -50%);
       transform-origin: center center;
       display: flex;
@@ -218,26 +219,6 @@
       #screen-overlay::before { animation: none !important; }
     }
 
-    /* ── Mobile adjustments ── */
-    @media (max-width: 768px) {
-      #screen-overlay {
-        width: 32.5vh !important;
-        height: 24.2vh !important;
-        top: 55.5% !important;
-        left: 50% !important;
-        gap: 0.3em !important;
-        padding: 0.6rem !important;
-      }
-      #screen-statement {
-        font-size: clamp(0.5rem, 1.15vh, 0.9rem) !important;
-        line-height: 1.25 !important;
-        max-width: 95% !important;
-      }
-      #screen-location {
-        font-size: clamp(0.4rem, 0.8vh, 0.75rem) !important;
-        margin-top: 0.2vh !important;
-      }
-    }
   </style>
 </head>
 <body>
@@ -250,7 +231,7 @@
       <a href="#" class="logo logo-flicker">
         <span class="logo-name">Vishwash Mehta</span>
         <span class="logo-divider">|</span>
-        <span class="logo-title">Experince Designer</span>
+        <span class="logo-title">Experience Designer</span>
       </a>
       <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
         <span class="bar"></span>
@@ -435,14 +416,6 @@
           <div class="work-preview-sticky">
             <div class="work-preview-frame" id="workPreviewFrame">
               
-              <!-- Default state when nothing is hovered -->
-              <div class="preview-default-state active">
-                <div class="preview-default-inner">
-                  <span class="preview-default-icon">[ PREVIEW ]</span>
-                  <span class="preview-default-text">Hover over a project</span>
-                </div>
-              </div>
-
               <!-- Project 1: The Whole Fruit Preview -->
               <div class="project-preview-item" data-preview-index="0">
                 <div class="preview-media-container">
@@ -606,7 +579,7 @@
     <div class="footer-container">
       <div class="footer-left">
         <span class="footer-logo">Vishwash Mehta.</span>
-        <span class="footer-sub">EXPERINCE DESIGNER — PORTFOLIO VOL. I</span>
+        <span class="footer-sub">EXPERIENCE DESIGNER — PORTFOLIO VOL. I</span>
       </div>
       <div class="footer-center">
         <a href="mailto:vyommehta197@gmail.com" class="footer-email">VYOMMEHTA197@GMAIL.COM</a>

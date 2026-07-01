@@ -98,7 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // — Screen overlay: expands in parallel with the background TV image
     //   and fades out as it gets large (0–100% of scroll)
     if (screenOverlay) {
-      gsap.set(screenOverlay, { transformOrigin: 'center center' });
+      gsap.set(screenOverlay, { 
+        transformOrigin: 'center center',
+        xPercent: -50,
+        yPercent: -50
+      });
       tl.to(screenOverlay, {
         scale: FINAL_SCALE,
         duration: 1,
@@ -506,7 +510,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const workRows = document.querySelectorAll('.work-row');
   const previewFrame = document.getElementById('workPreviewFrame');
   const previewItems = document.querySelectorAll('.project-preview-item');
-  const defaultState = document.querySelector('.preview-default-state');
   const listColumn = document.querySelector('.work-list-column');
 
   let activeHoverIndex = -1;
@@ -514,22 +517,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateActivePreview = (index) => {
     activeHoverIndex = index;
     
-    // Hide default state
+    // Toggle frame visibility class
     if (index === -1) {
-      defaultState?.classList.add('active');
+      previewFrame?.classList.remove('visible');
       previewItems.forEach(item => item.classList.remove('active'));
       
       // Reset frame position back to 0
       gsap.to(previewFrame, {
         y: 0,
         duration: 0.4,
-        ease: 'power2.out',
         overwrite: 'auto'
       });
       return;
     }
     
-    defaultState?.classList.remove('active');
+    previewFrame?.classList.add('visible');
     
     // Switch active preview item
     previewItems.forEach((item) => {

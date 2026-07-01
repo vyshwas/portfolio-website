@@ -682,55 +682,23 @@ section > *:not(.section-bg-canvas) {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
     overflow: hidden;
     position: relative;
-    pointer-events: auto; /* Enable hover/clicks on the frame */
+    pointer-events: none; /* Disable interaction when hidden */
     cursor: pointer;
-    transform: translateZ(0); /* Force hardware acceleration */
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    transform: translate3d(0, 0, 0) scale(0.98); /* Initial scale state */
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, visibility 0.4s ease, box-shadow 0.4s ease;
+}
+
+.work-preview-frame.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
 }
 
 .work-preview-frame:hover {
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-}
-
-/* Default state styling */
-.preview-default-state {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    background: #171513;
-    z-index: 5;
-}
-
-.preview-default-state.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.preview-default-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.preview-default-icon {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    color: rgba(240, 237, 230, 0.25);
-}
-
-.preview-default-text {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-style: italic;
-    color: rgba(240, 237, 230, 0.4);
 }
 
 /* Project preview items */
@@ -1946,39 +1914,27 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* Responsive TV screen overlay scaling for portrait and tablet viewports */
-@media (max-aspect-ratio: 4/3) {
+@media (max-aspect-ratio: 16/9) {
     #screen-overlay {
-        width: 32vh !important;
-        height: 23.8vh !important;
-        top: 55.5% !important;
-        left: 50% !important;
-    }
-}
-
-@media (max-width: 768px) {
-    #screen-overlay {
-        width: 34vh !important;
-        height: 25.3vh !important;
+        width: 41.8vh !important;
+        height: 31.1vh !important;
+        max-width: 90vw !important;
     }
     #screen-statement {
-        font-size: clamp(0.55rem, 1.25vh, 1.1rem) !important;
+        font-size: clamp(0.55rem, 1.45vh, 1.15rem) !important;
         line-height: 1.25 !important;
         max-width: 92% !important;
     }
     #screen-location {
-        font-size: clamp(0.45rem, 0.95vh, 0.85rem) !important;
+        font-size: clamp(0.45rem, 1.1vh, 0.9rem) !important;
         margin-top: 0.5vh !important;
-    }
-    .logo-title,
-    .logo-divider {
-        display: none !important;
     }
 }
 
-@media (max-width: 480px) {
-    #screen-overlay {
-        width: 34.5vh !important;
-        height: 25.7vh !important;
+@media (max-width: 768px) {
+    .logo-title,
+    .logo-divider {
+        display: none !important;
     }
 }
 
