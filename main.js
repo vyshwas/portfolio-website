@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let animId, isVisible = false;
     
     // Config: dense dot grid with larger dots
-    const CELL     = 10;
-    const BASE_R   = 1.0;
+    const CELL     = 30;
+    const BASE_R   = 0.75;
     const HOVER_R  = 75;
     
     // Dynamic contrast handling based on light vs dark sections
