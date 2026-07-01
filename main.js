@@ -500,6 +500,112 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ──────────────────────────────────────────────────────────
+     9b. HOVER PROJECT PREVIEW (Interaction 03)
+  ────────────────────────────────────────────────────────── */
+  const workRows = document.querySelectorAll('.work-row');
+  const previewFrame = document.getElementById('workPreviewFrame');
+  const previewItems = document.querySelectorAll('.project-preview-item');
+  const defaultState = document.querySelector('.preview-default-state');
+  const listColumn = document.querySelector('.work-list-column');
+
+  let activeHoverIndex = -1;
+
+  const updateActivePreview = (index) => {
+    activeHoverIndex = index;
+    
+    // Hide default state
+    if (index === -1) {
+      defaultState?.classList.add('active');
+      previewItems.forEach(item => item.classList.remove('active'));
+      
+      // Reset frame position back to 0
+      gsap.to(previewFrame, {
+        y: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+        overwrite: 'auto'
+      });
+      return;
+    }
+    
+    defaultState?.classList.remove('active');
+    
+    // Switch active preview item
+    previewItems.forEach((item) => {
+      const idx = parseInt(item.getAttribute('data-preview-index'), 10);
+      item.classList.toggle('active', idx === index);
+    });
+
+    // Move preview frame to vertically align with the active project row
+    const row = workRows[index];
+    if (row && previewFrame && listColumn) {
+      const rowRect = row.getBoundingClientRect();
+      const listRect = listColumn.getBoundingClientRect();
+      
+      // Calculate top relative to the listColumn
+      const relativeRowCenter = (rowRect.top - listRect.top) + (rowRect.height / 2);
+      const targetY = relativeRowCenter - (previewFrame.offsetHeight / 2);
+
+      gsap.to(previewFrame, {
+        y: targetY,
+        duration: 0.45,
+        ease: 'power2.out',
+        overwrite: 'auto'
+      });
+    }
+  };
+
+  workRows.forEach((row, idx) => {
+    // Mouse hover activation
+    row.addEventListener('mouseenter', () => {
+      updateActivePreview(idx);
+    });
+    
+    // Accessibility focus activation
+    row.addEventListener('focus', () => {
+      updateActivePreview(idx);
+    });
+  });
+
+  // When mouse leaves the list column, reset to default state
+  listColumn?.addEventListener('mouseleave', () => {
+    updateActivePreview(-1);
+  });
+
+  // Handle clicking on the preview frame itself
+  previewFrame?.addEventListener('click', (e) => {
+    if (activeHoverIndex !== -1) {
+      openProjectDrawer(activeHoverIndex);
+    }
+  });
+
+  // Keyboard navigation for work section
+  window.addEventListener('keydown', (e) => {
+    // Only run if the drawer is NOT open
+    if (drawer && drawer.classList.contains('open')) return;
+
+    // Check if we are focusing on one of the work rows
+    const activeEl = document.activeElement;
+    if (!activeEl || !activeEl.classList.contains('work-row')) return;
+
+    let index = Array.from(workRows).indexOf(activeEl);
+    if (index === -1) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIdx = (index + 1) % workRows.length;
+      workRows[nextIdx].focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIdx = (index - 1 + workRows.length) % workRows.length;
+      workRows[prevIdx].focus();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      openProjectDrawer(index);
+    }
+  });
+
   // Bind controls
   closeDrawerBtn?.addEventListener('click', closeProjectDrawer);
   backdrop?.addEventListener('click', closeProjectDrawer);

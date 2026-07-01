@@ -394,46 +394,137 @@
         </h2>
       </div>
 
-      <div class="work-list">
-        <div class="work-row">
-          <div class="work-col-num">01</div>
-          <div class="work-col-details">
-            <h3 class="work-title">The Whole Fruit</h3>
-            <p class="work-desc">Repositioning a fruit brand from utilitarian snack to a daily ritual of indulgence — strategy, identity, and packaging system.</p>
+      <div class="work-split-container">
+        <!-- Left: Typography-first project list -->
+        <div class="work-list-column">
+          
+          <div class="work-row" data-project-index="0" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for The Whole Fruit">
+            <div class="work-row-left">
+              <span class="work-row-num">01</span>
+              <h3 class="work-row-title">The Whole Fruit</h3>
+            </div>
+            <div class="work-row-meta">
+              <span class="work-row-tags">Brand Strategy · Visual Identity · Packaging</span>
+            </div>
           </div>
-          <div class="work-col-meta">
-            <span class="work-tags">Brand Strategy · Visual Identity · Packaging</span>
+
+          <div class="work-row" data-project-index="1" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for Travel Product">
+            <div class="work-row-left">
+              <span class="work-row-num">02</span>
+              <h3 class="work-row-title">Travel Product</h3>
+            </div>
+            <div class="work-row-meta">
+              <span class="work-row-tags">Product Design · UX Strategy</span>
+            </div>
           </div>
-          <div class="work-col-action">
-            <button class="plus-btn" aria-label="View Project details"><span class="plus-icon"></span></button>
+
+          <div class="work-row" data-project-index="2" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for Shopping Cart Abandonment">
+            <div class="work-row-left">
+              <span class="work-row-num">03</span>
+              <h3 class="work-row-title">Shopping Cart Abandonment</h3>
+            </div>
+            <div class="work-row-meta">
+              <span class="work-row-tags">UX Research · Strategy</span>
+            </div>
           </div>
+
         </div>
 
-        <div class="work-row">
-          <div class="work-col-num">02</div>
-          <div class="work-col-details">
-            <h3 class="work-title">Travel Product</h3>
-            <p class="work-desc">Re-thinking a booking flow that had been A/B tested into incoherence. (Case study in progress.)</p>
-          </div>
-          <div class="work-col-meta">
-            <span class="work-tags">Product Design · UX Strategy</span>
-          </div>
-          <div class="work-col-action">
-            <button class="plus-btn" aria-label="View Project details"><span class="plus-icon"></span></button>
-          </div>
-        </div>
+        <!-- Right: Dedicated, anchored preview area -->
+        <div class="work-preview-column" aria-live="polite">
+          <div class="work-preview-sticky">
+            <div class="work-preview-frame" id="workPreviewFrame">
+              
+              <!-- Default state when nothing is hovered -->
+              <div class="preview-default-state active">
+                <div class="preview-default-inner">
+                  <span class="preview-default-icon">[ PREVIEW ]</span>
+                  <span class="preview-default-text">Hover over a project</span>
+                </div>
+              </div>
 
-        <div class="work-row">
-          <div class="work-col-num">03</div>
-          <div class="work-col-details">
-            <h3 class="work-title">Shopping Cart Abandonment</h3>
-            <p class="work-desc">A case study on why most 'abandonment fixes' make the problem worse. (Case study in progress.)</p>
-          </div>
-          <div class="work-col-meta">
-            <span class="work-tags">UX Research · Strategy</span>
-          </div>
-          <div class="work-col-action">
-            <button class="plus-btn" aria-label="View Project details"><span class="plus-icon"></span></button>
+              <!-- Project 1: The Whole Fruit Preview -->
+              <div class="project-preview-item" data-preview-index="0">
+                <div class="preview-media-container">
+                  <div class="preview-ambient-reflection"></div>
+                  <div class="preview-grain"></div>
+                  <img src="assets/project_fruit.jpg" class="preview-hero-img" alt="The Whole Fruit packaging mockup">
+                  <div class="preview-decorations">
+                    <svg class="spinning-packaging" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(252,76,19,0.3)" stroke-width="0.75" stroke-dasharray="4 8"/>
+                      <ellipse cx="50" cy="50" rx="30" ry="10" fill="none" stroke="rgba(252,76,19,0.15)" stroke-width="0.5"/>
+                      <ellipse cx="50" cy="50" rx="10" ry="30" fill="none" stroke="rgba(252,76,19,0.15)" stroke-width="0.5"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="preview-details">
+                  <div class="preview-secondary-details">
+                    <span class="preview-subtitle">Brand Identity & Strategy</span>
+                    <h4 class="preview-headline">A daily ritual of luxury indulgence.</h4>
+                  </div>
+                  <div class="preview-metadata">
+                    <span class="meta-tag">Brand Identity</span>
+                    <span class="meta-tag">Packaging</span>
+                    <span class="meta-tag">2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Project 2: Travel Product Preview -->
+              <div class="project-preview-item" data-preview-index="1">
+                <div class="preview-media-container">
+                  <div class="preview-ambient-reflection"></div>
+                  <div class="preview-grain"></div>
+                  <img src="assets/project_travel.jpg" class="preview-hero-img" alt="Travel Product user interface mockup">
+                  <div class="preview-decorations">
+                    <svg class="panning-map" viewBox="0 0 150 100">
+                      <path d="M15,75 Q45,25 75,55 T135,35" fill="none" stroke="rgba(252,76,19,0.4)" stroke-width="1.2" stroke-dasharray="4 4"/>
+                      <circle cx="15" cy="75" r="4" fill="#FC4C13"/>
+                      <circle cx="135" cy="35" r="4" fill="#FC4C13"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="preview-details">
+                  <div class="preview-secondary-details">
+                    <span class="preview-subtitle">Product Design & UX Strategy</span>
+                    <h4 class="preview-headline">Re-thinking booking flows.</h4>
+                  </div>
+                  <div class="preview-metadata">
+                    <span class="meta-tag">Product Design</span>
+                    <span class="meta-tag">UX Strategy</span>
+                    <span class="meta-tag">2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Project 3: Shopping Cart Abandonment Preview -->
+              <div class="project-preview-item" data-preview-index="2">
+                <div class="preview-media-container">
+                  <div class="preview-ambient-reflection"></div>
+                  <div class="preview-grain"></div>
+                  <img src="assets/project_cart.jpg" class="preview-hero-img" alt="Shopping Cart Flow analysis">
+                  <div class="preview-decorations">
+                    <div class="cart-simulation">
+                      <div class="sim-line"></div>
+                      <div class="sim-line short"></div>
+                      <div class="sim-bar"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="preview-details">
+                  <div class="preview-secondary-details">
+                    <span class="preview-subtitle">UX Research & Strategy</span>
+                    <h4 class="preview-headline">Why typical abandonment fixes fail.</h4>
+                  </div>
+                  <div class="preview-metadata">
+                    <span class="meta-tag">UX Research</span>
+                    <span class="meta-tag">Strategy</span>
+                    <span class="meta-tag">2026</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
