@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vishwas Mehta — Experince Designer</title>
+  <meta name="description" content="Portfolio of Vishwas Mehta, an experince designer translating user insights and business goals into experiences that compound trust over time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       HERO — CINEMATIC TV ZOOM  (clean, image-based)
+       Color theme: Warm charcoal black, deep burgundy red
+    ═══════════════════════════════════════════════════════ */
+
+    #hero-pin-wrapper { position: relative; }
+
+    #hero-scene {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #130F0E; /* Warm charcoal black */
+    }
+
+    /* ── The whole hero photograph – this is what we SCALE ── */
+    #hero-bg {
+      position: absolute;
+      inset: -8%;
+      background-image: url('hero-desert.jpg');
+      background-size: cover;
+      background-position: center 50%;
+      /* Zoom origin aimed at the TV screen centre in the photo. */
+      transform-origin: 50% 55.5%;
+      will-change: transform;
+    }
+
+    /* Film-grain texture */
+    #hero-grain {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Radial vignette — keeps the TV as the focal point */
+    #hero-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      background: radial-gradient(ellipse 60% 60% at 50% 55.5%, transparent 0%, rgba(0,0,0,0.6) 100%);
+    }
+
+    /* ── Screen overlay ─────────────────────────────────────
+       Sits exactly over the dark TV screen in the photo.
+       It will scale UP (expand) together with the background image.
+    ─────────────────────────────────────────────────────── */
+    #screen-overlay {
+      position: absolute;
+      z-index: 10;
+      left: 50%;
+      top: 55.5%;
+      width:  23.5vw;
+      height: 17.5vw;
+      transform: translate(-50%, -50%);
+      transform-origin: center center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6em;
+      pointer-events: none;
+      will-change: transform, opacity;
+      /* CRT horizontal scan-line pattern overlaid on text */
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent   0px,
+        transparent   2px,
+        rgba(0,0,0,0.2) 2px,
+        rgba(0,0,0,0.2) 4px
+      );
+      overflow: hidden;
+      border-radius: 4px; /* subtle curve match */
+    }
+
+    /* Slow CRT sweep line */
+    #screen-overlay::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(252, 76, 19, 0.25), transparent);
+      animation: crt-sweep 5s linear infinite;
+      z-index: 2;
+    }
+    @keyframes crt-sweep {
+      0%   { top: -2px; opacity: 0; }
+      3%   { opacity: 1; }
+      97%  { opacity: 1; }
+      100% { top: 100%;  opacity: 0; }
+    }
+
+    /* ── Statement ── */
+    #screen-statement {
+      position: relative;
+      z-index: 3;
+      font-family: 'VT323', monospace;
+      font-size: clamp(0.7rem, 1.15vw, 1.25rem);
+      font-weight: 400;
+      color: #FFFFFF; /* White */
+      letter-spacing: 0.01em;
+      text-align: center;
+      line-height: 1.25;
+      max-width: 90%;
+      margin: 0 auto;
+      text-shadow: 0 0 6px rgba(255,255,255,0.3);
+      animation: crt-flicker 3.5s linear infinite;
+    }
+
+    /* ── Location ── */
+    #screen-location {
+      position: relative;
+      z-index: 3;
+      font-family: 'VT323', monospace;
+      font-size: clamp(0.55rem, 0.9vw, 0.95rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #FC4C13; /* Vermilion */
+      text-align: center;
+      margin-top: 0.6vw;
+      text-shadow: 0 0 5px rgba(252,76,19,0.3);
+      animation: crt-flicker 3.5s linear infinite 0.2s;
+    }
+
+    /* Realistic multi-step CRT flicker */
+    @keyframes crt-flicker {
+      0%    { opacity: 0.92; }
+      5%    { opacity: 0.88; }
+      10%   { opacity: 0.93; }
+      30%   { opacity: 0.91; }
+      40%   { opacity: 0.45; }
+      40.5% { opacity: 0.93; }
+      60%   { opacity: 0.90; }
+      72%   { opacity: 0.15; }
+      72.1% { opacity: 0.94; }
+      85%   { opacity: 0.89; }
+      100%  { opacity: 0.92; }
+    }
+
+    /* ── Corner meta labels ── */
+    #hero-meta-left,
+    #hero-meta-right {
+      position: absolute;
+      z-index: 20;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: rgba(249, 230, 173, 0.45);
+      text-transform: uppercase;
+    }
+    #hero-meta-left  { top: 2rem; left: var(--site-padding, 6.5vw); }
+    #hero-meta-right { top: 2rem; right: var(--site-padding, 6.5vw); }
+
+    /* ── Scroll cue ── */
+    #scroll-cue {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #scroll-cue span {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: rgba(249, 230, 173, 0.35);
+      text-transform: uppercase;
+    }
+    #scroll-cue-line {
+      width: 1px;
+      height: 34px;
+      background: linear-gradient(to bottom, rgba(249, 230, 173, 0.35), transparent);
+      animation: linePulse 2.2s ease-in-out infinite;
+    }
+    @keyframes linePulse {
+      0%, 100% { transform: scaleY(1);    opacity: 1;    }
+      50%       { transform: scaleY(0.5);  opacity: 0.3;  }
+    }
+
+    /* ── Main content block ── */
+    #main-content {
+      position: relative;
+      z-index: 1;
+      background: #130F0E; /* Warm charcoal black */
+    }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      #hero-bg         { will-change: auto !important; }
+      #screen-overlay  { will-change: auto !important; }
+      #screen-name,
+      #screen-role,
+      #scroll-cue-line { animation: none !important; opacity: 1 !important; }
+      #screen-overlay::before { animation: none !important; }
+    }
+
+    /* ── Mobile adjustments ── */
+    @media (max-width: 768px) {
+      #screen-overlay {
+        width: 32.5vh !important;
+        height: 24.2vh !important;
+        top: 55.5% !important;
+        left: 50% !important;
+        gap: 0.3em !important;
+        padding: 0.6rem !important;
+      }
+      #screen-statement {
+        font-size: clamp(0.5rem, 1.15vh, 0.9rem) !important;
+        line-height: 1.25 !important;
+        max-width: 95% !important;
+      }
+      #screen-location {
+        font-size: clamp(0.4rem, 0.8vh, 0.75rem) !important;
+        margin-top: 0.2vh !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       SITE HEADER
+  ══════════════════════════════════════════ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <a href="#" class="logo logo-flicker">
+        <span class="logo-name">Vishwash Mehta</span>
+        <span class="logo-divider">|</span>
+        <span class="logo-title">Experince Designer</span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="#about"       class="nav-link">About</a></li>
+          <li><a href="#work"        class="nav-link">Work</a></li>
+          <li><a href="#contact"     class="nav-link">Contact</a></li>
+          <li class="nav-divider">|</li>
+          <li><a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="nav-link">Behance</a></li>
+          <li><a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="nav-link">LinkedIn</a></li>
+          <li><a href="resume.pdf" target="_blank" rel="noopener" class="nav-resume-btn">[ RESUME ]</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════
+       HERO — CINEMATIC TV ZOOM
+  ══════════════════════════════════════════ -->
+  <div id="hero-pin-wrapper">
+    <section id="hero-scene" aria-label="Hero introduction">
+      <canvas class="section-bg-canvas"></canvas>
+
+      <!-- The desert TV photograph — this is what scales during the zoom -->
+      <div id="hero-bg"></div>
+
+      <!-- Overlays -->
+      <div id="hero-grain"></div>
+      <div id="hero-vignette"></div>
+
+      <!-- Screen overlay — floats over the real TV screen in the photo -->
+      <div id="screen-overlay" aria-hidden="true">
+        <div id="screen-statement">
+          Strategic Designer | Brand Identity, AI/Experience & Product Design | Helping startups build memorable brands and digital experiences through design
+        </div>
+        <div id="screen-location">Greater Bengaluru Area</div>
+      </div>
+
+
+
+      <!-- Scroll cue -->
+      <div id="scroll-cue">
+        <span>Scroll</span>
+        <div id="scroll-cue-line"></div>
+      </div>
+
+    </section><!-- /hero-scene -->
+  </div><!-- /hero-pin-wrapper -->
+
+
+  <!-- ══════════════════════════════════════════
+       MAIN CONTENT — revealed after zoom
+  ══════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ─── About (01 / 02) ─── -->
+    <section id="about" class="about-section dark-theme">
+      <canvas class="section-bg-canvas"></canvas>
+      <div class="section-header">
+        <span class="section-tag">(WHY I DESIGN) — 01 / 02</span>
+      </div>
+
+      <div class="why-design-journal">
+        <div class="journal-header">
+          <h2 class="journal-lead-title">
+            Curiosity led me to design.<br>Systems made me stay.
+          </h2>
+        </div>
+
+        <!-- Segment 1: Systems Thinking -->
+        <div class="journal-segment">
+          <div class="segment-meta-column">
+            <span class="segment-meta">[ NOTE 01 // SYSTEMS ]</span>
+          </div>
+          <div class="segment-title-column">
+            <h3 class="segment-title">Thinking in Systems</h3>
+          </div>
+          <div class="segment-body-column">
+            <p>I started in computer science, where I learned to think in systems before I ever designed an interface. That mindset taught me to look beyond individual screens and understand how every decision shapes a larger experience.</p>
+          </div>
+        </div>
+
+        <!-- Segment 2: Human Psychology & UX Discovery -->
+        <div class="journal-segment">
+          <div class="segment-meta-column">
+            <span class="segment-meta">[ NOTE 02 // BEHAVIOR ]</span>
+          </div>
+          <div class="segment-title-column">
+            <h3 class="segment-title">UX Discovery &amp; Psychology</h3>
+          </div>
+          <div class="segment-body-column">
+            <p>Even before design, I was fascinated by human psychology and how visuals, media, and everyday experiences influence our decisions.</p>
+            <p>That curiosity led me to UX, where I discovered that great design isn't built on assumptions, but on observing behavior. People often say one thing and do another, and understanding that gap is where meaningful design begins.</p>
+          </div>
+        </div>
+
+        <!-- Segment 3: Brand + Product Thinking -->
+        <div class="journal-segment">
+          <div class="segment-meta-column">
+            <span class="segment-meta">[ NOTE 03 // COHERENCE ]</span>
+          </div>
+          <div class="segment-title-column">
+            <h3 class="segment-title">Brand + Product Coherence</h3>
+          </div>
+          <div class="segment-body-column">
+            <p>Over time, I realized a brand isn't just a logo and a product isn't just a collection of screens. Together, they shape how people understand, trust, and remember something.</p>
+            <p>That's why my work spans brand identity, product design, and storytelling. I'm interested in designing complete experiences, not isolated deliverables.</p>
+          </div>
+        </div>
+
+        <!-- Segment 4: Future Vision -->
+        <div class="journal-segment">
+          <div class="segment-meta-column">
+            <span class="segment-meta">[ NOTE 04 // LONGEVITY ]</span>
+          </div>
+          <div class="segment-title-column">
+            <h3 class="segment-title">Friction &amp; Inevitability</h3>
+          </div>
+          <div class="segment-body-column">
+            <p>I'm less interested in adding features than removing friction. Less interested in making things look different than making them feel inevitable.</p>
+            <p>Long term, I want to build products, brands, and eventually companies that people genuinely remember.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── Selected Work (02 / 04) ─── -->
+    <section id="work" class="work-section">
+      <canvas class="section-bg-canvas"></canvas>
+      <div class="section-header">
+        <span class="section-tag">(SELECTED WORK) — 02 / 02</span>
+      </div>
+
+      <div class="work-intro">
+        <h2 class="work-lead">
+          Three projects. <span class="italic-red">Each chosen for what it taught me</span>, not for how it looks.
+        </h2>
+      </div>
+
+      <div class="work-list">
+        <div class="work-row">
+          <div class="work-col-num">01</div>
+          <div class="work-col-details">
+            <h3 class="work-title">The Whole Fruit</h3>
+            <p class="work-desc">Repositioning a fruit brand from utilitarian snack to a daily ritual of indulgence — strategy, identity, and packaging system.</p>
+          </div>
+          <div class="work-col-meta">
+            <span class="work-tags">Brand Strategy · Visual Identity · Packaging</span>
+          </div>
+          <div class="work-col-action">
+            <button class="plus-btn" aria-label="View Project details"><span class="plus-icon"></span></button>
+          </div>
+        </div>
+
+        <div class="work-row">
+          <div class="work-col-num">02</div>
+          <div class="work-col-details">
+            <h3 class="work-title">Travel Product</h3>
+            <p class="work-desc">Re-thinking a booking flow that had been A/B tested into incoherence. (Case study in progress.)</p>
+          </div>
+          <div class="work-col-meta">
+            <span class="work-tags">Product Design · UX Strategy</span>
+          </div>
+          <div class="work-col-action">
+            <button class="plus-btn" aria-label="View Project details"><span class="plus-icon"></span></button>
+          </div>
+        </div>
+
+        <div class="work-row">
+          <div class="work-col-num">03</div>
+          <div class="work-col-details">
+            <h3 class="work-title">Shopping Cart Abandonment</h3>
+            <p class="work-desc">A case study on why most 'abandonment fixes' make the problem worse. (Case study in progress.)</p>
+          </div>
+          <div class="work-col-meta">
+            <span class="work-tags">UX Research · Strategy</span>
+          </div>
+          <div class="work-col-action">
+            <button class="plus-btn" aria-label="View Project details"><span class="plus-icon"></span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ─── Contact ─── -->
+    <section id="contact" class="contact-section dark-theme">
+      <canvas class="section-bg-canvas"></canvas>
+      <div class="section-header">
+        <span class="section-tag">(CONTACT)</span>
+      </div>
+
+      <div class="contact-intro">
+        <h2 class="contact-lead">Have a problem worth <span class="italic-red">designing for?</span></h2>
+        <p class="contact-subtext">I take on a small number of strategy-led brand and product engagements each year, and a few advisory conversations besides. If that sounds like a fit, write to me — a sentence is enough to start.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="info-group">
+            <span class="info-label">DIRECT</span>
+            <a href="mailto:vyommehta197@gmail.com" class="info-email">vyommehta197@gmail.com</a>
+          </div>
+          <div class="info-group">
+            <span class="info-label">ELSEWHERE</span>
+            <ul class="social-links">
+              <li><a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="social-link">LinkedIn <span class="social-arrow">&nearr;</span></a></li>
+              <li><a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="social-link">Behance <span class="social-arrow">&nearr;</span></a></li>
+              <li><a href="mailto:vyommehta197@gmail.com" class="social-link">Email <span class="social-arrow">&nearr;</span></a></li>
+            </ul>
+          <div class="info-group">
+            <span class="info-label">RESUME</span>
+            <a href="resume.pdf" target="_blank" rel="noopener" class="btn-link btn-trigger-resume" id="openResumeHero">VIEW RESUME <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+
+        <div class="contact-form-container">
+          <form id="contactForm" class="contact-form" autocomplete="off">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="formName" class="form-label">NAME</label>
+                <input type="text" id="formName" name="name" placeholder="Your name" required class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="formEmail" class="form-label">EMAIL</label>
+                <input type="email" id="formEmail" name="email" placeholder="you@company.com" required class="form-input">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="formCompany" class="form-label">COMPANY (OPTIONAL)</label>
+              <input type="text" id="formCompany" name="company" placeholder="Where you work" class="form-input">
+            </div>
+            <div class="form-group">
+              <label for="formMessage" class="form-label">MESSAGE</label>
+              <textarea id="formMessage" name="message" placeholder="A sentence is enough." required class="form-textarea"></textarea>
+            </div>
+            <div class="form-footer">
+              <span class="form-privacy">YOUR REPLY IS PRIVATE.</span>
+              <button type="submit" class="submit-btn" id="submitBtn">SEND MESSAGE <span class="submit-arrow">&nearr;</span></button>
+            </div>
+          </form>
+          <div id="formSuccess" class="form-success-message hidden">
+            <h3 class="success-title">Message sent.</h3>
+            <p class="success-desc">Thank you. I'll read this and get back to you shortly.</p>
+            <button type="button" class="reset-btn" id="resetFormBtn">Send another message</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main-content -->
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="site-footer dark-theme">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-logo">Vishwash Mehta.</span>
+        <span class="footer-sub">EXPERINCE DESIGNER — PORTFOLIO VOL. I</span>
+      </div>
+      <div class="footer-center">
+        <a href="mailto:vyommehta197@gmail.com" class="footer-email">VYOMMEHTA197@GMAIL.COM</a>
+      </div>
+      <div class="footer-right">
+        <span class="footer-copyright">© 2026 — BUILT QUIETLY.</span>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+
+  <!-- ══════════════════════════════════════════
+       PROJECT CASE STUDY DRAWER
+  ══════════════════════════════════════════ -->
+  <div id="project-drawer" class="project-drawer" aria-modal="true" role="dialog" aria-hidden="true" data-lenis-prevent>
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-content">
+      <div class="drawer-body">
+        
+        <!-- Left Panel: Storytelling -->
+        <div class="drawer-left-panel">
+          <div class="project-meta-info">
+            <span id="drawer-project-category" class="drawer-category">Category</span>
+            <h2 id="drawer-project-title" class="drawer-title">Project Title</h2>
+          </div>
+          
+          <div class="project-details-grid">
+            <div class="detail-group">
+              <span class="detail-label">TIMELINE</span>
+              <span id="drawer-project-timeline" class="detail-value"></span>
+            </div>
+            <div class="detail-group">
+              <span class="detail-label">ROLE</span>
+              <span id="drawer-project-role" class="detail-value"></span>
+            </div>
+            <div class="detail-group">
+              <span class="detail-label">TEAM</span>
+              <span id="drawer-project-team" class="detail-value"></span>
+            </div>
+          </div>
+
+          <div class="project-story">
+            <div class="story-section">
+              <h4 class="story-header">SUMMARY</h4>
+              <p id="drawer-project-summary" class="story-text"></p>
+            </div>
+            <div class="story-section">
+              <h4 class="story-header">THE CHALLENGE</h4>
+              <p id="drawer-project-challenge" class="story-text"></p>
+            </div>
+            <div class="story-section">
+              <h4 class="story-header">THE OUTCOME</h4>
+              <p id="drawer-project-outcome" class="story-text"></p>
+            </div>
+          </div>
+
+          <a href="mailto:vyommehta197@gmail.com" class="drawer-cta-btn">INQUIRE ABOUT THIS PROJECT &rarr;</a>
+        </div>
+
+        <!-- Right Panel: Immersive Visuals -->
+        <div class="drawer-right-panel">
+          <div class="drawer-media-gallery">
+            <img id="drawer-project-image" src="" alt="Project Case Study" class="drawer-gallery-img">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Persistent Bottom Navigation -->
+      <div class="drawer-footer">
+        <button type="button" id="prevProjectBtn" class="drawer-nav-btn">&larr; PREVIOUS</button>
+        <button type="button" id="closeDrawerBtn" class="drawer-nav-btn close-btn">[ CLOSE ]</button>
+        <button type="button" id="nextProjectBtn" class="drawer-nav-btn">NEXT &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SCRIPTS — GSAP + Lenis CDN then main.js
+  ══════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis smooth scroll via CDN -->
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+
+</body>
+</html>
