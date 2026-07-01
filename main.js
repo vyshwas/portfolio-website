@@ -179,6 +179,45 @@ document.addEventListener('DOMContentLoaded', () => {
     targetOX = 0; targetOY = 0;
   });
 
+  // Mobile Touch Support: Activate dot grid on touch, deactivate on release
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+      const hw = window.innerWidth / 2;
+      const hh = window.innerHeight / 2;
+      targetOX = -((touch.clientX - hw) / hw) * 10;
+      targetOY = -((touch.clientY - hh) / hh) * 10;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+      const hw = window.innerWidth / 2;
+      const hh = window.innerHeight / 2;
+      targetOX = -((touch.clientX - hw) / hw) * 10;
+      targetOY = -((touch.clientY - hh) / hh) * 10;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    clientX = -9999;
+    clientY = -9999;
+    targetOX = 0;
+    targetOY = 0;
+  }, { passive: true });
+
+  document.addEventListener('touchcancel', () => {
+    clientX = -9999;
+    clientY = -9999;
+    targetOX = 0;
+    targetOY = 0;
+  }, { passive: true });
+
   document.querySelectorAll('.section-bg-canvas').forEach((canvas) => {
     const ctx      = canvas.getContext('2d');
     let animId, isVisible = false;
@@ -443,6 +482,12 @@ document.addEventListener('DOMContentLoaded', () => {
     currentProjectIndex = index;
     populateProjectDrawer(index);
     
+    // Reset scroll positions of scroll containers inside the drawer
+    const scrollContainers = drawer.querySelectorAll('.drawer-body, .drawer-left-panel, .drawer-right-panel');
+    scrollContainers.forEach(container => {
+      container.scrollTop = 0;
+    });
+    
     lastActiveElement = document.activeElement;
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
@@ -454,12 +499,10 @@ document.addEventListener('DOMContentLoaded', () => {
       lenis.stop();
     }
 
-    // Trapped focus focus management
+    // Focus on the project title at the top for accessibility and to prevent auto-scrolling to the bottom
     setTimeout(() => {
-      const focusable = drawer.querySelectorAll('a, button');
-      if (focusable.length > 0) {
-        focusable[0].focus();
-      }
+      const title = document.getElementById('drawer-project-title');
+      title?.focus();
     }, 100);
   };
 
@@ -675,12 +718,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     populateProjectDrawer(prevIndex);
     currentProjectIndex = prevIndex;
+    
+    // Reset scroll positions of scroll containers inside the drawer
+    const scrollContainers = drawer.querySelectorAll('.drawer-body, .drawer-left-panel, .drawer-right-panel');
+    scrollContainers.forEach(container => {
+      container.scrollTop = 0;
+    });
   });
 
   nextProjectBtn?.addEventListener('click', () => {
     let nextIndex = (currentProjectIndex + 1) % projectsData.length;
     populateProjectDrawer(nextIndex);
     currentProjectIndex = nextIndex;
+
+    // Reset scroll positions of scroll containers inside the drawer
+    const scrollContainers = drawer.querySelectorAll('.drawer-body, .drawer-left-panel, .drawer-right-panel');
+    scrollContainers.forEach(container => {
+      container.scrollTop = 0;
+    });
   });
 
   // Keyboard navigation support
