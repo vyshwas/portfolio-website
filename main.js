@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let animId, isVisible = false;
     
     // Config: dense dot grid with larger dots
-    const CELL     = 20;
+    const CELL     = 10;
     const BASE_R   = 1.0;
     const HOVER_R  = 75;
     
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: "Product Design · UX Strategy",
       timeline: "6 Weeks",
       role: "Lead UX Researcher & Product Designer",
-      team: "3 Designers, 2 Developers",
+      team: "3 Designers",
       summary: "Re-thinking a booking flow that had been A/B tested into incoherence.",
       challenge: "Over years of incremental A/B testing, the core user flow had accumulated conflicting UI patterns, leading to cognitive fatigue, increased drop-offs, and negative feedback during critical checkout stages.",
       outcome: "Conducted usability audits to strip away unnecessary cognitive checkpoints. Redesigned the search and confirmation screen hierarchies to focus only on contextual options, resulting in an intuitive, friction-free interface.",
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: "UX Research · Strategy",
       timeline: "8 Weeks",
       role: "Lead UX Analyst & Strategist",
-      team: "1 UX Researcher, 1 Product Manager",
+      team: "Solo Project",
       summary: "A detailed analysis and redesign case study on why most 'abandonment fixes' make the problem worse.",
       challenge: "Most plugin and pop-up systems try to solve cart abandonment by introducing high-friction popups, countdown timers, and discount emails. These techniques erode brand trust and teach users to wait for discounts.",
       outcome: "Developed a silent, non-intrusive recovery framework centered around transparent pricing, context-aware reminders, and seamless guest-checkout transitions, reducing abandonment without relying on promotional popups.",
