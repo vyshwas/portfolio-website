@@ -726,7 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
       summary: "My M.Des dissertation project. The brief I gave myself: build a wellness brand confident enough to look expensive without saying \"premium\" anywhere on the pack. The category is noise. Every competitor uses the same palette, the same kraft paper, the same health claims. I wanted to explore what restraint actually signals on a shelf.",
       challenge: "PROBLEM:\nHow do you stand out in a category where every brand looks identical?\n\nAPPROACH:\nResearch competitor positioning, build a type-led system, test the visual logic against category conventions.",
       outcome: "SYSTEM:\nFull brand identity (mark, palette, packaging), documented as strategic positioning framework.\n\nLEARNING:\nRestraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
-      image: "assets/project_fruit_full.png"
+      image: "assets/project_fruit_full.pdf"
     },
     {
       title: "Personalised Travel Platform",
@@ -843,13 +843,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Lazy-load media
     const img = document.getElementById('drawer-project-image');
-    img.src = data.image;
-    img.alt = `Case study screenshot for ${data.title}`;
+    const pdf = document.getElementById('drawer-project-pdf');
+    
+    if (data.image.endsWith('.pdf')) {
+      if (img) img.style.display = 'none';
+      if (pdf) {
+        pdf.style.display = 'block';
+        pdf.src = data.image + "#view=FitH&toolbar=0&navpanes=0";
+      }
+    } else {
+      if (pdf) pdf.style.display = 'none';
+      if (img) {
+        img.style.display = 'block';
+        img.src = data.image;
+        img.alt = `Case study screenshot for ${data.title}`;
+      }
+    }
     
     // Preload next image hero
     const nextIdx = (index + 1) % projectsData.length;
-    const preloadImg = new Image();
-    preloadImg.src = projectsData[nextIdx].image;
+    if (!projectsData[nextIdx].image.endsWith('.pdf')) {
+      const preloadImg = new Image();
+      preloadImg.src = projectsData[nextIdx].image;
+    }
   };
 
   // Bind click trigger on work list rows
