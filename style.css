@@ -2471,10 +2471,6 @@ section > *:not(.section-bg-canvas) {
         line-height: 1.25 !important;
         max-width: 92% !important;
     }
-    #screen-location {
-        font-size: clamp(0.45rem, 1.1vh, 0.9rem) !important;
-        margin-top: 0.5vh !important;
-    }
 }
 
 @media (max-width: 768px) {

@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroMetaRight   = document.getElementById('hero-meta-right');
   const scrollCue       = document.getElementById('scroll-cue');
   const mainContent     = document.getElementById('main-content');
+  let heroTrigger       = null;
 
   if (heroPinWrapper && heroBg && !prefersReduced) {
 
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tl.to('#hero-about-container', { opacity: 0, duration: 0.01 }, 0.99);
 
     // ScrollTrigger — pin + scrub drives Phase 1 via tl, Phase 2 via onUpdate
-    ScrollTrigger.create({
+    heroTrigger = ScrollTrigger.create({
       trigger:      heroPinWrapper,
       start:        'top top',
       end:          `+=${scrollDist}`,
@@ -388,6 +389,27 @@ document.addEventListener('DOMContentLoaded', () => {
     navMenu.querySelectorAll('.nav-link').forEach((l) => l.addEventListener('click', closeNav));
   }
 
+  // Handle About link scroll target in the pinned hero section
+  const aboutLink = document.querySelector('a[href="#about"]');
+  if (aboutLink) {
+    aboutLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      let startPos = 0;
+      if (heroPinWrapper && heroBg && !prefersReduced) {
+        const scrollDist = window.innerHeight * SCROLL_MULT;
+        // Scroll exactly to where slides container is revealed (progress 0.25)
+        startPos = heroPinWrapper.offsetTop + (0.25 * scrollDist);
+      } else if (heroPinWrapper) {
+        startPos = heroPinWrapper.offsetTop;
+      }
+      if (lenis) {
+        lenis.scrollTo(startPos);
+      } else {
+        window.scrollTo({ top: startPos, behavior: 'smooth' });
+      }
+    });
+  }
+
   /* ──────────────────────────────────────────────────────────
      7. SCROLLSPY — active link + header theme
 
@@ -405,18 +427,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const THRESHOLD = window.innerHeight * 0.4;
 
     let activeId = null;
-    sections.forEach((sec) => {
-      const rect = sec.getBoundingClientRect();
-      // Consider a section active if it occupies the trigger zone
-      if (rect.top <= THRESHOLD && rect.bottom > 0) {
-        activeId = sec.id;
+
+    if (heroTrigger && heroTrigger.isActive) {
+      if (heroTrigger.progress >= 0.22) {
+        activeId = 'about';
+      } else {
+        activeId = 'hero-scene';
       }
+    } else {
+      sections.forEach((sec) => {
+        if (sec.id === 'hero-scene') return;
+        const rect = sec.getBoundingClientRect();
+        // Consider a section active if it occupies the trigger zone
+        if (rect.top <= THRESHOLD && rect.bottom > 0) {
+          activeId = sec.id;
+        }
+      });
+    }
+
+    navLinks.forEach((l) => {
+      l.classList.toggle('active', l.getAttribute('href') === `#${activeId}`);
     });
 
     if (activeId) {
-      navLinks.forEach((l) => {
-        l.classList.toggle('active', l.getAttribute('href') === `#${activeId}`);
-      });
       const activeSec = document.getElementById(activeId);
       const isLightBg = activeSec?.classList.contains('dark-theme') ?? false;
       siteHeader?.classList.toggle('header-light', isLightBg);

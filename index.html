@@ -126,21 +126,6 @@
       animation: crt-flicker 3.5s linear infinite;
     }
 
-    /* ── Location ── */
-    #screen-location {
-      position: relative;
-      z-index: 3;
-      font-family: 'VT323', monospace;
-      font-size: clamp(0.55rem, 0.9vw, 0.95rem);
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #FC4C13; /* Vermilion */
-      text-align: center;
-      margin-top: 0.6vw;
-      text-shadow: 0 0 5px rgba(252,76,19,0.3);
-      animation: crt-flicker 3.5s linear infinite 0.2s;
-    }
 
     /* Realistic multi-step CRT flicker */
     @keyframes crt-flicker {
@@ -231,8 +216,6 @@
     <div class="header-container">
       <a href="#" class="logo logo-flicker">
         <span class="logo-name">Vishwash Mehta</span>
-        <span class="logo-divider">|</span>
-        <span class="logo-title">Experience Designer</span>
       </a>
       <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
         <span class="bar"></span>
@@ -272,7 +255,6 @@
         <div id="screen-statement">
           Strategic Designer | Brand Identity, AI/Experience & Product Design | Helping startups build memorable brands and digital experiences through design
         </div>
-        <div id="screen-location">Greater Bengaluru Area</div>
       </div>
 
       <!-- Inside hero-scene: About Z-Scroll slides -->
