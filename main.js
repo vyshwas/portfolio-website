@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 3.5;  // pin scroll distance = 3.5 × 100vh — generous pacing so each note has time to be read
+  const SCROLL_MULT   = 7;    // pin scroll distance = 7 × 100vh — matches reference 5500 px at standard viewport
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pin:          heroScene,
       pinSpacing:   true,
       anticipatePin: 1,
-      scrub:        true,
+      scrub:        1,        // 1-second lag — camera glides behind scroll, calming cinematic feel
       animation:    tl,
 
       onUpdate: (self) => {
