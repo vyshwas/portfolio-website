@@ -296,135 +296,50 @@
     <section id="about" class="about-section dark-theme">
       <canvas class="section-bg-canvas"></canvas>
       
-      <!-- Sticky wrapper spans 100vh, pins itself while scrolling -->
-      <div class="about-sticky-wrapper">
-        <!-- Left Side: Copy Content -->
-        <div class="about-left-pane">
-          <div class="section-header">
-            <span class="section-tag">(WHY I DESIGN) — 01 / 02</span>
+      <!-- Pinned 3D container spans 100vh -->
+      <div class="about-3d-container">
+        <!-- Perspective wrapper for 3D coordinate space -->
+        <div class="perspective-wrapper">
+          
+          <!-- Slide 1: Systems -->
+          <div class="about-3d-card" data-index="0">
+            <span class="card-meta">[ NOTE 01 // SYSTEMS ]</span>
+            <h2 class="card-title">Curiosity led me to design. Systems made me stay.</h2>
+            <h3 class="card-subtitle">Thinking in Systems</h3>
+            <p class="card-desc">I started in computer science, where I learned to think in systems before I ever designed an interface. That mindset taught me to look beyond individual screens and understand how every decision shapes a larger experience.</p>
+            <span class="card-accent-star">✦</span>
           </div>
           
-          <div class="about-copy-container">
-            <!-- Slide 1 -->
-            <div class="about-copy-slide active" data-index="0">
-              <span class="slide-meta">[ NOTE 01 // SYSTEMS ]</span>
-              <h2 class="slide-title">Curiosity led me to design. Systems made me stay.</h2>
-              <h3 class="slide-subtitle">Thinking in Systems</h3>
-              <p class="slide-desc">I started in computer science, where I learned to think in systems before I ever designed an interface. That mindset taught me to look beyond individual screens and understand how every decision shapes a larger experience.</p>
-            </div>
-            
-            <!-- Slide 2 -->
-            <div class="about-copy-slide" data-index="1">
-              <span class="slide-meta">[ NOTE 02 // BEHAVIOR ]</span>
-              <h2 class="slide-title">Observing human behavior reveals the real gaps.</h2>
-              <h3 class="slide-subtitle">UX Discovery &amp; Psychology</h3>
-              <p class="slide-desc">Even before design, I was fascinated by human psychology and how visuals, media, and everyday experiences influence our decisions.</p>
-              <p class="slide-desc">That curiosity led me to UX, where I discovered that great design isn't built on assumptions, but on observing behavior. People often say one thing and do another, and understanding that gap is where meaningful design begins.</p>
-            </div>
-            
-            <!-- Slide 3 -->
-            <div class="about-copy-slide" data-index="2">
-              <span class="slide-meta">[ NOTE 03 // COHERENCE ]</span>
-              <h2 class="slide-title">A brand and its product must form one ecosystem.</h2>
-              <h3 class="slide-subtitle">Brand + Product Coherence</h3>
-              <p class="slide-desc">Over time, I realized a brand isn't just a logo and a product isn't just a collection of screens. Together, they shape how people understand, trust, and remember something.</p>
-              <p class="slide-desc">That's why my work spans brand identity, product design, and storytelling. I'm interested in designing complete experiences, not isolated deliverables.</p>
-            </div>
-            
-            <!-- Slide 4 -->
-            <div class="about-copy-slide" data-index="3">
-              <span class="slide-meta">[ NOTE 04 // LONGEVITY ]</span>
-              <h2 class="slide-title">Design is not about features, but removing friction.</h2>
-              <h3 class="slide-subtitle">Friction &amp; Inevitability</h3>
-              <p class="slide-desc">I'm less interested in adding features than removing friction. Less interested in making things look different than making them feel inevitable.</p>
-              <p class="slide-desc">Long term, I want to build products, brands, and eventually companies that people genuinely remember.</p>
-            </div>
+          <!-- Slide 2: Behavior -->
+          <div class="about-3d-card" data-index="1">
+            <span class="card-meta">[ NOTE 02 // BEHAVIOR ]</span>
+            <h2 class="card-title">Observing human behavior reveals the real gaps.</h2>
+            <h3 class="card-subtitle">UX Discovery &amp; Psychology</h3>
+            <p class="card-desc">Even before design, I was fascinated by human psychology and how visuals, media, and everyday experiences influence our decisions.</p>
+            <p class="card-desc">That curiosity led me to UX, where I discovered that great design isn't built on assumptions, but on observing behavior. People often say one thing and do another, and understanding that gap is where meaningful design begins.</p>
+            <span class="card-accent-star">✦</span>
           </div>
-        </div>
-        
-        <!-- Right Side: The Interactive/Floating Collage Canvas -->
-        <div class="about-right-pane">
-          <div class="collage-container">
-            <!-- The central frame container -->
-            <div class="collage-main-frame">
-              <div class="collage-visual active" data-index="0">
-                <!-- Systems diagram or graphic -->
-                <div class="systems-diagram">
-                  <svg class="nodes-svg" viewBox="0 0 400 300">
-                    <g stroke="rgba(252, 76, 19, 0.45)" stroke-width="1.5" fill="none">
-                      <path d="M50 150 L150 80 L250 80 L350 150 M150 80 L150 220 L250 220 L250 80 M50 150 L150 220 M250 220 L350 150" />
-                      <circle cx="50" cy="150" r="5" fill="#FC4C13" />
-                      <circle cx="150" cy="80" r="5" fill="#1D1D1D" stroke="#FC4C13" stroke-width="2" />
-                      <circle cx="250" cy="80" r="5" fill="#1D1D1D" stroke="#FC4C13" stroke-width="2" />
-                      <circle cx="350" cy="150" r="5" fill="#FC4C13" />
-                      <circle cx="150" cy="220" r="5" fill="#1D1D1D" stroke="#FC4C13" stroke-width="2" />
-                      <circle cx="250" cy="220" r="5" fill="#1D1D1D" stroke="#FC4C13" stroke-width="2" />
-                    </g>
-                  </svg>
-                  <div class="code-terminal">
-                    <span class="term-lbl">struct ExperienceSystem {</span>
-                    <span class="term-lbl">&nbsp;&nbsp;let inputs: [Behavior]</span>
-                    <span class="term-lbl">&nbsp;&nbsp;let outputs: [Emotion]</span>
-                    <span class="term-lbl">}</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="collage-visual" data-index="1">
-                <!-- Psychology hotspot matrix -->
-                <div class="psychology-card">
-                  <div class="radar-scan"></div>
-                  <div class="pulsing-hotspot" style="top: 30%; left: 40%;"></div>
-                  <div class="pulsing-hotspot" style="top: 65%; left: 70%;"></div>
-                  <div class="pulsing-hotspot" style="top: 45%; left: 20%;"></div>
-                </div>
-              </div>
-              
-              <div class="collage-visual" data-index="2">
-                <!-- Editorial Image -->
-                <img src="assets/collage_brand.jpg" alt="Brand & Product Coherence" class="visual-img">
-              </div>
-              
-              <div class="collage-visual" data-index="3">
-                <!-- Minimal architecture Image -->
-                <img src="assets/collage_longevity.jpg" alt="Longevity & Frictionless Design" class="visual-img">
-              </div>
-            </div>
-            
-            <!-- Floating Elements -->
-            <div class="floating-card text-card" data-parallax="0.08">
-              <span class="f-lbl">Inter</span>
-              <span class="f-lbl font-mono">Space Mono</span>
-              <span class="f-big-text font-serif">Aa</span>
-            </div>
-            
-            <div class="floating-card leaf-card" data-parallax="-0.12">
-              <img src="assets/collage_leaf.jpg" alt="Organic Detail">
-            </div>
-            
-            <div class="floating-card silhouette-card" data-parallax="0.15">
-              <img src="assets/collage_silhouette.jpg" alt="Silhouette">
-            </div>
-            
-            <div class="floating-badge jitter-badge" data-parallax="0.04">
-              <span>New Motion System ✦</span>
-            </div>
-            
-            <div class="floating-badge veeps-badge" data-parallax="-0.06">
-              <span>VEEPS</span>
-            </div>
-            
-            <div class="floating-card stats-card" data-parallax="0.1">
-              <span class="stats-num">82%</span>
-              <span class="stats-lbl">Retention Gain</span>
-            </div>
-            
-            <div class="floating-colors" data-parallax="-0.04">
-              <span class="color-dot dark-swatch"></span>
-              <span class="color-dot cream-swatch"></span>
-              <span class="color-dot vermilion-swatch"></span>
-            </div>
+          
+          <!-- Slide 3: Coherence -->
+          <div class="about-3d-card" data-index="2">
+            <span class="card-meta">[ NOTE 03 // COHERENCE ]</span>
+            <h2 class="card-title">A brand and its product must form one ecosystem.</h2>
+            <h3 class="card-subtitle">Brand + Product Coherence</h3>
+            <p class="card-desc">Over time, I realized a brand isn't just a logo and a product isn't just a collection of screens. Together, they shape how people understand, trust, and remember something.</p>
+            <p class="card-desc">That's why my work spans brand identity, product design, and storytelling. I'm interested in designing complete experiences, not isolated deliverables.</p>
+            <span class="card-accent-star">✦</span>
           </div>
+          
+          <!-- Slide 4: Longevity -->
+          <div class="about-3d-card" data-index="3">
+            <span class="card-meta">[ NOTE 04 // LONGEVITY ]</span>
+            <h2 class="card-title">Design is not about features, but removing friction.</h2>
+            <h3 class="card-subtitle">Friction &amp; Inevitability</h3>
+            <p class="card-desc">I'm less interested in adding features than removing friction. Less interested in making things look different than making them feel inevitable.</p>
+            <p class="card-desc">Long term, I want to build products, brands, and eventually companies that people genuinely remember.</p>
+            <span class="card-accent-star">✦</span>
+          </div>
+          
         </div>
       </div>
     </section>
