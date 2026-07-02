@@ -782,9 +782,11 @@ document.addEventListener('DOMContentLoaded', () => {
       lenis.stop();
     }
 
-    // Push state for mobile swipe back
+    // Push state for mobile swipe back using hash
     if (window.history && window.history.pushState) {
-      window.history.pushState({ drawerOpen: true }, "", "#project-" + index);
+      window.history.pushState(null, "", "#project-" + index);
+    } else {
+      window.location.hash = 'project-' + index;
     }
 
     // Focus on the project title at the top for accessibility and to prevent auto-scrolling to the bottom
@@ -810,17 +812,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Pop state if closed manually (not via swipe back)
-    if (fromHistory !== true && window.history && window.history.state && window.history.state.drawerOpen) {
+    if (fromHistory !== true && window.location.hash.startsWith('#project-')) {
       window.history.back();
     }
   };
 
-  // Listen for mobile swipe back (popstate)
-  window.addEventListener('popstate', (e) => {
-    if (drawer && drawer.classList.contains('open')) {
+  // Listen for mobile swipe back (hashchange and popstate)
+  const handleHistoryChange = () => {
+    if (!window.location.hash.startsWith('#project-') && drawer && drawer.classList.contains('open')) {
       closeProjectDrawer(true);
     }
-  });
+  };
+  window.addEventListener('hashchange', handleHistoryChange);
+  window.addEventListener('popstate', handleHistoryChange);
 
   const populateProjectDrawer = (index) => {
     const data = projectsData[index];
