@@ -966,6 +966,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Hide preview when scrolling the page
+  window.addEventListener('scroll', () => {
+    if (activeHoverIndex !== -1) {
+      updateActivePreview(-1);
+    }
+  }, { passive: true });
+
   // Follow mouse cursor inside listColumn
   listColumn?.addEventListener('mousemove', (e) => {
     if (activeHoverIndex !== -1 && previewFrame) {
