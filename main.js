@@ -127,6 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
       duration: 0.03,
     }, 0.22);
 
+    const scrollDist = 6000; // Fixed 6000px scroll duration as per specifications
+
     // ── Phase 2: Z-axis depth-of-field camera engine ──
     // Read each slide's spatial Z from data-z attribute, initialise transform
     const zSlides = Array.from(document.querySelectorAll('.z-slide'));
@@ -150,34 +152,30 @@ document.addEventListener('DOMContentLoaded', () => {
       pin:          heroScene,
       pinSpacing:   true,
       anticipatePin: 1,
-      scrub:        1,        // 1-second lag — camera glides behind scroll, calming cinematic feel
+      scrub:        1, // exactly 1 second of easing/lag
       animation:    tl,
 
       onUpdate: (self) => {
-        // ── Camera only moves during Phase 2 (after TV zoom ends at 0.25) ──
         const p = self.progress;
         if (p < 0.22) return;
 
-        // Map 0.25–1.0 of scroll progress → camera travelling 0–12500 Z units
+        // Map 0.25–1.0 of scroll progress → camera travelling 0–13000 Z units
         const phase2 = Math.max(0, (p - 0.25) / 0.75);
-        const cameraZ = phase2 * 12500;
+        const cameraZ = phase2 * 13000;
 
         zSlides.forEach(slide => {
           const calcZ = slide._spatialZ + cameraZ;
 
-          // Update 3D position
+          // Push calculated transform values directly down to rendering engine layer
           slide.style.transform = `translate(-50%, -50%) translateZ(${calcZ}px)`;
 
-          // ── Depth-of-field: blur keyed to distance from camera ──
-          const blurAmt = Math.max(0, Math.abs(calcZ) / 180 - 0.8);
+          // ── Depth of Field: Fade In / Blur Math ──
+          // Math.max(0, Math.abs(effectiveZ) / 150 - 1)
+          const blurAmt = Math.max(0, Math.abs(calcZ) / 150 - 1);
 
-          // ── Opacity: fade when behind camera (>400) or too far away (<-2500) ──
-          let alpha = 1;
-          if (calcZ > 400) {
-            alpha = 1 - Math.max(0, (calcZ - 400) / 400);
-          } else if (calcZ < -2500) {
-            alpha = 1 - Math.abs(calcZ + 2500) / 2500;
-          }
+          // ── Fade Out Math ──
+          // 1 - Math.max(0, (effectiveZ - 500) / 300)
+          let alpha = 1 - Math.max(0, (calcZ - 500) / 300);
           alpha = Math.max(0, Math.min(1, alpha));
 
           slide.style.filter  = `blur(${blurAmt.toFixed(2)}px)`;
