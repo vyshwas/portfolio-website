@@ -256,6 +256,7 @@
   <!-- ══════════════════════════════════════════
        HERO — CINEMATIC TV ZOOM
   ══════════════════════════════════════════ -->
+  <div id="about" style="position: absolute; top: 0; left: 0; pointer-events: none;"></div>
   <div id="hero-pin-wrapper">
     <section id="hero-scene" aria-label="Hero introduction">
       <canvas class="section-bg-canvas"></canvas>
@@ -268,11 +269,15 @@
       <div id="hero-vignette"></div>
 
       <!-- Screen overlay — floats over the real TV screen in the photo -->
-      <div id="screen-overlay" aria-hidden="true">
-        <div id="screen-statement">
-          Strategic Designer | Brand Identity, AI/Experience & Product Design | Helping startups build memorable brands and digital experiences through design
+      <div id="screen-overlay" aria-hidden="true" style="pointer-events: auto;">
+        <div id="screen-statement" style="font-size: clamp(0.58rem, 0.85vw, 0.95rem); line-height: 1.35; margin-bottom: 0.5vw; text-shadow: 0 0 4px rgba(255,255,255,0.25);">
+          I work across brand identity, product design, and storytelling. The parts of design that get separated, but rarely should be.
         </div>
-        <div id="screen-location">Greater Bengaluru Area</div>
+        <div class="screen-links" style="display: flex; gap: 0.8vw; font-family: 'VT323', monospace; font-size: clamp(0.55rem, 0.75vw, 0.85rem); color: rgba(255,255,255,0.7); margin-top: 0.2vw;">
+          <a href="#work" style="color: #FC4C13; text-decoration: none; border-bottom: 1px solid rgba(252,76,19,0.3);">[ View Work ]</a>
+          <a href="resume.pdf" target="_blank" rel="noopener" style="color: #FFFFFF; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.25);">[ Download Resume ]</a>
+        </div>
+        <div id="screen-location" style="margin-top: 0.5vw; font-size: clamp(0.5rem, 0.7vw, 0.8rem); opacity: 0.8; letter-spacing: 0.05em;">(Scroll)</div>
       </div>
 
       <!-- Inside hero-scene: About Z-Scroll slides -->
@@ -280,11 +285,11 @@
         <div class="z-perspective-container">
           <div id="z-viewport-camera">
 
-            <!-- Slide 1 — Systems Thinking -->
+            <!-- Slide 1 — Origins -->
             <div class="z-slide" id="z-slide-1" data-z="-1500">
-              <span class="z-meta">[ NOTE 01 // SYSTEMS ]</span>
-              <h2 class="z-title">Curiosity led me to design.<br><span class="z-title-muted">Systems made me stay.</span></h2>
-              <p class="z-desc">I started in computer science, where I learned to think in systems before I ever designed an interface. That mindset taught me to look beyond individual screens and understand how every decision shapes a larger experience.</p>
+              <span class="z-meta">[ ABOUT // 01 ]</span>
+              <h2 class="z-title">I didn't start in design.</h2>
+              <p class="z-desc">I started in computer science, spent four years thinking in systems and code, then moved into a two-year M.Des program. That shift taught me something important: the best design thinking comes from understanding how things actually work underneath.</p>
             </div>
 
             <!-- Parallax Floating Asset Card 01 (Right-aligned structural layout) -->
@@ -294,9 +299,9 @@
 
             <!-- Slide 2 — UX & Behavior -->
             <div class="z-slide" id="z-slide-2" data-z="-5500">
-              <span class="z-meta">[ NOTE 02 // BEHAVIOR ]</span>
-              <h2 class="z-title"><span class="z-title-muted">Observing the</span><br>human gap.</h2>
-              <p class="z-desc">Even before design, I was fascinated by human psychology and how visuals, media, and everyday experiences influence our decisions. People say one thing and do another — understanding that gap is where meaningful design begins.</p>
+              <span class="z-meta">[ ABOUT // 02 ]</span>
+              <h2 class="z-title">How people navigate uncertainty.</h2>
+              <p class="z-desc">Most of my interest in UX comes from watching how people make decisions when the information isn't complete. That's more interesting than interface polish.</p>
             </div>
 
             <!-- Parallax Floating Asset Card 02 (Left-aligned Typography Specimen Card) -->
@@ -309,16 +314,19 @@
 
             <!-- Slide 3 — Coherence -->
             <div class="z-slide" id="z-slide-3" data-z="-9000">
-              <span class="z-meta">[ NOTE 03 // COHERENCE ]</span>
-              <h2 class="z-title">Brand and product.<br><span class="z-title-accent">One ecosystem.</span></h2>
-              <p class="z-desc">Over time, I realized a brand isn't just a logo and a product isn't just a collection of screens. Together they shape how people understand, trust, and remember something. I'm interested in complete experiences, not isolated deliverables.</p>
+              <span class="z-meta">[ ABOUT // 03 ]</span>
+              <h2 class="z-title">Brand and product are the same problem.</h2>
+              <p class="z-desc">Now I work across brand and product because I think they're the same problem. A packaging decision and a checkout flow are both answering the same question: does this person trust us enough to take the next step? I'm most useful in the room where those two conversations happen at the same time.</p>
             </div>
 
-            <!-- Slide 4 — Longevity -->
+            <!-- Slide 4 — Bio -->
             <div class="z-slide" id="z-slide-4" data-z="-11000">
-              <span class="z-meta">[ NOTE 04 // LONGEVITY ]</span>
-              <h2 class="z-title">Less features.<br><span class="z-title-accent">Less friction.</span></h2>
-              <p class="z-desc">I'm less interested in adding features than removing friction. Less interested in making things look different than making them feel inevitable. Long term, I want to build products, brands, and companies people genuinely remember.</p>
+              <span class="z-meta">[ ABOUT // 04 ]</span>
+              <h2 class="z-title">Based in Bengaluru, India</h2>
+              <div class="z-desc" style="display: flex; flex-direction: column; gap: 0.6rem; align-items: center; margin-top: 1.5rem; font-size: 1.1rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; width: 100%; max-width: 480px;">
+                <div style="display: flex; justify-content: space-between; width: 100%;"><span style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em;">Education</span><span style="color: #ffffff; font-weight: 400;">B.Tech CS + M.Des (NIFT)</span></div>
+                <div style="display: flex; justify-content: space-between; width: 100%;"><span style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em;">Currently</span><span style="color: var(--accent-red); font-weight: 400;">Ministry of Oats</span></div>
+              </div>
             </div>
 
           </div><!-- /z-viewport-camera -->
@@ -353,7 +361,7 @@
 
       <div class="work-intro">
         <h2 class="work-lead">
-          Three projects. <span class="italic-red">Each chosen for what it taught me</span>, not for how it looks.
+          Three projects. <span class="italic-red">Each chosen for what it taught me</span>, not for validation or outcomes.
         </h2>
       </div>
 
@@ -367,27 +375,27 @@
               <h3 class="work-row-title">The Whole Fruit</h3>
             </div>
             <div class="work-row-meta">
-              <span class="work-row-tags">Brand Strategy · Visual Identity · Packaging</span>
+              <span class="work-row-tags">Brand Strategy · Packaging · Identity</span>
             </div>
           </div>
 
-          <div class="work-row" data-project-index="1" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for Travel Product">
+          <div class="work-row" data-project-index="1" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for Personalised Travel Platform">
             <div class="work-row-left">
               <span class="work-row-num">02</span>
-              <h3 class="work-row-title">Travel Product</h3>
+              <h3 class="work-row-title">Personalised Travel Platform</h3>
             </div>
             <div class="work-row-meta">
-              <span class="work-row-tags">Product Design · UX Strategy</span>
+              <span class="work-row-tags">Product Design · UX Research · Systems Thinking</span>
             </div>
           </div>
 
-          <div class="work-row" data-project-index="2" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for Shopping Cart Abandonment">
+          <div class="work-row" data-project-index="2" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View project details for Cart Abandonment Audit">
             <div class="work-row-left">
               <span class="work-row-num">03</span>
-              <h3 class="work-row-title">Shopping Cart Abandonment</h3>
+              <h3 class="work-row-title">Cart Abandonment Audit</h3>
             </div>
             <div class="work-row-meta">
-              <span class="work-row-tags">UX Research · Strategy</span>
+              <span class="work-row-tags">UX Audit · E-commerce · Strategy</span>
             </div>
           </div>
 
@@ -414,23 +422,23 @@
                 </div>
                 <div class="preview-details">
                   <div class="preview-secondary-details">
-                    <span class="preview-subtitle">Brand Identity & Strategy</span>
-                    <h4 class="preview-headline">A daily ritual of luxury indulgence.</h4>
+                    <span class="preview-subtitle">Brand Strategy · Packaging · Identity</span>
+                    <h4 class="preview-headline">The Whole Fruit</h4>
                   </div>
                   <div class="preview-metadata">
-                    <span class="meta-tag">Brand Identity</span>
+                    <span class="meta-tag">Brand Strategy</span>
                     <span class="meta-tag">Packaging</span>
-                    <span class="meta-tag">2026</span>
+                    <span class="meta-tag">Identity</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Project 2: Travel Product Preview -->
+              <!-- Project 2: Personalised Travel Platform Preview -->
               <div class="project-preview-item" data-preview-index="1">
                 <div class="preview-media-container">
                   <div class="preview-ambient-reflection"></div>
                   <div class="preview-grain"></div>
-                  <img src="assets/project_travel.jpg" class="preview-hero-img" alt="Travel Product user interface mockup">
+                  <img src="assets/project_travel.jpg" class="preview-hero-img" alt="Personalised Travel Platform user interface mockup">
                   <div class="preview-decorations">
                     <svg class="panning-map" viewBox="0 0 150 100">
                       <path d="M15,75 Q45,25 75,55 T135,35" fill="none" stroke="rgba(252,76,19,0.4)" stroke-width="1.2" stroke-dasharray="4 4"/>
@@ -441,23 +449,23 @@
                 </div>
                 <div class="preview-details">
                   <div class="preview-secondary-details">
-                    <span class="preview-subtitle">Product Design & UX Strategy</span>
-                    <h4 class="preview-headline">Re-thinking booking flows.</h4>
+                    <span class="preview-subtitle">Product Design · UX Research · Systems Thinking</span>
+                    <h4 class="preview-headline">Personalised Travel Platform</h4>
                   </div>
                   <div class="preview-metadata">
                     <span class="meta-tag">Product Design</span>
-                    <span class="meta-tag">UX Strategy</span>
-                    <span class="meta-tag">2026</span>
+                    <span class="meta-tag">UX Research</span>
+                    <span class="meta-tag">Systems Thinking</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Project 3: Shopping Cart Abandonment Preview -->
+              <!-- Project 3: Cart Abandonment Audit Preview -->
               <div class="project-preview-item" data-preview-index="2">
                 <div class="preview-media-container">
                   <div class="preview-ambient-reflection"></div>
                   <div class="preview-grain"></div>
-                  <img src="assets/project_cart.jpg" class="preview-hero-img" alt="Shopping Cart Flow analysis">
+                  <img src="assets/project_cart.jpg" class="preview-hero-img" alt="Cart Abandonment Flow analysis">
                   <div class="preview-decorations">
                     <div class="cart-simulation">
                       <div class="sim-line"></div>
@@ -468,13 +476,13 @@
                 </div>
                 <div class="preview-details">
                   <div class="preview-secondary-details">
-                    <span class="preview-subtitle">UX Research & Strategy</span>
-                    <h4 class="preview-headline">Why typical abandonment fixes fail.</h4>
+                    <span class="preview-subtitle">UX Audit · E-commerce · Strategy</span>
+                    <h4 class="preview-headline">Cart Abandonment Audit</h4>
                   </div>
                   <div class="preview-metadata">
-                    <span class="meta-tag">UX Research</span>
+                    <span class="meta-tag">UX Audit</span>
+                    <span class="meta-tag">E-commerce</span>
                     <span class="meta-tag">Strategy</span>
-                    <span class="meta-tag">2026</span>
                   </div>
                 </div>
               </div>
@@ -523,8 +531,8 @@
           <div class="tv-popup-menu hidden" id="tvPopupMenu">
             <span class="menu-header">SELECT CASE STUDY:</span>
             <button type="button" class="tv-menu-item" data-project="0">01 / THE WHOLE FRUIT</button>
-            <button type="button" class="tv-menu-item" data-project="1">02 / TRAVEL PRODUCT</button>
-            <button type="button" class="tv-menu-item" data-project="2">03 / SHOPPING CART AUDIT</button>
+            <button type="button" class="tv-menu-item" data-project="1">02 / TRAVEL PLATFORM</button>
+            <button type="button" class="tv-menu-item" data-project="2">03 / CHECKOUT AUDIT</button>
           </div>
         </div>
 
@@ -544,8 +552,8 @@
         </div>
 
         <!-- Object 3: Travel Boarding Pass / Ticket -->
-        <div class="desk-obj-wrapper obj-travel" data-action="travel" tabindex="0" role="button" aria-label="Open Travel Product case study">
-          <div class="obj-label">03 / travel product</div>
+        <div class="desk-obj-wrapper obj-travel" data-action="travel" tabindex="0" role="button" aria-label="Open Personalised Travel Platform case study">
+          <div class="obj-label">03 / travel platform</div>
           <div class="obj-graphic graphic-travel">
             <div class="boarding-pass">
               <div class="pass-header">
@@ -567,7 +575,7 @@
         </div>
 
         <!-- Object 4: Commerce Receipt -->
-        <div class="desk-obj-wrapper obj-checkout" data-action="checkout" tabindex="0" role="button" aria-label="Open Shopping Cart Recovery case study">
+        <div class="desk-obj-wrapper obj-checkout" data-action="checkout" tabindex="0" role="button" aria-label="Open Cart Abandonment Audit case study">
           <div class="obj-label">04 / checkout audit</div>
           <div class="obj-graphic graphic-checkout">
             <div class="receipt-slip">
@@ -698,13 +706,13 @@
         <div class="footer-container">
           <div class="footer-left">
             <span class="footer-logo">Vishwas Mehta.</span>
-            <span class="footer-sub">EXPERIENCE DESIGNER — PORTFOLIO VOL. I</span>
+            <span class="footer-sub">Strategic Designer, Bengaluru India</span>
           </div>
           <div class="footer-center">
-            <a href="mailto:vyommehta197@gmail.com" class="footer-email">VYOMMEHTA197@GMAIL.COM</a>
+            <a href="mailto:vyommehta97@gmail.com" class="footer-email">VYOMMEHTA97@GMAIL.COM</a>
           </div>
           <div class="footer-right">
-            <span class="footer-copyright">© 2026 — BUILT QUIETLY.</span>
+            <span class="footer-copyright">2026 — vyommehta97@gmail.com</span>
           </div>
         </div>
       </div>
@@ -753,16 +761,24 @@
               <p id="drawer-project-summary" class="story-text"></p>
             </div>
             <div class="story-section">
-              <h4 class="story-header">THE CHALLENGE</h4>
+              <h4 class="story-header">PROBLEM</h4>
               <p id="drawer-project-challenge" class="story-text"></p>
             </div>
             <div class="story-section">
-              <h4 class="story-header">THE OUTCOME</h4>
+              <h4 class="story-header">APPROACH</h4>
+              <p id="drawer-project-approach" class="story-text"></p>
+            </div>
+            <div class="story-section">
+              <h4 class="story-header">SYSTEM</h4>
+              <p id="drawer-project-system" class="story-text"></p>
+            </div>
+            <div class="story-section">
+              <h4 class="story-header">LEARNING</h4>
               <p id="drawer-project-outcome" class="story-text"></p>
             </div>
           </div>
 
-          <a href="mailto:vyommehta197@gmail.com" class="drawer-cta-btn">INQUIRE ABOUT THIS PROJECT &rarr;</a>
+          <a href="mailto:vyommehta97@gmail.com" class="drawer-cta-btn">INQUIRE ABOUT THIS PROJECT &rarr;</a>
         </div>
 
         <!-- Right Panel: Immersive Visuals -->

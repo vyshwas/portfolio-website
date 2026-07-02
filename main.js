@@ -566,35 +566,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectsData = [
     {
       title: "The Whole Fruit",
-      category: "Brand Strategy · Visual Identity · Packaging",
-      timeline: "4 Weeks",
-      role: "Brand Strategist & Lead Designer",
-      team: "Solo Project",
-      summary: "Repositioning a fruit brand from a utilitarian snack to a daily ritual of luxury indulgence.",
-      challenge: "Traditional fruit brands suffer from low emotional resonance and high price sensitivity. The challenge was to elevate the product from a commodity to an indispensable lifestyle brand that commands a premium.",
-      outcome: "Re-designed the visual system and packaging around minimal organic geometric forms, moving away from loud, bright fruit graphics. The new identity created a premium editorial feel, increasing perceived value and buyer interest during test placements.",
+      category: "Brand Strategy · Packaging · Identity",
+      timeline: "Dissertation",
+      role: "Strategist & Designer",
+      team: "Solo",
+      summary: "My M.Des dissertation project. The brief I gave myself: build a wellness brand confident enough to look expensive without saying \"premium\" anywhere on the pack. The category is noise. Every competitor uses the same palette, the same kraft paper, the same health claims. I wanted to explore what restraint actually signals on a shelf.",
+      problem: "How do you stand out in a category where every brand looks identical?",
+      approach: "Research competitor positioning, build a type-led system, test the visual logic against category conventions.",
+      system: "Full brand identity (mark, palette, packaging), documented as strategic positioning framework.",
+      learning: "Restraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
       image: "assets/project_fruit.jpg"
     },
     {
-      title: "Travel Product",
-      category: "Product Design · UX Strategy",
-      timeline: "6 Weeks",
-      role: "Lead UX Researcher & Product Designer",
-      team: "3 Designers",
-      summary: "Re-thinking a booking flow that had been A/B tested into incoherence.",
-      challenge: "Over years of incremental A/B testing, the core user flow had accumulated conflicting UI patterns, leading to cognitive fatigue, increased drop-offs, and negative feedback during critical checkout stages.",
-      outcome: "Conducted usability audits to strip away unnecessary cognitive checkpoints. Redesigned the search and confirmation screen hierarchies to focus only on contextual options, resulting in an intuitive, friction-free interface.",
+      title: "Personalised Travel Platform",
+      category: "Product Design · UX Research · Systems Thinking",
+      timeline: "Concept",
+      role: "UX Designer",
+      team: "Solo",
+      summary: "A concept project exploring how trip planning actually works. Most platforms ask for dates and destination, then hand you a list. People don't plan that way. They plan around a feeling, a budget, constraints they don't articulate. I designed a constraint-first flow to see what happens when you surface the reasoning instead of hiding it.",
+      problem: "Generic itinerary tools ignore how people actually decide.",
+      approach: "User research on travel planning behaviour, constraint mapping, flow redesign.",
+      system: "Prototype and documented user flows showing decision architecture.",
+      learning: "Personalisation isn't a filter. It's about showing your work. Making the system's reasoning visible builds more trust than a perfect recommendation.",
       image: "assets/project_travel.jpg"
     },
     {
-      title: "Shopping Cart Abandonment",
-      category: "UX Research · Strategy",
-      timeline: "8 Weeks",
-      role: "Lead UX Analyst & Strategist",
-      team: "Solo Project",
-      summary: "A detailed analysis and redesign case study on why most 'abandonment fixes' make the problem worse.",
-      challenge: "Most plugin and pop-up systems try to solve cart abandonment by introducing high-friction popups, countdown timers, and discount emails. These techniques erode brand trust and teach users to wait for discounts.",
-      outcome: "Developed a silent, non-intrusive recovery framework centered around transparent pricing, context-aware reminders, and seamless guest-checkout transitions, reducing abandonment without relying on promotional popups.",
+      title: "Cart Abandonment Audit",
+      category: "UX Audit · E-commerce · Strategy",
+      timeline: "Audit",
+      role: "UX Analyst",
+      team: "Katalyse.ai",
+      summary: "A structured UX audit I completed at Katalyse.ai exploring why checkout flows lose users. The assumption is price or shipping. The audit found something quieter: friction at moments where the interface asks for trust it hasn't earned. I mapped 11 friction points and documented them as a prioritised audit.",
+      problem: "High cart abandonment across e-commerce funnels, cause unclear.",
+      approach: "Audit of Shopify checkout experience, friction point mapping, trust analysis.",
+      system: "Documented audit with friction prioritisation and redesign recommendations.",
+      learning: "Ambiguity costs more than transparency. People don't abandon carts because of price. They abandon because the next step isn't clear.",
       image: "assets/project_cart.jpg"
     }
   ];
@@ -661,8 +667,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('drawer-project-team').textContent     = data.team;
     
     document.getElementById('drawer-project-summary').textContent   = data.summary;
-    document.getElementById('drawer-project-challenge').textContent = data.challenge;
-    document.getElementById('drawer-project-outcome').textContent   = data.outcome;
+    document.getElementById('drawer-project-challenge').textContent = data.problem;
+    document.getElementById('drawer-project-approach').textContent  = data.approach;
+    document.getElementById('drawer-project-system').textContent    = data.system;
+    document.getElementById('drawer-project-outcome').textContent   = data.learning;
     
     // Lazy-load media
     const img = document.getElementById('drawer-project-image');
