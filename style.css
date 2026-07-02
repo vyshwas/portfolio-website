@@ -156,25 +156,34 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* Header & Navigation — Translucent background blur */
+/* Header & Navigation — Floating capsule style */
 .site-header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3rem);
+    max-width: 1200px;
     z-index: 100;
     background-color: rgba(29, 29, 29, 0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    transition: var(--transition-smooth);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: all var(--transition-smooth);
 }
 
 /* Site header light-mode styling when scrolling over light background sections */
 .site-header.header-light {
     background-color: rgba(255, 255, 255, 0.75);
-    border-bottom-color: rgba(29, 29, 29, 0.08);
+    border-color: rgba(29, 29, 29, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 .site-header.header-light .logo {
+    color: #1D1D1D;
+}
+.site-header.header-light .logo-name {
     color: #1D1D1D;
 }
 .site-header.header-light .nav-link {
@@ -190,9 +199,13 @@ section > *:not(.section-bg-canvas) {
 
 .site-header.header-dark {
     background-color: rgba(29, 29, 29, 0.75);
-    border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 .site-header.header-dark .logo {
+    color: #FFFFFF;
+}
+.site-header.header-dark .logo-name {
     color: #FFFFFF;
 }
 .site-header.header-dark .nav-link {
@@ -228,7 +241,7 @@ section > *:not(.section-bg-canvas) {
 
 .header-container {
     max-width: 100%;
-    padding: 1.2rem var(--site-padding);
+    padding: 0.6rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1995,6 +2008,14 @@ section > *:not(.section-bg-canvas) {
 @media screen and (max-width: 768px) {
     section {
         padding: 5rem var(--site-padding);
+    }
+    
+    .site-header {
+        top: 1rem;
+        width: calc(100% - 2rem);
+    }
+    .header-container {
+        padding: 0.5rem 1.5rem;
     }
     
     /* Navigation Drawer */
