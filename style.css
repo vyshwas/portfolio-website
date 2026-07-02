@@ -2613,11 +2613,9 @@ section > *:not(.section-bg-canvas) {
 
 /* --- 30% Information Area --- */
 .drawer-info {
-  width: 33.33%; /* 33.33% of the 90vw parent = 30vw of total screen */
+  width: 33.33%;
   height: 100vh;
   position: relative;
-  display: flex;
-  flex-direction: column;
   overflow-y: auto;
   scrollbar-width: none;
 }
