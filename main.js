@@ -929,9 +929,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ──────────────────────────────────────────────────────────
      11. FAVICON FLICKER
-     – Draws the favicon from scratch on a canvas (no image
-       load = no CORS) and swaps <link rel="icon"> on irregular
-       intervals that mirror the Backyard button flicker rhythm.
+     – Loads the VM monogram favicon image, renders it at three
+       opacity levels via canvas, and swaps <link rel="icon">
+       on irregular intervals that mirror the Backyard button
+       flicker rhythm (4500 ms cycle, same drop points).
   ────────────────────────────────────────────────────────── */
   (function initFaviconFlicker() {
     const S = 64;
@@ -942,67 +943,84 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = canvas.height = S;
     const ctx = canvas.getContext('2d');
 
-    // Draw one frame: glowAlpha = vermilion glow intensity, textAlpha = "V" opacity
-    function renderFrame(glowAlpha, textAlpha) {
-      ctx.clearRect(0, 0, S, S);
+    // Flicker sequence (same rhythm as @keyframes backyard-flicker):
+    //  [opacity, hold-ms]
+    //   8% dip → recover → 43% dip → recover → 76% hard drop → snap → tail
+    function buildSequence(FULL, DIM, OFF) {
+      return [
+        [FULL,  350],
+        [DIM,    45],
+        [FULL, 1510],
+        [DIM,    45],
+        [FULL, 1395],
+        [OFF,    45],
+        [FULL,   45],
+        [FULL,  710],
+      ];
+    }
 
-      // ── Charcoal background with rounded corners ──
-      ctx.fillStyle = '#130F0E';
-      ctx.beginPath();
-      ctx.roundRect(0, 0, S, S, 10);
-      ctx.fill();
-
-      // ── Vermilion radial glow ──
-      if (glowAlpha > 0) {
-        const g = ctx.createRadialGradient(S/2, S/2, S * 0.08, S/2, S/2, S * 0.58);
-        g.addColorStop(0, `rgba(252,76,19,${glowAlpha})`);
-        g.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.roundRect(0, 0, S, S, 10);
-        ctx.fill();
+    function startFlicker(seq) {
+      let i = 0;
+      function tick() {
+        const [frame, wait] = seq[i % seq.length];
+        faviconLink.href = frame;
+        i++;
+        setTimeout(tick, wait);
       }
+      setTimeout(tick, 800);
+    }
 
-      // ── "V" monogram ──
-      ctx.globalAlpha = textAlpha;
-      ctx.fillStyle   = '#FC4C13';
-      ctx.font        = '500 34px "Cormorant Garamond", Georgia, serif';
-      ctx.textAlign   = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('V', S / 2, S / 2 + 2);
+    // Render the img at a given opacity → returns data URL
+    function bakeFrame(img, alpha) {
+      ctx.clearRect(0, 0, S, S);
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(img, 0, 0, S, S);
       ctx.globalAlpha = 1;
-
       return canvas.toDataURL('image/png');
     }
 
-    // Pre-bake three frames (full / dim / near-off)
-    const FULL = renderFrame(0.55, 1.00);
-    const DIM  = renderFrame(0.18, 0.48);
-    const OFF  = renderFrame(0.00, 0.12);
+    // ── Attempt 1: load the actual favicon image (same-origin) ──
+    const img = new Image();
+    // Use relative path — avoids any absolute-URL CORS quirks
+    img.src = 'assets/favicon.png';
 
-    // Sequence mirrors @keyframes backyard-flicker (4500 ms cycle):
-    //  8% dip → 9% recover → 43% dip → 44% recover → 76% hard drop → 77% snap
-    const seq = [
-      [FULL,  350],   // 0 → 350 ms    steady
-      [DIM,    45],   // 8 % dip
-      [FULL, 1510],   // recover → 42 %
-      [DIM,    45],   // 43 % dip
-      [FULL, 1395],   // recover → 75 %
-      [OFF,    45],   // 76 % hard drop
-      [FULL,   45],   // 77 % snap back
-      [FULL,  710],   // tail — completes the 4500 ms cycle
-    ];
+    img.onload = function () {
+      const FULL = bakeFrame(img, 1.00);
+      const DIM  = bakeFrame(img, 0.45);
+      const OFF  = bakeFrame(img, 0.10);
+      startFlicker(buildSequence(FULL, DIM, OFF));
+    };
 
-    let i = 0;
-    function tick() {
-      const [frame, wait] = seq[i % seq.length];
-      faviconLink.href = frame;
-      i++;
-      setTimeout(tick, wait);
-    }
-
-    // Start after page has settled
-    setTimeout(tick, 800);
+    // ── Fallback: draw VM monogram from scratch if image fails ──
+    img.onerror = function () {
+      function drawFrame(alpha) {
+        ctx.clearRect(0, 0, S, S);
+        // White background
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.roundRect(0, 0, S, S, 10);
+        ctx.fill();
+        // Thin border
+        ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(0.5, 0.5, S - 1, S - 1, 10);
+        ctx.stroke();
+        // VM monogram in warm cream
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = '#E8E0D5';
+        ctx.font = '500 30px "Cormorant Garamond", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('VM', S / 2, S / 2 + 1);
+        ctx.globalAlpha = 1;
+        return canvas.toDataURL('image/png');
+      }
+      const FULL = drawFrame(1.00);
+      const DIM  = drawFrame(0.45);
+      const OFF  = drawFrame(0.10);
+      startFlicker(buildSequence(FULL, DIM, OFF));
+    };
   })();
 
 });
