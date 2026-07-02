@@ -929,90 +929,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ──────────────────────────────────────────────────────────
      11. FAVICON FLICKER
-     – Canvas-draws the favicon at varying opacities and swaps
-       the <link rel="icon"> href on irregular intervals,
-       mirroring the CRT flicker rhythm of the Backyard button.
+     – Draws the favicon from scratch on a canvas (no image
+       load = no CORS) and swaps <link rel="icon"> on irregular
+       intervals that mirror the Backyard button flicker rhythm.
   ────────────────────────────────────────────────────────── */
   (function initFaviconFlicker() {
-    const SIZE   = 64;                              // canvas resolution
-    const ACCENT = 'rgba(252, 76, 19, ';            // vermilion base
+    const S = 64;
     const faviconLink = document.querySelector('link[rel="icon"]');
     if (!faviconLink) return;
 
-    // Offscreen canvas
     const canvas = document.createElement('canvas');
-    canvas.width = canvas.height = SIZE;
+    canvas.width = canvas.height = S;
     const ctx = canvas.getContext('2d');
 
-    // Pre-load the original favicon image once
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = faviconLink.href.split('?')[0];       // strip cache-buster for load
+    // Draw one frame: glowAlpha = vermilion glow intensity, textAlpha = "V" opacity
+    function renderFrame(glowAlpha, textAlpha) {
+      ctx.clearRect(0, 0, S, S);
 
-    img.onload = function () {
+      // ── Charcoal background with rounded corners ──
+      ctx.fillStyle = '#130F0E';
+      ctx.beginPath();
+      ctx.roundRect(0, 0, S, S, 10);
+      ctx.fill();
 
-      // Draw favicon at a given global opacity → returns data URL
-      function renderFrame(opacity, glowAlpha) {
-        ctx.clearRect(0, 0, SIZE, SIZE);
-
-        // Optional glow halo behind the icon
-        if (glowAlpha > 0) {
-          const grad = ctx.createRadialGradient(SIZE/2, SIZE/2, SIZE * 0.15,
-                                                SIZE/2, SIZE/2, SIZE * 0.55);
-          grad.addColorStop(0, ACCENT + glowAlpha + ')');
-          grad.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, SIZE, SIZE);
-        }
-
-        ctx.globalAlpha = opacity;
-        ctx.drawImage(img, 0, 0, SIZE, SIZE);
-        ctx.globalAlpha = 1;
-        return canvas.toDataURL('image/png');
+      // ── Vermilion radial glow ──
+      if (glowAlpha > 0) {
+        const g = ctx.createRadialGradient(S/2, S/2, S * 0.08, S/2, S/2, S * 0.58);
+        g.addColorStop(0, `rgba(252,76,19,${glowAlpha})`);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.roundRect(0, 0, S, S, 10);
+        ctx.fill();
       }
 
-      // Pre-bake three frames  (full / dim / near-off)
-      const FRAME_FULL  = renderFrame(1.00, 0.55);
-      const FRAME_DIM   = renderFrame(0.50, 0.20);
-      const FRAME_OFF   = renderFrame(0.15, 0.00);
+      // ── "V" monogram ──
+      ctx.globalAlpha = textAlpha;
+      ctx.fillStyle   = '#FC4C13';
+      ctx.font        = '500 34px "Cormorant Garamond", Georgia, serif';
+      ctx.textAlign   = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('V', S / 2, S / 2 + 2);
+      ctx.globalAlpha = 1;
 
-      // Flicker sequence: [frame, hold-ms]
-      // Mirrors the CSS @keyframes backyard-flicker rhythm:
-      //   8 % drop → 9 % recover → 43 % drop → 44 % recover → 76 % drop → 77 % recover
-      // At a 4500 ms cycle that maps to:
-      //   360ms drop, 45ms off, 360ms recover … etc.
-      const CYCLE_MS = 4500;
-      const sequence = [
-        [FRAME_FULL,  350],   // steady
-        [FRAME_DIM,    45],   // 8 % flicker dip
-        [FRAME_FULL,  1510],  // 9 %→42 % steady
-        [FRAME_DIM,    45],   // 43 % dip
-        [FRAME_FULL,  1395],  // 44 %→75 % steady
-        [FRAME_OFF,    45],   // 76 % hard drop
-        [FRAME_FULL,   45],   // 77 % snap back
-        // remaining ~265 ms returns to full naturally via loop
-      ];
+      return canvas.toDataURL('image/png');
+    }
 
-      let step = 0;
+    // Pre-bake three frames (full / dim / near-off)
+    const FULL = renderFrame(0.55, 1.00);
+    const DIM  = renderFrame(0.18, 0.48);
+    const OFF  = renderFrame(0.00, 0.12);
 
-      function tick() {
-        const [frame, delay] = sequence[step % sequence.length];
-        faviconLink.href = frame;
-        step++;
-        // After all steps of one cycle, pause until cycle restarts
-        const elapsed = sequence.slice(0, step % sequence.length).reduce((a, s) => a + s[1], 0);
-        const pause = (step % sequence.length === 0)
-          ? Math.max(CYCLE_MS - sequence.reduce((a, s) => a + s[1], 0), 0)
-          : delay;
-        setTimeout(tick, pause || delay);
-      }
+    // Sequence mirrors @keyframes backyard-flicker (4500 ms cycle):
+    //  8% dip → 9% recover → 43% dip → 44% recover → 76% hard drop → 77% snap
+    const seq = [
+      [FULL,  350],   // 0 → 350 ms    steady
+      [DIM,    45],   // 8 % dip
+      [FULL, 1510],   // recover → 42 %
+      [DIM,    45],   // 43 % dip
+      [FULL, 1395],   // recover → 75 %
+      [OFF,    45],   // 76 % hard drop
+      [FULL,   45],   // 77 % snap back
+      [FULL,  710],   // tail — completes the 4500 ms cycle
+    ];
 
-      // Small initial delay so the page settles before flicker starts
-      setTimeout(tick, 1200);
-    };
+    let i = 0;
+    function tick() {
+      const [frame, wait] = seq[i % seq.length];
+      faviconLink.href = frame;
+      i++;
+      setTimeout(tick, wait);
+    }
 
-    // If image fails to load (e.g. CORS on local file://), fail silently
-    img.onerror = function () {};
+    // Start after page has settled
+    setTimeout(tick, 800);
   })();
 
 });
