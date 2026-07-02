@@ -2420,9 +2420,6 @@ section > *:not(.section-bg-canvas) {
     .logo-divider {
         display: none !important;
     }
-}
-
-
     
     /* Selected work rows stack on mobile */
     .work-row {
