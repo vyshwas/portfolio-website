@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 2.56; // pin scroll distance = 2.56 × 100vh (reduced to 80% of previous value for faster scroll)
+  const SCROLL_MULT   = 1.8;  // pin scroll distance = 1.8 × 100vh (provides compact, fast scroll space for zoom + Z-slides)
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
@@ -76,8 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     heroBg.style.transformOrigin = `${TV_ORIGIN_X}% ${TV_ORIGIN_Y}%`;
     heroBg.style.willChange = 'transform';
 
-    // Set initial state of main content and about slides
-    if (mainContent) gsap.set(mainContent, { opacity: 0 });
+    // Set initial state of about slides
     gsap.set('#hero-about-container', { opacity: 0 });
     gsap.set('.z-slide', { 
       transformPerspective: 1000, 
@@ -143,36 +142,27 @@ document.addEventListener('DOMContentLoaded', () => {
       duration: 0.03,
     }, 0.22);
 
-    // Slide 1: Systems Thinking (0.25 to 0.45)
-    tl.to('#z-slide-1', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.25);
-    tl.to('#z-slide-1', { opacity: 0, z: 1000, scale: 3.5, duration: 0.07 }, 0.38);
+    // Slide 1: Systems Thinking (0.30 to 0.50)
+    tl.to('#z-slide-1', { opacity: 1, z: 0, scale: 1, duration: 0.10 }, 0.30);
+    tl.to('#z-slide-1', { opacity: 0, z: 1000, scale: 3.5, duration: 0.08 }, 0.42);
 
-    // Slide 2: UX & Behavior (0.43 to 0.63)
-    tl.to('#z-slide-2', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.43);
-    tl.to('#z-slide-2', { opacity: 0, z: 1000, scale: 3.5, duration: 0.07 }, 0.56);
+    // Slide 2: UX & Behavior (0.48 to 0.68)
+    tl.to('#z-slide-2', { opacity: 1, z: 0, scale: 1, duration: 0.10 }, 0.48);
+    tl.to('#z-slide-2', { opacity: 0, z: 1000, scale: 3.5, duration: 0.08 }, 0.60);
 
-    // Slide 3: Coherence (0.61 to 0.81)
-    tl.to('#z-slide-3', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.61);
-    tl.to('#z-slide-3', { opacity: 0, z: 1000, scale: 3.5, duration: 0.07 }, 0.74);
+    // Slide 3: Coherence (0.66 to 0.86)
+    tl.to('#z-slide-3', { opacity: 1, z: 0, scale: 1, duration: 0.10 }, 0.66);
+    tl.to('#z-slide-3', { opacity: 0, z: 1000, scale: 3.5, duration: 0.08 }, 0.78);
 
-    // Slide 4: Longevity (0.79 to 0.97)
-    tl.to('#z-slide-4', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.79);
-    tl.to('#z-slide-4', { opacity: 0, z: 1000, scale: 3.5, duration: 0.05 }, 0.92);
+    // Slide 4: Longevity (0.84 to 0.98)
+    tl.to('#z-slide-4', { opacity: 1, z: 0, scale: 1, duration: 0.10 }, 0.84);
+    tl.to('#z-slide-4', { opacity: 0, z: 1000, scale: 3.5, duration: 0.04 }, 0.94);
 
-    // Fade out Z-slides container at the end of slides
+    // Fade out Z-slides container at the end of slides (0.97 to 1.0)
     tl.to('#hero-about-container', {
       opacity: 0,
       duration: 0.03,
     }, 0.97);
-
-    // ── Phase 3: Transition to main content (0.95 to 1.0) ──
-    if (mainContent) {
-      tl.to(mainContent, {
-        opacity: 1,
-        duration: 0.03,
-        ease: 'power2.out',
-      }, 0.97);
-    }
 
     // ScrollTrigger — pin + instant scrub (no lag)
     ScrollTrigger.create({
@@ -186,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
       animation:    tl,
       onLeave:      () => { 
         heroBg.style.willChange = 'auto'; 
-        if (mainContent) gsap.set(mainContent, { opacity: 1 });
       },
       onEnterBack:  () => { 
         heroBg.style.willChange = 'transform'; 
