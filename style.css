@@ -2663,7 +2663,6 @@ section > *:not(.section-bg-canvas) {
     font-size: 0.95rem;
     line-height: 1.6;
     color: var(--text-muted);
-    white-space: pre-wrap;
 }
 
 .drawer-cta-btn {
