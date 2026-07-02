@@ -395,39 +395,134 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ──────────────────────────────────────────────────────────
      8. CONTACT FORM
   ────────────────────────────────────────────────────────── */
-  const form       = document.getElementById('contactForm');
-  const success    = document.getElementById('formSuccess');
-  const resetBtn   = document.getElementById('resetFormBtn');
-  const submitBtn  = document.getElementById('submitBtn');
+  /* ──────────────────────────────────────────────────────────
+     8. VISHWAS'S DESK INTERACTION
+     ────────────────────────────────────────────────────────── */
+  const tvPopup = document.getElementById('tvPopupMenu');
+  const contactPopup = document.getElementById('contactPopupMenu');
+  const copyEmailBtn = document.getElementById('copyEmailBtn');
+  const mobileCopyEmailBtn = document.getElementById('mobileCopyEmailBtn');
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let valid = true;
-    form.querySelectorAll('[required]').forEach((f) => {
-      const ok = f.value.trim() !== '';
-      f.classList.toggle('error', !ok);
-      if (!ok) valid = false;
-    });
-    if (!valid) return;
+  // Helper: hide all desk popups
+  const hideDeskPopups = () => {
+    tvPopup?.classList.add('hidden');
+    contactPopup?.classList.add('hidden');
+  };
 
-    const orig = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'SENDING… <span class="submit-arrow">&nearr;</span>';
-    form.style.opacity = '0.5';
-
-    setTimeout(() => {
-      form.classList.add('hidden');
-      form.style.opacity = '';
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = orig;
-      success.classList.remove('hidden');
-      form.reset();
-    }, 1600);
+  // Close menus on click outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.obj-tv') && !e.target.closest('.obj-contact')) {
+      hideDeskPopups();
+    }
   });
 
-  resetBtn?.addEventListener('click', () => {
-    success.classList.add('hidden');
-    form.classList.remove('hidden');
+  // Action Map for Desk Objects (Desktop & Mobile)
+  const deskActions = {
+    tv: (e) => {
+      e.stopPropagation();
+      tvPopup?.classList.toggle('hidden');
+      contactPopup?.classList.add('hidden');
+    },
+    fruit: () => {
+      openProjectDrawer(0);
+    },
+    travel: () => {
+      openProjectDrawer(1);
+    },
+    checkout: () => {
+      openProjectDrawer(2);
+    },
+    notebook: () => {
+      const aboutSec = document.getElementById('about');
+      if (aboutSec) {
+        if (lenis) {
+          lenis.scrollTo(aboutSec);
+        } else {
+          aboutSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    },
+    contact: (e) => {
+      e.stopPropagation();
+      contactPopup?.classList.toggle('hidden');
+      tvPopup?.classList.add('hidden');
+    }
+  };
+
+  // Bind Desktop Objects
+  document.querySelectorAll('.desk-obj-wrapper').forEach((obj) => {
+    const action = obj.getAttribute('data-action');
+    obj.addEventListener('click', (e) => {
+      if (deskActions[action]) {
+        deskActions[action](e);
+      }
+    });
+
+    // Keypress support
+    obj.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        obj.click();
+      }
+    });
+  });
+
+  // Bind TV Popup Menu Items
+  document.querySelectorAll('.tv-menu-item').forEach((item) => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const projIdx = parseInt(item.getAttribute('data-project'), 10);
+      hideDeskPopups();
+      openProjectDrawer(projIdx);
+    });
+  });
+
+  // Bind Mobile List Cards
+  document.querySelectorAll('.mobile-card').forEach((card) => {
+    const action = card.getAttribute('data-action');
+    card.addEventListener('click', (e) => {
+      if (action === 'contact') {
+        // Expand contact links inline on mobile card
+        const links = card.querySelector('.mobile-contact-links');
+        const arrow = card.querySelector('.card-arrow');
+        if (links) {
+          const isHidden = links.classList.contains('hidden');
+          links.classList.toggle('hidden', !isHidden);
+          if (arrow) {
+            arrow.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
+          }
+        }
+      } else if (deskActions[action]) {
+        deskActions[action](e);
+      }
+    });
+  });
+
+  // Email copying logic
+  const emailToCopy = "vyommehta197@gmail.com";
+  const copyEmailHandler = (btn) => {
+    if (!btn) return;
+    const origText = btn.innerHTML;
+    navigator.clipboard.writeText(emailToCopy).then(() => {
+      btn.innerHTML = "COPIED!";
+      setTimeout(() => {
+        btn.innerHTML = origText;
+      }, 2000);
+    }).catch(err => {
+      console.error('Could not copy email: ', err);
+      // Fallback
+      alert(emailToCopy);
+    });
+  };
+
+  copyEmailBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    copyEmailHandler(copyEmailBtn);
+  });
+
+  mobileCopyEmailBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    copyEmailHandler(mobileCopyEmailBtn);
   });
 
   /* ──────────────────────────────────────────────────────────

@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
     /* ═══════════════════════════════════════════════════════
        HERO — CINEMATIC TV ZOOM  (clean, image-based)
@@ -245,6 +246,7 @@
           <li class="nav-divider">|</li>
           <li><a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="nav-link">Behance</a></li>
           <li><a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="nav-link">LinkedIn</a></li>
+          <li><a href="https://vyshwas.github.io/vyshwas-s-playground/" target="_blank" rel="noopener" class="nav-link">Backyard</a></li>
           <li><a href="resume.pdf" target="_blank" rel="noopener" class="nav-resume-btn">[ RESUME ]</a></li>
         </ul>
       </nav>
@@ -505,90 +507,231 @@
 
 
 
-    <!-- ─── Contact ─── -->
-    <section id="contact" class="contact-section dark-theme">
+    <!-- ─── Vishwas's Desk (Interactive Archive) ─── -->
+    <section id="contact" class="desk-section dark-theme">
       <canvas class="section-bg-canvas"></canvas>
       <div class="section-header">
-        <span class="section-tag">(CONTACT)</span>
+        <span class="section-tag">(ARCHIVE / LAST THINGS)</span>
       </div>
 
-      <div class="contact-intro">
-        <h2 class="contact-lead">Have a problem worth <span class="italic-red">designing for?</span></h2>
-        <p class="contact-subtext">I take on a small number of strategy-led brand and product engagements each year, and a few advisory conversations besides. If that sounds like a fit, write to me — a sentence is enough to start.</p>
+      <div class="desk-intro">
+        <h2 class="desk-lead">Six things worth opening.</h2>
+        <p class="desk-subtext">Projects, notes, resume, and a few clues about how I think. Click on any artifact to explore.</p>
       </div>
 
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="info-group">
-            <span class="info-label">DIRECT</span>
-            <a href="mailto:vyommehta197@gmail.com" class="info-email">vyommehta197@gmail.com</a>
+      <!-- Desktop Interaction Zone: Table Flatlay -->
+      <div class="desk-flatlay-container" aria-label="Interactive desktop flatlay">
+        
+        <!-- Object 1: CRT TV / Monitor -->
+        <div class="desk-obj-wrapper obj-tv" data-action="tv" tabindex="0" role="button" aria-label="Open work overview">
+          <div class="obj-label">01 / selected work</div>
+          <div class="obj-graphic graphic-tv">
+            <div class="tv-bezel">
+              <div class="tv-screen-inner">
+                <div class="tv-scanlines"></div>
+                <div class="tv-glow"></div>
+                <div class="tv-display-text">[ WORK ]</div>
+              </div>
+            </div>
+            <div class="tv-controls">
+              <span class="tv-knob"></span>
+              <span class="tv-knob"></span>
+              <span class="tv-button"></span>
+            </div>
           </div>
-          <div class="info-group">
-            <span class="info-label">ELSEWHERE</span>
-            <ul class="social-links">
-              <li><a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="social-link">LinkedIn <span class="social-arrow">&nearr;</span></a></li>
-              <li><a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="social-link">Behance <span class="social-arrow">&nearr;</span></a></li>
-              <li><a href="mailto:vyommehta197@gmail.com" class="social-link">Email <span class="social-arrow">&nearr;</span></a></li>
-            </ul>
-          <div class="info-group">
-            <span class="info-label">RESUME</span>
-            <a href="resume.pdf" target="_blank" rel="noopener" class="btn-link btn-trigger-resume" id="openResumeHero">VIEW RESUME <span class="arrow">&rarr;</span></a>
+          <!-- CRT TV popup menu with project links -->
+          <div class="tv-popup-menu hidden" id="tvPopupMenu">
+            <span class="menu-header">SELECT CASE STUDY:</span>
+            <button type="button" class="tv-menu-item" data-project="0">01 / THE WHOLE FRUIT</button>
+            <button type="button" class="tv-menu-item" data-project="1">02 / TRAVEL PRODUCT</button>
+            <button type="button" class="tv-menu-item" data-project="2">03 / SHOPPING CART AUDIT</button>
           </div>
         </div>
 
-        <div class="contact-form-container">
-          <form id="contactForm" class="contact-form" autocomplete="off">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="formName" class="form-label">NAME</label>
-                <input type="text" id="formName" name="name" placeholder="Your name" required class="form-input">
+        <!-- Object 2: Whole Fruit Packaging -->
+        <div class="desk-obj-wrapper obj-fruit" data-action="fruit" tabindex="0" role="button" aria-label="Open Whole Fruit case study">
+          <div class="obj-label">02 / whole fruit</div>
+          <div class="obj-graphic graphic-fruit">
+            <div class="fruit-pack">
+              <div class="pack-label">THE WHOLE FRUIT</div>
+              <svg class="pack-svg" viewBox="0 0 40 40">
+                <circle cx="20" cy="20" r="12" fill="none" stroke="rgba(252,76,19,0.4)" stroke-width="0.75" stroke-dasharray="2 3"/>
+                <circle cx="20" cy="20" r="8" fill="none" stroke="rgba(252,76,19,0.8)" stroke-width="1.0"/>
+              </svg>
+              <div class="pack-sub">VOL. 01</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Object 3: Travel Boarding Pass / Ticket -->
+        <div class="desk-obj-wrapper obj-travel" data-action="travel" tabindex="0" role="button" aria-label="Open Travel Product case study">
+          <div class="obj-label">03 / travel product</div>
+          <div class="obj-graphic graphic-travel">
+            <div class="boarding-pass">
+              <div class="pass-header">
+                <span>BOARDING PASS</span>
+                <span class="pass-logo">FLIGHT</span>
               </div>
-              <div class="form-group">
-                <label for="formEmail" class="form-label">EMAIL</label>
-                <input type="email" id="formEmail" name="email" placeholder="you@company.com" required class="form-input">
+              <div class="pass-route">
+                <span class="airport">BLR</span>
+                <span class="arrow-plane">&rarr;</span>
+                <span class="airport">DXB</span>
+              </div>
+              <div class="pass-meta">
+                <span>SEAT 12A</span>
+                <span>GATE 04</span>
+              </div>
+              <div class="pass-barcode"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Object 4: Commerce Receipt -->
+        <div class="desk-obj-wrapper obj-checkout" data-action="checkout" tabindex="0" role="button" aria-label="Open Shopping Cart Recovery case study">
+          <div class="obj-label">04 / checkout audit</div>
+          <div class="obj-graphic graphic-checkout">
+            <div class="receipt-slip">
+              <div class="receipt-torn-edge top"></div>
+              <div class="receipt-title">RECEIPT</div>
+              <div class="receipt-divider">* * * * * * * *</div>
+              <div class="receipt-item">
+                <span>CART ITEM</span>
+                <span>$99.00</span>
+              </div>
+              <div class="receipt-item status-abandoned">
+                <span>STATUS</span>
+                <span class="text-abandoned">ABANDONED</span>
+              </div>
+              <div class="receipt-divider">* * * * * * * *</div>
+              <div class="receipt-barcode"></div>
+              <div class="receipt-torn-edge bottom"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Object 5: Journal / Note Card -->
+        <div class="desk-obj-wrapper obj-notebook" data-action="notebook" tabindex="0" role="button" aria-label="Scroll to Why I Design section">
+          <div class="obj-label">05 / why i design</div>
+          <div class="obj-graphic graphic-notebook">
+            <div class="notebook-card">
+              <div class="notebook-header">JOURNAL NOTE</div>
+              <div class="notebook-line"></div>
+              <div class="notebook-line"></div>
+              <div class="notebook-line text-hint">"Curiosity led me..."</div>
+              <div class="notebook-line"></div>
+              <div class="notebook-fold"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Object 6: Resume / Business Card Folder -->
+        <div class="desk-obj-wrapper obj-contact" data-action="contact" tabindex="0" role="button" aria-label="Open resume and contact options">
+          <div class="obj-label">06 / resume / contact</div>
+          <div class="obj-graphic graphic-contact">
+            <div class="contact-folder">
+              <div class="folder-tab">CV</div>
+              <div class="folder-content-inner">
+                <span class="folder-logo-text">VM</span>
+                <span class="folder-name-text">Vishwas Mehta</span>
               </div>
             </div>
-            <div class="form-group">
-              <label for="formCompany" class="form-label">COMPANY (OPTIONAL)</label>
-              <input type="text" id="formCompany" name="company" placeholder="Where you work" class="form-input">
+          </div>
+          <!-- Contact popover menu -->
+          <div class="contact-popup-menu hidden" id="contactPopupMenu">
+            <span class="menu-header">CONTACT & CV:</span>
+            <a href="resume.pdf" target="_blank" rel="noopener" class="contact-menu-item btn-trigger-resume">[ VIEW RESUME ]</a>
+            <button type="button" class="contact-menu-item" id="copyEmailBtn">COPY EMAIL</button>
+            <a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="contact-menu-item">[ LINKEDIN ]</a>
+            <a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="contact-menu-item">[ BEHANCE ]</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile Stacked List: Artifact Cards -->
+      <div class="desk-mobile-list" aria-label="Interactive desktop list for mobile viewports">
+        
+        <div class="mobile-card" data-action="tv" role="button" tabindex="0">
+          <div class="card-num">01</div>
+          <div class="card-details">
+            <h3 class="card-title">SELECTED WORK</h3>
+            <p class="card-desc">CRT Monitor — Open project overview</p>
+          </div>
+          <div class="card-arrow">&rarr;</div>
+        </div>
+
+        <div class="mobile-card" data-action="fruit" role="button" tabindex="0">
+          <div class="card-num">02</div>
+          <div class="card-details">
+            <h3 class="card-title">THE WHOLE FRUIT</h3>
+            <p class="card-desc">Packaging Object — Case study</p>
+          </div>
+          <div class="card-arrow">&rarr;</div>
+        </div>
+
+        <div class="mobile-card" data-action="travel" role="button" tabindex="0">
+          <div class="card-num">03</div>
+          <div class="card-details">
+            <h3 class="card-title">TRAVEL PRODUCT</h3>
+            <p class="card-desc">Boarding Pass — Product case study</p>
+          </div>
+          <div class="card-arrow">&rarr;</div>
+        </div>
+
+        <div class="mobile-card" data-action="checkout" role="button" tabindex="0">
+          <div class="card-num">04</div>
+          <div class="card-details">
+            <h3 class="card-title">CHECKOUT AUDIT</h3>
+            <p class="card-desc">Commerce Receipt — Cart recovery analysis</p>
+          </div>
+          <div class="card-arrow">&rarr;</div>
+        </div>
+
+        <div class="mobile-card" data-action="notebook" role="button" tabindex="0">
+          <div class="card-num">05</div>
+          <div class="card-details">
+            <h3 class="card-title">WHY I DESIGN</h3>
+            <p class="card-desc">Journal Note — Read design philosophy</p>
+          </div>
+          <div class="card-arrow">&rarr;</div>
+        </div>
+
+        <div class="mobile-card" data-action="contact" role="button" tabindex="0">
+          <div class="card-num">06</div>
+          <div class="card-details">
+            <h3 class="card-title">RESUME & CONTACT</h3>
+            <p class="card-desc">Business Card — Direct options</p>
+            <div class="mobile-contact-links hidden">
+              <a href="resume.pdf" target="_blank" rel="noopener" class="mobile-link-btn btn-trigger-resume">View Resume</a>
+              <button type="button" class="mobile-link-btn" id="mobileCopyEmailBtn">Copy Email</button>
+              <a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="mobile-link-btn">LinkedIn</a>
+              <a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="mobile-link-btn">Behance</a>
             </div>
-            <div class="form-group">
-              <label for="formMessage" class="form-label">MESSAGE</label>
-              <textarea id="formMessage" name="message" placeholder="A sentence is enough." required class="form-textarea"></textarea>
-            </div>
-            <div class="form-footer">
-              <span class="form-privacy">YOUR REPLY IS PRIVATE.</span>
-              <button type="submit" class="submit-btn" id="submitBtn">SEND MESSAGE <span class="submit-arrow">&nearr;</span></button>
-            </div>
-          </form>
-          <div id="formSuccess" class="form-success-message hidden">
-            <h3 class="success-title">Message sent.</h3>
-            <p class="success-desc">Thank you. I'll read this and get back to you shortly.</p>
-            <button type="button" class="reset-btn" id="resetFormBtn">Send another message</button>
+          </div>
+          <div class="card-arrow">&rarr;</div>
+        </div>
+
+      </div>
+
+      <!-- Integrated Closing Footer -->
+      <div class="desk-footer">
+        <div class="footer-container">
+          <div class="footer-left">
+            <span class="footer-logo">Vishwas Mehta.</span>
+            <span class="footer-sub">EXPERIENCE DESIGNER — PORTFOLIO VOL. I</span>
+          </div>
+          <div class="footer-center">
+            <a href="mailto:vyommehta197@gmail.com" class="footer-email">VYOMMEHTA197@GMAIL.COM</a>
+          </div>
+          <div class="footer-right">
+            <span class="footer-copyright">© 2026 — BUILT QUIETLY.</span>
           </div>
         </div>
       </div>
+
     </section>
 
   </main><!-- /main-content -->
-
-  <!-- ══════════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════════ -->
-  <footer class="site-footer dark-theme">
-    <div class="footer-container">
-      <div class="footer-left">
-        <span class="footer-logo">Vishwash Mehta.</span>
-        <span class="footer-sub">EXPERIENCE DESIGNER — PORTFOLIO VOL. I</span>
-      </div>
-      <div class="footer-center">
-        <a href="mailto:vyommehta197@gmail.com" class="footer-email">VYOMMEHTA197@GMAIL.COM</a>
-      </div>
-      <div class="footer-right">
-        <span class="footer-copyright">© 2026 — BUILT QUIETLY.</span>
-      </div>
-    </div>
-  </footer>
 
 
 
