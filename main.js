@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 3.2;  // pin scroll distance = 3.2 × 100vh (provides snappy scroll space for zoom + Z-slides)
+  const SCROLL_MULT   = 2.56; // pin scroll distance = 2.56 × 100vh (reduced to 80% of previous value for faster scroll)
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
