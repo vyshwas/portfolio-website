@@ -869,24 +869,86 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ──────────────────────────────────────────────────────────
-     10. WHY I DESIGN — JOURNAL SCROLL TRIGGERS
+     10. WHY I DESIGN — PINNED SCROLL SLIDER & COLLAGE PARALLAX
   ────────────────────────────────────────────────────────── */
-  if (!prefersReduced) {
-    gsap.utils.toArray('.journal-segment').forEach((segment) => {
-      gsap.fromTo(segment,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.0,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: segment,
-            start: "top 85%",
-            toggleActions: "play none none none"
+  const aboutSection = document.getElementById('about');
+  const stickyWrapper = document.querySelector('.about-sticky-wrapper');
+  
+  if (aboutSection && stickyWrapper && !prefersReduced) {
+    // 1. Mobile responsive setup: Move visuals inline inside each slide
+    function handleAboutResponsive() {
+      if (window.innerWidth <= 768) {
+        const slides = document.querySelectorAll('.about-copy-slide');
+        const visuals = document.querySelectorAll('.collage-visual');
+        slides.forEach((slide, index) => {
+          if (visuals[index] && !slide.querySelector('.mobile-inline-visual')) {
+            const originalVisual = visuals[index];
+            const clone = originalVisual.cloneNode(true);
+            clone.classList.add('mobile-inline-visual');
+            // Remove absolute positioning class and make active by default
+            clone.classList.add('active');
+            
+            // Append right after the description block
+            const pTags = slide.querySelectorAll('.slide-desc');
+            const targetNode = pTags.length > 0 ? pTags[pTags.length - 1] : slide.lastElementChild;
+            slide.insertBefore(clone, targetNode.nextSibling);
           }
+        });
+      }
+    }
+    
+    // Initial execution and resize listener
+    handleAboutResponsive();
+    window.addEventListener('resize', handleAboutResponsive);
+    
+    // Only run GSAP ScrollTrigger pinning and card parallax on screens > 768px
+    if (window.innerWidth > 768) {
+      const slides = document.querySelectorAll('.about-copy-slide');
+      const visuals = document.querySelectorAll('.collage-visual');
+      const floatingCards = document.querySelectorAll('.floating-card, .floating-badge, .floating-colors');
+      
+      ScrollTrigger.create({
+        trigger: aboutSection,
+        start: "top top",
+        end: "+=300%",
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const progress = self.progress; // 0 to 1
+          const numSlides = slides.length;
+          
+          // Determine which slide should be active based on progress
+          let activeIndex = Math.floor(progress * numSlides);
+          if (activeIndex >= numSlides) activeIndex = numSlides - 1;
+          if (activeIndex < 0) activeIndex = 0;
+          
+          // Switch active slide classes
+          slides.forEach((slide, idx) => {
+            if (idx === activeIndex) {
+              slide.classList.add('active');
+            } else {
+              slide.classList.remove('active');
+            }
+          });
+          
+          // Switch active collage visuals
+          visuals.forEach((visual, idx) => {
+            if (idx === activeIndex) {
+              visual.classList.add('active');
+            } else {
+              visual.classList.remove('active');
+            }
+          });
+          
+          // Apply parallax floating card translates
+          floatingCards.forEach((card) => {
+            const speed = parseFloat(card.getAttribute('data-parallax') || '0.1');
+            const translateY = (progress - 0.5) * speed * -250; // offset centering
+            gsap.set(card, { y: translateY });
+          });
         }
-      );
-    });
+      });
+    }
   }
 });
