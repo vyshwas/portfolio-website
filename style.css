@@ -370,6 +370,45 @@ section > *:not(.section-bg-canvas) {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
+/* ── Backyard capsule CTA ── */
+@keyframes backyard-flicker {
+    0%,  100% { opacity: 1;    box-shadow: 0 0 6px 1px rgba(252, 76, 19, 0.55); }
+    8%         { opacity: 0.82; box-shadow: 0 0 3px 0px rgba(252, 76, 19, 0.30); }
+    9%         { opacity: 1;    box-shadow: 0 0 8px 2px rgba(252, 76, 19, 0.70); }
+    42%        { opacity: 0.95; box-shadow: 0 0 5px 1px rgba(252, 76, 19, 0.45); }
+    43%        { opacity: 0.50; box-shadow: 0 0 2px 0px rgba(252, 76, 19, 0.20); }
+    44%        { opacity: 1;    box-shadow: 0 0 9px 2px rgba(252, 76, 19, 0.75); }
+    75%        { opacity: 0.92; box-shadow: 0 0 6px 1px rgba(252, 76, 19, 0.55); }
+    76%        { opacity: 0.30; box-shadow: none; }
+    77%        { opacity: 1;    box-shadow: 0 0 10px 3px rgba(252, 76, 19, 0.80); }
+}
+
+.nav-backyard-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    padding: 0.35em 0.95em;
+    border-radius: 999px;
+    border: 1px solid rgba(252, 76, 19, 0.65);
+    background: rgba(252, 76, 19, 0.06);
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    animation: backyard-flicker 4.5s linear infinite;
+    will-change: opacity, box-shadow;
+}
+
+.nav-backyard-btn:hover {
+    background: rgba(252, 76, 19, 0.18);
+    border-color: rgba(252, 76, 19, 1);
+    color: #fff;
+    animation-play-state: paused;
+    box-shadow: 0 0 14px 3px rgba(252, 76, 19, 0.55);
+}
 
 /* Mobile Menu Toggle */
 .menu-toggle {
