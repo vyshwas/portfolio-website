@@ -2655,8 +2655,7 @@ section > *:not(.section-bg-canvas) {
 
 .info-content {
   padding: 40px;
-  position: sticky; /* Keeps it fixed in place */
-  top: 0;
+  padding-bottom: 80px; /* Extra breathing room at the bottom */
 }
 
 /* --- Basic Styling for Info Content --- */
