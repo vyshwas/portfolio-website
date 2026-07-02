@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const p = self.progress;
         if (p < 0.22) return;
 
-        // Map 0.25–1.0 of scroll progress → camera travelling 0–12500 Z units
+        // Map 0.25–1.0 of scroll progress → camera travelling 0–10500 Z units
         const phase2 = Math.max(0, (p - 0.25) / 0.75);
-        const cameraZ = phase2 * 12500;
+        const cameraZ = phase2 * 10500;
 
         zSlides.forEach(slide => {
           const calcZ = slide._spatialZ + cameraZ;
@@ -259,21 +259,39 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.section-bg-canvas').forEach((canvas) => {
     const ctx      = canvas.getContext('2d');
     let animId, isVisible = false;
-    
-    // Config: dense dot grid with larger dots
-    const CELL     = 30;
-    const BASE_R   = 0.75;
-    const HOVER_R  = 75;
-    
+
+    // Config: spacing for caustics mesh
+    const SPACING     = 40;
+    const maxDisplace = 14;
+
     // Dynamic contrast handling based on light vs dark sections
     const parent       = canvas.closest('section') || canvas.closest('#hero-scene') || canvas.parentElement;
-    const isLightTheme = parent.classList.contains('dark-theme') || parent.classList.contains('light-section') || parent.id === 'about';
-    
-    const BASE_C   = isLightTheme ? 'rgba(29,29,29,0.05)' : 'rgba(240,237,230,0.065)';
-    const SOFT_C   = isLightTheme ? 'rgba(29,29,29,0.22)' : 'rgba(240,237,230,0.25)';
-    const RED_C    = 'rgba(252,76,19,0.85)';
+    const isLightTheme = parent.classList.contains('light-section') || parent.id === 'about';
+    const isSandbox    = parent.id === 'contact'; // Sandbox contact section
 
-    let curOX = 0, curOY = 0;
+    // Pre-calculate base grid points
+    const vertices = [];
+    let cols = 0, rows = 0;
+
+    // Word particles for Sandbox section
+    const particles = [];
+    if (isSandbox) {
+      const words = [
+        "Brand Strategy", "UX Research", "Packaging", "Systems",
+        "Typography", "Positioning", "Interaction", "Product",
+        "Identity", "Motion"
+      ];
+      words.forEach((w) => {
+        particles.push({
+          text: w,
+          x: Math.random() * 600 + 100,
+          y: Math.random() * 400 + 100,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          colorVal: 0.35 // base opacity
+        });
+      });
+    }
 
     const resize = () => {
       const r   = canvas.getBoundingClientRect();
@@ -281,7 +299,30 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.width  = r.width  * dpr;
       canvas.height = r.height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Re-grid caustics base points
+      const W = r.width, H = r.height;
+      vertices.length = 0;
+      cols = Math.ceil(W / SPACING) + 2;
+      rows = Math.ceil(H / SPACING) + 2;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          vertices.push({
+            baseX: (c - 1) * SPACING,
+            baseY: (r - 1) * SPACING
+          });
+        }
+      }
+
+      // Constrain particles to bounds
+      if (isSandbox) {
+        particles.forEach(p => {
+          p.x = Math.max(30, Math.min(W - 120, Math.random() * (W - 150) + 50));
+          p.y = Math.max(30, Math.min(H - 30, Math.random() * (H - 80) + 40));
+        });
+      }
     };
+
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
@@ -291,29 +332,106 @@ document.addEventListener('DOMContentLoaded', () => {
       const W = r.width, H = r.height;
       ctx.clearRect(0, 0, W, H);
 
-      curOX += (targetOX - curOX) * 0.08;
-      curOY += (targetOY - curOY) * 0.08;
-
       const lmx = clientX - r.left;
       const lmy = clientY - r.top;
-      const sx  = (curOX % CELL) - CELL;
-      const sy  = (curOY % CELL) - CELL;
+      const time = Date.now() * 0.0012;
 
-      for (let x = sx; x < W + CELL; x += CELL) {
-        for (let y = sy; y < H + CELL; y += CELL) {
-          const dist = Math.hypot(lmx - x, lmy - y);
-          let r2 = BASE_R, col = BASE_C;
-          if (dist < HOVER_R) {
-            const f = 1 - dist / HOVER_R;
-            r2  = BASE_R + f * 2.2;
-            col = f > 0.45 ? RED_C : SOFT_C;
+      // 1. Calculate displaced vertices for water caustics
+      const displaced = vertices.map(v => {
+        // Wave deformation
+        let dx = Math.sin(v.baseY * 0.015 + time * 1.3) * maxDisplace + Math.cos(v.baseX * 0.012 + time * 1.0) * maxDisplace;
+        let dy = Math.cos(v.baseX * 0.014 + time * 1.2) * maxDisplace + Math.sin(v.baseY * 0.018 + time * 0.9) * maxDisplace;
+
+        // Mouse deformation + flare
+        const dist = Math.hypot(lmx - v.baseX, lmy - v.baseY);
+        let opac = 0.012; // base ambient line opacity (very subtle)
+
+        if (dist < 180) {
+          const factor = 1 - dist / 180;
+          // Warp vertices locally
+          dx += Math.sin(time * 5 + dist * 0.08) * 12 * factor;
+          dy += Math.cos(time * 5 + dist * 0.08) * 12 * factor;
+          // Lines flare/appear on hover
+          opac += factor * 0.35;
+        }
+
+        return { x: v.baseX + dx, y: v.baseY + dy, opacity: opac };
+      });
+
+      // 2. Draw vertical grid lines
+      ctx.lineWidth = 0.75;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols - 1; c++) {
+          const idx1 = r * cols + c;
+          const idx2 = idx1 + 1;
+          const p1 = displaced[idx1];
+          const p2 = displaced[idx2];
+          if (!p1 || !p2) continue;
+
+          const avgOpacity = (p1.opacity + p2.opacity) * 0.5;
+          if (avgOpacity > 0.01) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = isLightTheme 
+              ? `rgba(29, 29, 29, ${avgOpacity * 0.2})` 
+              : `rgba(240, 237, 230, ${avgOpacity})`; // warm water caustic lines
+            ctx.stroke();
           }
-          ctx.beginPath();
-          ctx.arc(x, y, r2, 0, Math.PI * 2);
-          ctx.fillStyle = col;
-          ctx.fill();
         }
       }
+
+      // 3. Draw horizontal grid lines
+      for (let r = 0; r < rows - 1; r++) {
+        for (let c = 0; c < cols; c++) {
+          const idx1 = r * cols + c;
+          const idx2 = idx1 + cols;
+          const p1 = displaced[idx1];
+          const p2 = displaced[idx2];
+          if (!p1 || !p2) continue;
+
+          const avgOpacity = (p1.opacity + p2.opacity) * 0.5;
+          if (avgOpacity > 0.01) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = isLightTheme 
+              ? `rgba(29, 29, 29, ${avgOpacity * 0.2})` 
+              : `rgba(240, 237, 230, ${avgOpacity})`;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 4. Draw Sandbox words if this is the Sandbox section
+      if (isSandbox) {
+        ctx.font = '400 12px "JetBrains Mono", monospace';
+        particles.forEach((p) => {
+          // Drifting motion
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Bounce off container bounds
+          if (p.x < 20 || p.x > W - 110) p.vx *= -1;
+          if (p.y < 20 || p.y > H - 20) p.vy *= -1;
+
+          // Push/repel from mouse cursor
+          const mDist = Math.hypot(lmx - p.x, lmy - p.y);
+          if (mDist < 120) {
+            const angle = Math.atan2(p.y - lmy, p.x - lmx);
+            const force = (1 - mDist / 120) * 0.6;
+            p.x += Math.cos(angle) * force;
+            p.y += Math.sin(angle) * force;
+            p.colorVal = 0.85; // light up under mouse
+          } else {
+            p.colorVal += (0.32 - p.colorVal) * 0.05; // fade back to base
+          }
+
+          ctx.fillStyle = `rgba(252, 76, 19, ${p.colorVal})`; // vermilion monospace tag
+          ctx.fillText(p.text, p.x, p.y);
+        });
+      }
+
       animId = requestAnimationFrame(draw);
     };
 
@@ -569,7 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Email copying logic
-  const emailToCopy = "vyommehta197@gmail.com";
+  const emailToCopy = "vyommehta97@gmail.com";
   const copyEmailHandler = (btn) => {
     if (!btn) return;
     const origText = btn.innerHTML;
@@ -601,35 +719,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectsData = [
     {
       title: "The Whole Fruit",
-      category: "Brand Strategy · Visual Identity · Packaging",
-      timeline: "4 Weeks",
-      role: "Brand Strategist & Lead Designer",
-      team: "Solo Project",
-      summary: "Repositioning a fruit brand from a utilitarian snack to a daily ritual of luxury indulgence.",
-      challenge: "Traditional fruit brands suffer from low emotional resonance and high price sensitivity. The challenge was to elevate the product from a commodity to an indispensable lifestyle brand that commands a premium.",
-      outcome: "Re-designed the visual system and packaging around minimal organic geometric forms, moving away from loud, bright fruit graphics. The new identity created a premium editorial feel, increasing perceived value and buyer interest during test placements.",
+      category: "Brand Strategy · Packaging · Identity",
+      timeline: "Dissertation",
+      role: "Strategist & Designer",
+      team: "Solo",
+      summary: "My M.Des dissertation project. The brief I gave myself: build a wellness brand confident enough to look expensive without saying \"premium\" anywhere on the pack. The category is noise. Every competitor uses the same palette, the same kraft paper, the same health claims. I wanted to explore what restraint actually signals on a shelf.",
+      challenge: "PROBLEM:\nHow do you stand out in a category where every brand looks identical?\n\nAPPROACH:\nResearch competitor positioning, build a type-led system, test the visual logic against category conventions.",
+      outcome: "SYSTEM:\nFull brand identity (mark, palette, packaging), documented as strategic positioning framework.\n\nLEARNING:\nRestraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
       image: "assets/project_fruit.jpg"
     },
     {
-      title: "Travel Product",
-      category: "Product Design · UX Strategy",
-      timeline: "6 Weeks",
-      role: "Lead UX Researcher & Product Designer",
-      team: "3 Designers",
-      summary: "Re-thinking a booking flow that had been A/B tested into incoherence.",
-      challenge: "Over years of incremental A/B testing, the core user flow had accumulated conflicting UI patterns, leading to cognitive fatigue, increased drop-offs, and negative feedback during critical checkout stages.",
-      outcome: "Conducted usability audits to strip away unnecessary cognitive checkpoints. Redesigned the search and confirmation screen hierarchies to focus only on contextual options, resulting in an intuitive, friction-free interface.",
+      title: "Personalised Travel Platform",
+      category: "Product Design · UX Research · Systems Thinking",
+      timeline: "Concept",
+      role: "UX Designer",
+      team: "Solo",
+      summary: "A concept project exploring how trip planning actually works. Most platforms ask for dates and destination, then hand you a list. People don't plan that way. They plan around a feeling, a budget, constraints they don't articulate. I designed a constraint-first flow to see what happens when you surface the reasoning instead of hiding it.",
+      challenge: "PROBLEM:\nGeneric itinerary tools ignore how people actually decide.\n\nAPPROACH:\nUser research on travel planning behaviour, constraint mapping, flow redesign.",
+      outcome: "SYSTEM:\nPrototype and documented user flows showing decision architecture.\n\nLEARNING:\nPersonalisation isn't a filter. It's about showing your work. Making the system's reasoning visible builds more trust than a perfect recommendation.",
       image: "assets/project_travel.jpg"
     },
     {
-      title: "Shopping Cart Abandonment",
-      category: "UX Research · Strategy",
-      timeline: "8 Weeks",
-      role: "Lead UX Analyst & Strategist",
-      team: "Solo Project",
-      summary: "A detailed analysis and redesign case study on why most 'abandonment fixes' make the problem worse.",
-      challenge: "Most plugin and pop-up systems try to solve cart abandonment by introducing high-friction popups, countdown timers, and discount emails. These techniques erode brand trust and teach users to wait for discounts.",
-      outcome: "Developed a silent, non-intrusive recovery framework centered around transparent pricing, context-aware reminders, and seamless guest-checkout transitions, reducing abandonment without relying on promotional popups.",
+      title: "Cart Abandonment Audit",
+      category: "UX Audit · E-commerce · Strategy",
+      timeline: "Audit",
+      role: "UX Analyst",
+      team: "Katalyse.ai",
+      summary: "A structured UX audit I completed at Katalyse.ai exploring why checkout flows lose users. The assumption is price or shipping. The audit found something quieter: friction at moments where the interface asks for trust it hasn't earned. I mapped 11 friction points and documented them as a prioritised audit.",
+      challenge: "PROBLEM:\nHigh cart abandonment across e-commerce funnels, cause unclear.\n\nAPPROACH:\nAudit of Shopify checkout experience, friction point mapping, trust analysis.",
+      outcome: "SYSTEM:\nDocumented audit with friction prioritisation and redesign recommendations.\n\nLEARNING:\nAmbiguity costs more than transparency. People don't abandon carts because of price. They abandon because the next step isn't clear.",
       image: "assets/project_cart.jpg"
     }
   ];

@@ -2008,8 +2008,6 @@ section > *:not(.section-bg-canvas) {
     .z-slide {
         width: 90% !important;
         max-width: 100% !important;
-        left: auto !important;
-        right: auto !important;
         text-align: center !important;
         align-items: center !important;
     }
@@ -2035,6 +2033,71 @@ section > *:not(.section-bg-canvas) {
         line-height: 1.5 !important;
     }
 }
+
+/* ── Editorial layout styles for About Z-slides ── */
+.z-columns-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    width: 100%;
+    margin-top: 1.2rem;
+    text-align: left;
+}
+.z-column-header {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent-red);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    font-family: var(--font-sans);
+}
+.z-facts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 440px;
+    margin-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1.2rem;
+    text-align: left;
+}
+.z-fact-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.z-fact-label {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    font-family: var(--font-sans);
+}
+.z-fact-value {
+    color: #ffffff;
+    font-weight: 400;
+    font-family: var(--font-sans);
+}
+
+@media screen and (max-width: 768px) {
+    .z-columns-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .z-column-header {
+        text-align: center;
+    }
+    .z-facts-grid {
+        max-width: 100%;
+    }
+}
+
 
 /* ==========================================================================
    Responsive Breakpoints
