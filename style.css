@@ -2447,10 +2447,14 @@ section > *:not(.section-bg-canvas) {
     pointer-events: none;
     display: flex;
     justify-content: flex-end;
+    overflow: hidden; /* Prevent horizontal overflow and scrollbars */
+    visibility: hidden; /* Hide completely from layout when closed */
+    transition: visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-drawer.open {
     pointer-events: auto;
+    visibility: visible;
 }
 
 /* Backdrop blur & darken */
