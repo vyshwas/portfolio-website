@@ -393,7 +393,7 @@
                 <div class="preview-media-container">
                   <div class="preview-ambient-reflection"></div>
                   <div class="preview-grain"></div>
-                  <img src="assets/project_fruit.jpg" class="preview-hero-img" alt="The Whole Fruit packaging mockup">
+                  <img src="assets/project_fruit_full.png" class="preview-hero-img" alt="The Whole Fruit packaging mockup">
                   <div class="preview-decorations">
                     <svg class="spinning-packaging" viewBox="0 0 100 100">
                       <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(252,76,19,0.3)" stroke-width="0.75" stroke-dasharray="4 8"/>
@@ -710,68 +710,41 @@
   <!-- ══════════════════════════════════════════
        PROJECT CASE STUDY DRAWER
   ══════════════════════════════════════════ -->
-  <div id="project-drawer" class="project-drawer" aria-modal="true" role="dialog" aria-hidden="true" data-lenis-prevent>
-    <div class="drawer-backdrop" id="drawerBackdrop"></div>
-    <div class="drawer-content">
-      <div class="drawer-body">
-        
-        <!-- Left Panel: Storytelling -->
-        <div class="drawer-left-panel">
-          <div class="project-meta-info">
-            <span id="drawer-project-category" class="drawer-category">Category</span>
-            <h2 id="drawer-project-title" class="drawer-title" tabindex="-1">Project Title</h2>
-          </div>
+  <div id="project-drawer" class="drawer-wrapper">
+    
+    <!-- 10% Clickable Overlay (Closes the drawer when clicked outside) -->
+    <div class="drawer-overlay" id="drawerBackdrop"></div>
+
+    <!-- 90% Main Content Area -->
+    <div class="drawer-main">
+      
+      <!-- 30% Information Area (Fixed, Now on Left) -->
+      <div class="drawer-info">
+        <div class="info-content">
+          <button class="close-btn" id="closeDrawerBtn">✕</button>
+          <h1 id="drawer-project-title">Project Title</h1>
+          <p id="drawer-project-meta">Project Meta</p>
           
-          <div class="project-details-grid">
-            <div class="detail-group">
-              <span class="detail-label">TIMELINE</span>
-              <span id="drawer-project-timeline" class="detail-value"></span>
-            </div>
-            <div class="detail-group">
-              <span class="detail-label">ROLE</span>
-              <span id="drawer-project-role" class="detail-value"></span>
-            </div>
-            <div class="detail-group">
-              <span class="detail-label">TEAM</span>
-              <span id="drawer-project-team" class="detail-value"></span>
-            </div>
-          </div>
-
-          <div class="project-story">
-            <div class="story-section">
-              <h4 class="story-header">SUMMARY</h4>
-              <p id="drawer-project-summary" class="story-text"></p>
-            </div>
-            <div class="story-section">
-              <h4 class="story-header">THE CHALLENGE</h4>
-              <p id="drawer-project-challenge" class="story-text"></p>
-            </div>
-            <div class="story-section">
-              <h4 class="story-header">THE OUTCOME</h4>
-              <p id="drawer-project-outcome" class="story-text"></p>
-            </div>
-          </div>
-
-          <a href="mailto:vyommehta97@gmail.com" class="drawer-cta-btn">INQUIRE ABOUT THIS PROJECT &rarr;</a>
-        </div>
-
-        <!-- Right Panel: Immersive Visuals -->
-        <div class="drawer-right-panel">
-          <div class="drawer-media-gallery">
-            <img id="drawer-project-image" src="" alt="Project Case Study" class="drawer-gallery-img">
+          <a href="#" class="launch-btn">LAUNCH WEBSITE ↗</a>
+          
+          <div class="nav-links">
+            <a href="#" id="nextProjectBtn">NEXT PROJECT</a>
+            <a href="#" id="prevProjectBtn">PREVIOUS PROJECT</a>
+            <a href="#" id="closeDrawerLink">CLOSE</a>
           </div>
         </div>
-
       </div>
 
-      <!-- Persistent Bottom Navigation -->
-      <div class="drawer-footer">
-        <button type="button" id="prevProjectBtn" class="drawer-nav-btn">&larr; PREVIOUS</button>
-        <button type="button" id="closeDrawerBtn" class="drawer-nav-btn close-btn">[ CLOSE ]</button>
-        <button type="button" id="nextProjectBtn" class="drawer-nav-btn">NEXT &rarr;</button>
+      <!-- 60% Visuals Area (Scrollable, Now on Right) -->
+      <div class="drawer-visuals">
+        <div class="visual-content">
+          <img id="drawer-project-image" src="" alt="Project Visual" style="width:100%; display:block; border-radius:10px;">
+        </div>
       </div>
+
     </div>
   </div>
+
 
   <!-- ══════════════════════════════════════════
        SCRIPTS — GSAP + Lenis CDN then main.js

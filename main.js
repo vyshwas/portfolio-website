@@ -726,7 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
       summary: "My M.Des dissertation project. The brief I gave myself: build a wellness brand confident enough to look expensive without saying \"premium\" anywhere on the pack. The category is noise. Every competitor uses the same palette, the same kraft paper, the same health claims. I wanted to explore what restraint actually signals on a shelf.",
       challenge: "PROBLEM:\nHow do you stand out in a category where every brand looks identical?\n\nAPPROACH:\nResearch competitor positioning, build a type-led system, test the visual logic against category conventions.",
       outcome: "SYSTEM:\nFull brand identity (mark, palette, packaging), documented as strategic positioning framework.\n\nLEARNING:\nRestraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
-      image: "assets/project_fruit.jpg"
+      image: "assets/project_fruit_full.png"
     },
     {
       title: "Personalised Travel Platform",
@@ -766,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateProjectDrawer(index);
     
     // Reset scroll positions of scroll containers inside the drawer
-    const scrollContainers = drawer.querySelectorAll('.drawer-body, .drawer-left-panel, .drawer-right-panel');
+    const scrollContainers = drawer.querySelectorAll('.drawer-visuals, .drawer-info');
     scrollContainers.forEach(container => {
       container.scrollTop = 0;
     });
@@ -782,6 +782,11 @@ document.addEventListener('DOMContentLoaded', () => {
       lenis.stop();
     }
 
+    // Push state for mobile swipe back
+    if (window.history && window.history.pushState) {
+      window.history.pushState({ drawerOpen: true }, "", "#project-" + index);
+    }
+
     // Focus on the project title at the top for accessibility and to prevent auto-scrolling to the bottom
     setTimeout(() => {
       const title = document.getElementById('drawer-project-title');
@@ -789,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   };
 
-  const closeProjectDrawer = () => {
+  const closeProjectDrawer = (fromHistory = false) => {
     drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
     
@@ -803,19 +808,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lastActiveElement) {
       lastActiveElement.focus();
     }
+
+    // Pop state if closed manually (not via swipe back)
+    if (fromHistory !== true && window.history && window.history.state && window.history.state.drawerOpen) {
+      window.history.back();
+    }
   };
+
+  // Listen for mobile swipe back (popstate)
+  window.addEventListener('popstate', (e) => {
+    if (drawer && drawer.classList.contains('open')) {
+      closeProjectDrawer(true);
+    }
+  });
 
   const populateProjectDrawer = (index) => {
     const data = projectsData[index];
-    document.getElementById('drawer-project-category').textContent = data.category;
-    document.getElementById('drawer-project-title').textContent    = data.title;
-    document.getElementById('drawer-project-timeline').textContent = data.timeline;
-    document.getElementById('drawer-project-role').textContent     = data.role;
-    document.getElementById('drawer-project-team').textContent     = data.team;
     
-    document.getElementById('drawer-project-summary').textContent   = data.summary;
-    document.getElementById('drawer-project-challenge').textContent = data.challenge;
-    document.getElementById('drawer-project-outcome').textContent   = data.outcome;
+    document.getElementById('drawer-project-title').textContent = data.title;
+    
+    // Combine meta data into the single meta block based on user's new layout
+    const metaHTML = `${data.timeline} | ${data.category}<br>${data.role}<br>${data.team}`;
+    document.getElementById('drawer-project-meta').innerHTML = metaHTML;
     
     // Lazy-load media
     const img = document.getElementById('drawer-project-image');
@@ -993,6 +1007,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Bind controls
   closeDrawerBtn?.addEventListener('click', closeProjectDrawer);
   backdrop?.addEventListener('click', closeProjectDrawer);
+  document.getElementById('closeDrawerLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeProjectDrawer();
+  });
 
   prevProjectBtn?.addEventListener('click', () => {
     let prevIndex = currentProjectIndex - 1;
@@ -1003,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentProjectIndex = prevIndex;
     
     // Reset scroll positions of scroll containers inside the drawer
-    const scrollContainers = drawer.querySelectorAll('.drawer-body, .drawer-left-panel, .drawer-right-panel');
+    const scrollContainers = drawer.querySelectorAll('.drawer-visuals, .drawer-info');
     scrollContainers.forEach(container => {
       container.scrollTop = 0;
     });
@@ -1015,7 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentProjectIndex = nextIndex;
 
     // Reset scroll positions of scroll containers inside the drawer
-    const scrollContainers = drawer.querySelectorAll('.drawer-body, .drawer-left-panel, .drawer-right-panel');
+    const scrollContainers = drawer.querySelectorAll('.drawer-visuals, .drawer-info');
     scrollContainers.forEach(container => {
       container.scrollTop = 0;
     });

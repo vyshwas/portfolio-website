@@ -2557,320 +2557,161 @@ section > *:not(.section-bg-canvas) {
 /* ==========================================================================
    Interaction 02 — Selected Work Drawer
    ========================================================================== */
-.project-drawer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh; /* Dynamic viewport height */
-    z-index: 9999;
-    pointer-events: none;
-    display: flex;
-    justify-content: flex-end;
-    overflow: hidden; /* Prevent horizontal overflow and scrollbars */
-    visibility: hidden; /* Hide completely from layout when closed */
-    transition: visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+/* --- Base Drawer Setup --- */
+.drawer-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  z-index: 9999;
+  
+  /* Hidden state by default */
+  transform: translateX(100%); 
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-drawer.open {
-    pointer-events: auto;
-    visibility: visible;
+.drawer-wrapper.open {
+  transform: translateX(0);
 }
 
-/* Backdrop blur & darken */
-.drawer-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* --- 10% Overlay Space --- */
+.drawer-overlay {
+  width: 10vw; /* Exactly 10% of the screen */
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); /* Slight dimming effect */
+  cursor: pointer; /* Indicates it can be clicked */
+}
+
+/* --- 90% Content Panel --- */
+.drawer-main {
+  width: 90vw;
+  height: 100vh;
+  display: flex;
+  background-color: #050505; /* Dark background from your reference */
+  color: #ffffff;
+}
+
+/* --- 60% Visuals Area --- */
+.drawer-visuals {
+  width: 66.66%; /* 66.66% of the 90vw parent = 60vw of total screen */
+  height: 100vh;
+  overflow-y: auto; /* Makes it scrollable */
+  border-right: 1px solid #222; /* Subtle divider */
+  /* Hide scrollbar for cleaner look */
+  scrollbar-width: none; 
+}
+.drawer-visuals::-webkit-scrollbar {
+  display: none;
+}
+
+.visual-content {
+  padding: 40px;
+}
+
+/* --- 30% Information Area --- */
+.drawer-info {
+  width: 33.33%; /* 33.33% of the 90vw parent = 30vw of total screen */
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-content {
+  padding: 40px;
+  position: sticky; /* Keeps it fixed in place */
+  top: 0;
+}
+
+/* --- Basic Styling for Info Content --- */
+.close-btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.close-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.launch-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 15px 30px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: background 0.3s, color 0.3s;
+}
+.launch-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.nav-links {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: #aaa;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: #fff;
+}
+
+#drawer-project-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+#drawer-project-meta {
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* --- Responsive Mobile Layout --- */
+@media (max-width: 900px) {
+  .drawer-main {
+    flex-direction: column;
+  }
+  
+  /* Stack the layout: Visuals on top, Info on bottom */
+  .drawer-visuals {
     width: 100%;
-    height: 100%;
-    background-color: rgba(20, 20, 20, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.project-drawer.open .drawer-backdrop {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* 90% width drawer container */
-.drawer-content {
-    position: relative;
-    width: 90%;
-    max-width: 1400px;
-    height: 100%;
-    background-color: #1D1D1D;
-    color: #FFFFFF;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    transform: translate3d(100%, 0, 0);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.project-drawer.open .drawer-content {
-    transform: translate3d(0, 0, 0);
-}
-
-/* Drawer Body (Left/Right split) */
-.drawer-body {
-    flex-grow: 1;
-    display: flex;
-    overflow: hidden;
-    height: calc(100% - 70px);
-}
-
-/* Left panel: Storytelling */
-.drawer-left-panel {
-    width: 40%;
-    min-width: 420px;
-    padding: 5rem 4rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    scrollbar-width: none;
-    background-color: #1D1D1D;
-}
-
-.drawer-left-panel::-webkit-scrollbar {
-    display: none;
-}
-
-.project-meta-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.drawer-category {
-    font-family: var(--font-serif);
-    font-size: 0.8rem;
-    color: var(--accent-red);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-}
-
-.drawer-title {
-    font-family: var(--font-serif);
-    font-size: 3.5rem;
-    line-height: 1.05;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    letter-spacing: -0.01em;
-    outline: none;
-}
-
-/* Details Grid */
-.project-details-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.5rem 0;
-}
-
-.detail-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-
-.detail-label {
-    font-family: var(--font-serif);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
-}
-
-.detail-value {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #FFFFFF;
-}
-
-/* Project Story Narrative */
-.project-story {
-    display: flex;
-    flex-direction: column;
-    gap: 2.2rem;
-}
-
-.story-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-
-.story-header {
-    font-family: var(--font-serif);
-    font-size: 0.8rem;
-    color: var(--accent-red);
-    letter-spacing: 0.1em;
-}
-
-.story-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--text-muted);
-}
-
-.drawer-cta-btn {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    color: #FFFFFF;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--accent-red);
-    padding-bottom: 0.3rem;
-    align-self: flex-start;
-    transition: var(--transition-fast);
-    margin-top: 1rem;
-}
-
-.drawer-cta-btn:hover {
-    color: var(--accent-red);
-    border-bottom-color: transparent;
-}
-
-/* Right panel: Immersive Visuals */
-.drawer-right-panel {
-    width: 60%;
-    height: 100%;
-    overflow-y: auto;
-    background-color: #141414;
-}
-
-.drawer-media-gallery {
+    height: 60vh; 
+    border-right: none;
+    border-bottom: 1px solid #222;
+  }
+  
+  .drawer-info {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.drawer-gallery-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0;
-    transform: scale(1.04);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-drawer.open .drawer-gallery-img {
-    opacity: 0.75;
-    transform: scale(1);
-}
-
-/* Bottom Persistent Navigation */
-.drawer-footer {
-    height: 70px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 4rem;
-    background-color: #1D1D1D;
-    flex-shrink: 0;
-    z-index: 10;
-}
-
-.drawer-nav-btn {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.4);
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.drawer-nav-btn:hover {
-    color: var(--accent-red);
-}
-
-.drawer-nav-btn.close-btn {
-    color: #FFFFFF;
-}
-
-/* VT323 Override list */
-.drawer-nav-btn,
-.drawer-cta-btn,
-.drawer-category,
-.drawer-title,
-.detail-label,
-.story-header {
-    font-family: var(--font-serif) !important;
-}
-
-/* Responsive Stacked Overrides */
-@media screen and (max-width: 1024px) {
-    .drawer-content {
-        width: 95%;
-        position: relative; /* Anchor absolute footer */
-    }
-    .drawer-body {
-        flex-direction: column;
-        overflow-y: scroll !important;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 75px !important; /* Space for absolute bottom footer */
-        height: calc(100% - 70px) !important;
-    }
-    .drawer-left-panel {
-        width: 100%;
-        min-width: 100%;
-        height: auto;
-        overflow-y: visible;
-        padding: 3rem 2.5rem;
-    }
-    .drawer-right-panel {
-        width: 100%;
-        height: 350px;
-        flex-shrink: 0;
-    }
-    .drawer-footer {
-        position: absolute !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        height: 70px !important;
-        background-color: #1D1D1D !important;
-        z-index: 20 !important;
-        padding: 0 2.5rem !important;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .drawer-content {
-        width: 100%;
-    }
-    .drawer-title {
-        font-size: 2.5rem;
-    }
-    .project-details-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    .drawer-right-panel {
-        height: 280px;
-    }
-    .drawer-footer {
-        padding: 0 1.5rem !important;
-    }
-    .drawer-nav-btn {
-        font-size: 0.85rem;
-    }
+    height: 40vh;
+    overflow-y: auto; /* Make info scrollable on small screens */
+  }
 }
