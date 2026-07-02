@@ -1894,16 +1894,38 @@ section > *:not(.section-bg-canvas) {
 
 .z-slide {
     position: absolute;
-    width: 80%;
-    max-width: 680px;
+    width: 48%;
+    max-width: 500px;
     opacity: 0;
     transform: translate3d(0, 0, -1500px) scale(0.1);
-    text-align: center;
     will-change: transform, opacity;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+}
+
+/* Asymmetrical layout assignments for desktop/tablet viewports */
+#z-slide-1 {
+    left: 8vw;
+    text-align: left;
+    align-items: flex-start;
+}
+
+#z-slide-2 {
+    right: 8vw;
+    text-align: right;
+    align-items: flex-end;
+}
+
+#z-slide-3 {
+    left: 12vw;
+    text-align: left;
+    align-items: flex-start;
+}
+
+#z-slide-4 {
+    right: 12vw;
+    text-align: right;
+    align-items: flex-end;
 }
 
 .z-meta {
@@ -1950,6 +1972,11 @@ section > *:not(.section-bg-canvas) {
 @media screen and (max-width: 768px) {
     .z-slide {
         width: 90% !important;
+        max-width: 100% !important;
+        left: auto !important;
+        right: auto !important;
+        text-align: center !important;
+        align-items: center !important;
     }
     
     .z-title {
