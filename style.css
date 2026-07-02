@@ -1919,53 +1919,49 @@ section > *:not(.section-bg-canvas) {
     background: transparent;
 }
 
-.z-slides-wrapper {
-    position: relative;
+/* ── About section: Z-axis depth-of-field camera engine ── */
+.z-perspective-container {
+    position: absolute;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
-    perspective: 400px;
+    perspective: 1000px;
     perspective-origin: 50% 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#z-viewport-camera {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    will-change: transform;
+    pointer-events: none;
 }
 
 .z-slide {
     position: absolute;
-    width: 44%;
-    max-width: 520px;
+    left: 50%;
+    top: 50%;
+    /* JS will write: transform = translate(-50%,-50%) translateZ(Zpx) */
+    transform: translate(-50%, -50%) translateZ(-1500px);
+    width: 90%;
+    max-width: 850px;
+    text-align: center;
+    will-change: transform, filter, opacity;
     opacity: 0;
-    /* GSAP will animate y — no 3D transforms needed */
-    will-change: opacity, transform;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    pointer-events: none;
 }
 
-/* Asymmetrical layout — left/right editorial positions */
-#z-slide-1 {
-    left: 7vw;
-    text-align: left;
-    align-items: flex-start;
-}
-
-#z-slide-2 {
-    right: 7vw;
-    text-align: right;
-    align-items: flex-end;
-}
-
-#z-slide-3 {
-    left: 10vw;
-    text-align: left;
-    align-items: flex-start;
-}
-
-#z-slide-4 {
-    right: 10vw;
-    text-align: right;
-    align-items: flex-end;
-}
+/* Title colour helpers */
+.z-title-muted   { color: var(--text-secondary); }
+.z-title-accent  { color: var(--accent-red); }
 
 .z-meta {
     font-family: var(--font-serif);

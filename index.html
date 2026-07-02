@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
   <link rel="icon" type="image/png" href="assets/favicon.png?v=3">
   <style>
     /* ═══════════════════════════════════════════════════════
@@ -277,40 +277,40 @@
 
       <!-- Inside hero-scene: About Z-Scroll slides -->
       <div id="hero-about-container" class="hidden-init">
-        <div class="z-slides-wrapper">
-          <!-- Slide 1 -->
-          <div class="z-slide" id="z-slide-1">
-            <span class="z-meta">[ NOTE 01 // SYSTEMS ]</span>
-            <h2 class="z-title">Curiosity led me to design. Systems made me stay.</h2>
-            <h3 class="z-subtitle">Thinking in Systems</h3>
-            <p class="z-desc">I started in computer science, where I learned to think in systems before I ever designed an interface. That mindset taught me to look beyond individual screens and understand how every decision shapes a larger experience.</p>
-          </div>
-          <!-- Slide 2 -->
-          <div class="z-slide" id="z-slide-2">
-            <span class="z-meta">[ NOTE 02 // BEHAVIOR ]</span>
-            <h2 class="z-title">Observing human behavior reveals the real gaps.</h2>
-            <h3 class="z-subtitle">UX Discovery &amp; Psychology</h3>
-            <p class="z-desc">Even before design, I was fascinated by human psychology and how visuals, media, and everyday experiences influence our decisions.</p>
-            <p class="z-desc">That curiosity led me to UX, where I discovered that great design isn't built on assumptions, but on observing behavior. People often say one thing and do another, and understanding that gap is where meaningful design begins.</p>
-          </div>
-          <!-- Slide 3 -->
-          <div class="z-slide" id="z-slide-3">
-            <span class="z-meta">[ NOTE 03 // COHERENCE ]</span>
-            <h2 class="z-title">A brand and its product must form one ecosystem.</h2>
-            <h3 class="z-subtitle">Brand + Product Coherence</h3>
-            <p class="z-desc">Over time, I realized a brand isn't just a logo and a product isn't just a collection of screens. Together, they shape how people understand, trust, and remember something.</p>
-            <p class="z-desc">That's why my work spans brand identity, product design, and storytelling. I'm interested in designing complete experiences, not isolated deliverables.</p>
-          </div>
-          <!-- Slide 4 -->
-          <div class="z-slide" id="z-slide-4">
-            <span class="z-meta">[ NOTE 04 // LONGEVITY ]</span>
-            <h2 class="z-title">Design is not about features, but removing friction.</h2>
-            <h3 class="z-subtitle">Friction &amp; Inevitability</h3>
-            <p class="z-desc">I'm less interested in adding features than removing friction. Less interested in making things look different than making them feel inevitable.</p>
-            <p class="z-desc">Long term, I want to build products, brands, and eventually companies that people genuinely remember.</p>
-          </div>
-        </div>
-      </div>
+        <div class="z-perspective-container">
+          <div id="z-viewport-camera">
+
+            <!-- Slide 1 — Systems Thinking -->
+            <div class="z-slide" id="z-slide-1" data-z="-1500">
+              <span class="z-meta">[ NOTE 01 // SYSTEMS ]</span>
+              <h2 class="z-title">Curiosity led me to design.<br><span class="z-title-muted">Systems made me stay.</span></h2>
+              <p class="z-desc">I started in computer science, where I learned to think in systems before I ever designed an interface. That mindset taught me to look beyond individual screens and understand how every decision shapes a larger experience.</p>
+            </div>
+
+            <!-- Slide 2 — UX & Behavior -->
+            <div class="z-slide" id="z-slide-2" data-z="-4500">
+              <span class="z-meta">[ NOTE 02 // BEHAVIOR ]</span>
+              <h2 class="z-title"><span class="z-title-muted">Observing the</span><br>human gap.</h2>
+              <p class="z-desc">Even before design, I was fascinated by human psychology and how visuals, media, and everyday experiences influence our decisions. People say one thing and do another — understanding that gap is where meaningful design begins.</p>
+            </div>
+
+            <!-- Slide 3 — Coherence -->
+            <div class="z-slide" id="z-slide-3" data-z="-7500">
+              <span class="z-meta">[ NOTE 03 // COHERENCE ]</span>
+              <h2 class="z-title">Brand and product.<br><span class="z-title-accent">One ecosystem.</span></h2>
+              <p class="z-desc">Over time, I realized a brand isn't just a logo and a product isn't just a collection of screens. Together they shape how people understand, trust, and remember something. I'm interested in complete experiences, not isolated deliverables.</p>
+            </div>
+
+            <!-- Slide 4 — Longevity -->
+            <div class="z-slide" id="z-slide-4" data-z="-10500">
+              <span class="z-meta">[ NOTE 04 // LONGEVITY ]</span>
+              <h2 class="z-title">Less features.<br><span class="z-title-accent">Less friction.</span></h2>
+              <p class="z-desc">I'm less interested in adding features than removing friction. Less interested in making things look different than making them feel inevitable. Long term, I want to build products, brands, and companies people genuinely remember.</p>
+            </div>
+
+          </div><!-- /z-viewport-camera -->
+        </div><!-- /z-perspective-container -->
+      </div><!-- /hero-about-container -->
 
 
 

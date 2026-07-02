@@ -76,13 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
     heroBg.style.transformOrigin = `${TV_ORIGIN_X}% ${TV_ORIGIN_Y}%`;
     heroBg.style.willChange = 'transform';
 
-    // Set initial state of about slides — flat 2D, no z-depth
+    // Set initial state of about container (slides start via data-z / JS)
     gsap.set('#hero-about-container', { opacity: 0 });
-    gsap.set('.z-slide', {
-      opacity: 0,
-      y: 28,           // subtle starting offset — will ease upward on entry
-      clearProps: 'z,scale,transformPerspective',
-    });
 
     // GSAP timeline — scrubbed 1:1 with scroll (scrub:true = zero lag)
     const tl = gsap.timeline({ defaults: { ease: 'none' } });
@@ -132,81 +127,66 @@ document.addEventListener('DOMContentLoaded', () => {
       duration: 0.03,
     }, 0.22);
 
-    // ── Phase 2: About slides — editorial fade-in / hold / fade-out ──
-    //
-    // Timeline layout (each slide = 20% of timeline):
-    //   0.25–0.27  fade-in slide 1  (quick, 2%)
-    //   0.27–0.44  hold slide 1     (readable pause, 17%)
-    //   0.44–0.47  fade-out slide 1 (soft, 3%)
-    //
-    //   0.45–0.47  fade-in slide 2
-    //   0.47–0.64  hold slide 2
-    //   0.64–0.67  fade-out slide 2
-    //
-    //   0.65–0.67  fade-in slide 3
-    //   0.67–0.84  hold slide 3
-    //   0.84–0.87  fade-out slide 3
-    //
-    //   0.85–0.87  fade-in slide 4
-    //   0.87–0.96  hold slide 4
-    //   0.96–0.99  fade-out slide 4
-    //
-    //   0.99–1.00  container fade out
+    // ── Phase 2: Z-axis depth-of-field camera engine ──
+    // Read each slide's spatial Z from data-z attribute, initialise transform
+    const zSlides = Array.from(document.querySelectorAll('.z-slide'));
+    zSlides.forEach(slide => {
+      const baseZ = parseFloat(slide.dataset.z) || -1500;
+      slide._spatialZ = baseZ;
+      slide.style.transform = `translate(-50%, -50%) translateZ(${baseZ}px)`;
+    });
 
-    // Reveal the about slides container as the TV bg fades to black
+    // Reveal the about container as TV bg fades to black (kept in timeline)
     tl.to('#hero-about-container', { opacity: 1, duration: 0.03 }, 0.22);
 
-    // Slide 1 — fade in, hold, fade out
-    tl.fromTo('#z-slide-1',
-      { opacity: 0, y: 28 },
-      { opacity: 1, y: 0,  duration: 0.02, ease: 'power2.out' },
-      0.25
-    );
-    tl.to('#z-slide-1', { opacity: 0, y: -12, duration: 0.03, ease: 'power1.in' }, 0.44);
-
-    // Slide 2 — fade in, hold, fade out
-    tl.fromTo('#z-slide-2',
-      { opacity: 0, y: 28 },
-      { opacity: 1, y: 0,  duration: 0.02, ease: 'power2.out' },
-      0.45
-    );
-    tl.to('#z-slide-2', { opacity: 0, y: -12, duration: 0.03, ease: 'power1.in' }, 0.64);
-
-    // Slide 3 — fade in, hold, fade out
-    tl.fromTo('#z-slide-3',
-      { opacity: 0, y: 28 },
-      { opacity: 1, y: 0,  duration: 0.02, ease: 'power2.out' },
-      0.65
-    );
-    tl.to('#z-slide-3', { opacity: 0, y: -12, duration: 0.03, ease: 'power1.in' }, 0.84);
-
-    // Slide 4 — fade in, hold, fade out
-    tl.fromTo('#z-slide-4',
-      { opacity: 0, y: 28 },
-      { opacity: 1, y: 0,  duration: 0.02, ease: 'power2.out' },
-      0.85
-    );
-    tl.to('#z-slide-4', { opacity: 0, y: -12, duration: 0.03, ease: 'power1.in' }, 0.96);
-
-    // Fade out container
+    // Container fade-out at very end of pin
     tl.to('#hero-about-container', { opacity: 0, duration: 0.01 }, 0.99);
 
-    // ScrollTrigger — pin + instant scrub (no lag)
+    // ScrollTrigger — pin + scrub drives Phase 1 via tl, Phase 2 via onUpdate
     ScrollTrigger.create({
       trigger:      heroPinWrapper,
       start:        'top top',
       end:          `+=${scrollDist}`,
       pin:          heroScene,
-      pinSpacing:   true,    // Let GSAP spacer handle document heights
+      pinSpacing:   true,
       anticipatePin: 1,
       scrub:        true,
       animation:    tl,
-      onLeave:      () => { 
-        heroBg.style.willChange = 'auto'; 
+
+      onUpdate: (self) => {
+        // ── Camera only moves during Phase 2 (after TV zoom ends at 0.25) ──
+        const p = self.progress;
+        if (p < 0.22) return;
+
+        // Map 0.25–1.0 of scroll progress → camera travelling 0–12500 Z units
+        const phase2 = Math.max(0, (p - 0.25) / 0.75);
+        const cameraZ = phase2 * 12500;
+
+        zSlides.forEach(slide => {
+          const calcZ = slide._spatialZ + cameraZ;
+
+          // Update 3D position
+          slide.style.transform = `translate(-50%, -50%) translateZ(${calcZ}px)`;
+
+          // ── Depth-of-field: blur keyed to distance from camera ──
+          const blurAmt = Math.max(0, Math.abs(calcZ) / 180 - 0.8);
+
+          // ── Opacity: fade when behind camera (>400) or too far away (<-2500) ──
+          let alpha = 1;
+          if (calcZ > 400) {
+            alpha = 1 - Math.max(0, (calcZ - 400) / 400);
+          } else if (calcZ < -2500) {
+            alpha = 1 - Math.abs(calcZ + 2500) / 2500;
+          }
+          alpha = Math.max(0, Math.min(1, alpha));
+
+          slide.style.filter  = `blur(${blurAmt.toFixed(2)}px)`;
+          slide.style.opacity = alpha;
+        });
       },
-      onEnterBack:  () => { 
-        heroBg.style.willChange = 'transform'; 
-      },
+
+      onLeave:     () => { heroBg.style.willChange = 'auto'; },
+      onEnterBack: () => { heroBg.style.willChange = 'transform'; },
     });
 
   } else if (heroPinWrapper) {
