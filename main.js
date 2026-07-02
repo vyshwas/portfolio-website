@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 1.0;  // pin scroll distance = 1.0 × 100vh (one scroll entry)
+  const SCROLL_MULT   = 5.0;  // pin scroll distance = 5.0 × 100vh (provides ample scroll space for zoom + Z-slides)
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
@@ -76,27 +76,35 @@ document.addEventListener('DOMContentLoaded', () => {
     heroBg.style.transformOrigin = `${TV_ORIGIN_X}% ${TV_ORIGIN_Y}%`;
     heroBg.style.willChange = 'transform';
 
-    // Set initial state of main content to hidden so it fades in
-    // only after entering the TV screen boundaries.
+    // Set initial state of main content and about slides
     if (mainContent) gsap.set(mainContent, { opacity: 0 });
+    gsap.set('#hero-about-container', { opacity: 0 });
+    gsap.set('.z-slide', { 
+      transformPerspective: 1000, 
+      transformOrigin: '50% 50%', 
+      opacity: 0, 
+      z: -1500, 
+      scale: 0.1 
+    });
 
     // GSAP timeline — scrubbed 1:1 with scroll (scrub:true = zero lag)
     const tl = gsap.timeline({ defaults: { ease: 'none' } });
 
-    // — Chrome labels fade immediately (0–12% of scroll)
+    // ── Phase 1: TV Zoom (0.0 to 0.25 of timeline) ──
+    
+    // — Chrome labels fade immediately (0–0.05 of scroll)
     tl.to([scrollCue, heroMetaLeft, heroMetaRight].filter(Boolean), {
       opacity: 0,
-      duration: 0.12,
+      duration: 0.05,
     }, 0);
 
-    // — Background image zooms in (whole scroll)
+    // — Background image zooms in (0–0.25)
     tl.to(heroBg, {
       scale: FINAL_SCALE,
-      duration: 1,
+      duration: 0.25,
     }, 0);
 
-    // — Screen overlay: expands in parallel with the background TV image
-    //   and fades out as it gets large (0–100% of scroll)
+    // — Screen overlay: scales up (0-0.25)
     if (screenOverlay) {
       gsap.set(screenOverlay, { 
         transformOrigin: 'center center',
@@ -111,29 +119,62 @@ document.addEventListener('DOMContentLoaded', () => {
         yPercent: -50,
         x: 0,
         y: 0,
-        duration: 1,
+        duration: 0.25,
       }, 0);
 
-      // Fade out the overlay contents before they exceed the viewport
+      // Fade out the overlay contents quickly as they expand (0–0.15)
       tl.to(screenOverlay, {
         opacity: 0,
-        duration: 0.25,
-      }, 0.55);
+        duration: 0.15,
+      }, 0.05);
     }
 
-    // — Fade in the main portfolio content (About section onwards)
-    //   as the camera enters the TV's black screen (0.75–1.0 of timeline)
+    // — Fade TV bg image to black as scale reaches maximum (0.22–0.25)
+    tl.to(heroBg, {
+      opacity: 0,
+      duration: 0.03,
+    }, 0.22);
+
+    // ── Phase 2: About Slides Z-Scroll Fly-Through (0.25 to 0.95 of timeline) ──
+
+    // Reveal the Z-slides container
+    tl.to('#hero-about-container', {
+      opacity: 1,
+      duration: 0.03,
+    }, 0.22);
+
+    // Slide 1: Systems Thinking (0.25 to 0.45)
+    tl.to('#z-slide-1', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.25);
+    tl.to('#z-slide-1', { opacity: 0, z: 1000, scale: 3.5, duration: 0.07 }, 0.38);
+
+    // Slide 2: UX & Behavior (0.43 to 0.63)
+    tl.to('#z-slide-2', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.43);
+    tl.to('#z-slide-2', { opacity: 0, z: 1000, scale: 3.5, duration: 0.07 }, 0.56);
+
+    // Slide 3: Coherence (0.61 to 0.81)
+    tl.to('#z-slide-3', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.61);
+    tl.to('#z-slide-3', { opacity: 0, z: 1000, scale: 3.5, duration: 0.07 }, 0.74);
+
+    // Slide 4: Longevity (0.79 to 0.97)
+    tl.to('#z-slide-4', { opacity: 1, z: 0, scale: 1, duration: 0.08 }, 0.79);
+    tl.to('#z-slide-4', { opacity: 0, z: 1000, scale: 3.5, duration: 0.05 }, 0.92);
+
+    // Fade out Z-slides container at the end of slides
+    tl.to('#hero-about-container', {
+      opacity: 0,
+      duration: 0.03,
+    }, 0.97);
+
+    // ── Phase 3: Transition to main content (0.95 to 1.0) ──
     if (mainContent) {
       tl.to(mainContent, {
         opacity: 1,
-        duration: 0.25,
+        duration: 0.03,
         ease: 'power2.out',
-      }, 0.75);
+      }, 0.97);
     }
 
     // ScrollTrigger — pin + instant scrub (no lag)
-    // Using pinSpacing: true allows GSAP to handle layout heights automatically,
-    // ensuring no empty space is left at the bottom of the page.
     ScrollTrigger.create({
       trigger:      heroPinWrapper,
       start:        'top top',
@@ -868,59 +909,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* ──────────────────────────────────────────────────────────
-     10. WHY I DESIGN — 3D Z-AXIS ZOOM SCROLL DECK
-  ────────────────────────────────────────────────────────── */
-  const aboutSection = document.getElementById('about');
-  
-  if (aboutSection && !prefersReduced) {
-    // Only run GSAP ScrollTrigger Z-axis pinning on screens > 768px
-    if (window.innerWidth > 768) {
-      const cards = gsap.utils.toArray('.about-3d-card');
-      
-      // Set initial 3D positions for stacked depth
-      cards.forEach((card, idx) => {
-        if (idx === 0) {
-          gsap.set(card, {
-            transformOrigin: "center center",
-            z: 0,
-            scale: 1,
-            opacity: 1,
-            pointerEvents: "all"
-          });
-        } else {
-          gsap.set(card, {
-            transformOrigin: "center center",
-            z: -400 * idx,
-            scale: 0.4,
-            opacity: 0,
-            pointerEvents: "none"
-          });
-        }
-      });
-      
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: aboutSection,
-          start: "top top",
-          end: "+=300%",
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.75
-        }
-      });
-      
-      // Card 0 -> Card 1
-      tl.to(cards[0], { z: 400, scale: 2.2, opacity: 0, pointerEvents: "none", ease: "power1.inOut" }, 0)
-        .to(cards[1], { z: 0, scale: 1, opacity: 1, pointerEvents: "all", ease: "power1.inOut" }, 0);
-        
-      // Card 1 -> Card 2
-      tl.to(cards[1], { z: 400, scale: 2.2, opacity: 0, pointerEvents: "none", ease: "power1.inOut" }, 1)
-        .to(cards[2], { z: 0, scale: 1, opacity: 1, pointerEvents: "all", ease: "power1.inOut" }, 1);
-        
-      // Card 2 -> Card 3
-      tl.to(cards[2], { z: 400, scale: 2.2, opacity: 0, pointerEvents: "none", ease: "power1.inOut" }, 2)
-        .to(cards[3], { z: 0, scale: 1, opacity: 1, pointerEvents: "all", ease: "power1.inOut" }, 2);
-    }
-  }
+  // 10. WHY I DESIGN — Handled in main hero pin zoom timeline above
 });
