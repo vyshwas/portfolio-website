@@ -127,8 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
       duration: 0.03,
     }, 0.22);
 
-    const scrollDist = 6000; // Fixed 6000px scroll duration as per specifications
-
     // ── Phase 2: Z-axis depth-of-field camera engine ──
     // Read each slide's spatial Z from data-z attribute, initialise transform
     const zSlides = Array.from(document.querySelectorAll('.z-slide'));
@@ -152,30 +150,34 @@ document.addEventListener('DOMContentLoaded', () => {
       pin:          heroScene,
       pinSpacing:   true,
       anticipatePin: 1,
-      scrub:        1, // exactly 1 second of easing/lag
+      scrub:        1,        // 1-second lag — camera glides behind scroll, calming cinematic feel
       animation:    tl,
 
       onUpdate: (self) => {
+        // ── Camera only moves during Phase 2 (after TV zoom ends at 0.25) ──
         const p = self.progress;
         if (p < 0.22) return;
 
-        // Map 0.25–1.0 of scroll progress → camera travelling 0–13000 Z units
+        // Map 0.25–1.0 of scroll progress → camera travelling 0–12500 Z units
         const phase2 = Math.max(0, (p - 0.25) / 0.75);
-        const cameraZ = phase2 * 13000;
+        const cameraZ = phase2 * 12500;
 
         zSlides.forEach(slide => {
           const calcZ = slide._spatialZ + cameraZ;
 
-          // Push calculated transform values directly down to rendering engine layer
+          // Update 3D position
           slide.style.transform = `translate(-50%, -50%) translateZ(${calcZ}px)`;
 
-          // ── Depth of Field: Fade In / Blur Math ──
-          // Math.max(0, Math.abs(effectiveZ) / 150 - 1)
-          const blurAmt = Math.max(0, Math.abs(calcZ) / 150 - 1);
+          // ── Depth-of-field: blur keyed to distance from camera ──
+          const blurAmt = Math.max(0, Math.abs(calcZ) / 180 - 0.8);
 
-          // ── Fade Out Math ──
-          // 1 - Math.max(0, (effectiveZ - 500) / 300)
-          let alpha = 1 - Math.max(0, (calcZ - 500) / 300);
+          // ── Opacity: fade when behind camera (>400) or too far away (<-2500) ──
+          let alpha = 1;
+          if (calcZ > 400) {
+            alpha = 1 - Math.max(0, (calcZ - 400) / 400);
+          } else if (calcZ < -2500) {
+            alpha = 1 - Math.abs(calcZ + 2500) / 2500;
+          }
           alpha = Math.max(0, Math.min(1, alpha));
 
           slide.style.filter  = `blur(${blurAmt.toFixed(2)}px)`;
@@ -571,10 +573,8 @@ document.addEventListener('DOMContentLoaded', () => {
       role: "Strategist & Designer",
       team: "Solo",
       summary: "My M.Des dissertation project. The brief I gave myself: build a wellness brand confident enough to look expensive without saying \"premium\" anywhere on the pack. The category is noise. Every competitor uses the same palette, the same kraft paper, the same health claims. I wanted to explore what restraint actually signals on a shelf.",
-      problem: "How do you stand out in a category where every brand looks identical?",
-      approach: "Research competitor positioning, build a type-led system, test the visual logic against category conventions.",
-      system: "Full brand identity (mark, palette, packaging), documented as strategic positioning framework.",
-      learning: "Restraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
+      challenge: "PROBLEM:\nHow do you stand out in a category where every brand looks identical?\n\nAPPROACH:\nResearch competitor positioning, build a type-led system, test the visual logic against category conventions.",
+      outcome: "SYSTEM:\nFull brand identity (mark, palette, packaging), documented as strategic positioning framework.\n\nLEARNING:\nRestraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
       image: "assets/project_fruit.jpg"
     },
     {
@@ -584,10 +584,8 @@ document.addEventListener('DOMContentLoaded', () => {
       role: "UX Designer",
       team: "Solo",
       summary: "A concept project exploring how trip planning actually works. Most platforms ask for dates and destination, then hand you a list. People don't plan that way. They plan around a feeling, a budget, constraints they don't articulate. I designed a constraint-first flow to see what happens when you surface the reasoning instead of hiding it.",
-      problem: "Generic itinerary tools ignore how people actually decide.",
-      approach: "User research on travel planning behaviour, constraint mapping, flow redesign.",
-      system: "Prototype and documented user flows showing decision architecture.",
-      learning: "Personalisation isn't a filter. It's about showing your work. Making the system's reasoning visible builds more trust than a perfect recommendation.",
+      challenge: "PROBLEM:\nGeneric itinerary tools ignore how people actually decide.\n\nAPPROACH:\nUser research on travel planning behaviour, constraint mapping, flow redesign.",
+      outcome: "SYSTEM:\nPrototype and documented user flows showing decision architecture.\n\nLEARNING:\nPersonalisation isn't a filter. It's about showing your work. Making the system's reasoning visible builds more trust than a perfect recommendation.",
       image: "assets/project_travel.jpg"
     },
     {
@@ -597,10 +595,8 @@ document.addEventListener('DOMContentLoaded', () => {
       role: "UX Analyst",
       team: "Katalyse.ai",
       summary: "A structured UX audit I completed at Katalyse.ai exploring why checkout flows lose users. The assumption is price or shipping. The audit found something quieter: friction at moments where the interface asks for trust it hasn't earned. I mapped 11 friction points and documented them as a prioritised audit.",
-      problem: "High cart abandonment across e-commerce funnels, cause unclear.",
-      approach: "Audit of Shopify checkout experience, friction point mapping, trust analysis.",
-      system: "Documented audit with friction prioritisation and redesign recommendations.",
-      learning: "Ambiguity costs more than transparency. People don't abandon carts because of price. They abandon because the next step isn't clear.",
+      challenge: "PROBLEM:\nHigh cart abandonment across e-commerce funnels, cause unclear.\n\nAPPROACH:\nAudit of Shopify checkout experience, friction point mapping, trust analysis.",
+      outcome: "SYSTEM:\nDocumented audit with friction prioritisation and redesign recommendations.\n\nLEARNING:\nAmbiguity costs more than transparency. People don't abandon carts because of price. They abandon because the next step isn't clear.",
       image: "assets/project_cart.jpg"
     }
   ];
@@ -667,10 +663,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('drawer-project-team').textContent     = data.team;
     
     document.getElementById('drawer-project-summary').textContent   = data.summary;
-    document.getElementById('drawer-project-challenge').textContent = data.problem;
-    document.getElementById('drawer-project-approach').textContent  = data.approach;
-    document.getElementById('drawer-project-system').textContent    = data.system;
-    document.getElementById('drawer-project-outcome').textContent   = data.learning;
+    document.getElementById('drawer-project-challenge').textContent = data.challenge;
+    document.getElementById('drawer-project-outcome').textContent   = data.outcome;
     
     // Lazy-load media
     const img = document.getElementById('drawer-project-image');
