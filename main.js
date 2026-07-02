@@ -831,6 +831,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const metaHTML = `${data.timeline} | ${data.category}<br>${data.role}<br>${data.team}`;
     document.getElementById('drawer-project-meta').innerHTML = metaHTML;
     
+    // Populate storytelling content
+    const summaryEl = document.getElementById('drawer-project-summary');
+    if (summaryEl) summaryEl.textContent = data.summary || "";
+    
+    const challengeEl = document.getElementById('drawer-project-challenge');
+    if (challengeEl) challengeEl.textContent = data.challenge || "";
+    
+    const outcomeEl = document.getElementById('drawer-project-outcome');
+    if (outcomeEl) outcomeEl.textContent = data.outcome || "";
+    
     // Lazy-load media
     const img = document.getElementById('drawer-project-image');
     img.src = data.image;

@@ -2618,6 +2618,39 @@ section > *:not(.section-bg-canvas) {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.drawer-info::-webkit-scrollbar {
+  display: none;
+}
+
+/* Project Story Narrative */
+.project-story {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.story-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.story-header {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  color: var(--accent-red);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.story-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #aaaaaa;
 }
 
 .info-content {
