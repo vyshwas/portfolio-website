@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=19">
+  <link rel="stylesheet" href="style.css?v=20">
   <link rel="icon" type="image/png" href="assets/favicon.png?v=3">
   <style>
     /* ═══════════════════════════════════════════════════════
@@ -272,37 +272,48 @@
         <div class="z-perspective-container">
           <div id="z-viewport-camera">
 
-            <!-- Slide 1 — Relocated Overview -->
-            <div class="z-slide" id="z-slide-1" data-z="-500">
-              <span class="z-meta">[ About 01 // OVERVIEW ]</span>
-              <h2 class="z-title">Brand, Product,<br><span class="z-title-muted">&amp; Storytelling.</span></h2>
-              <p class="z-desc">I work across brand identity, product design, and storytelling. The parts of design that get separated, but rarely should be.</p>
-            </div>
+              <!-- Chapter 1 (Text): -1500px -->
+              <div class="z-slide" id="z-slide-1" data-z="-1500">
+                <span class="z-meta">[ About 01 // OVERVIEW ]</span>
+                <h2 class="z-title">Brand, Product,<br><span class="z-title-muted">&amp; Storytelling.</span></h2>
+                <p class="z-desc">I work across brand identity, product design, and storytelling. The parts of design that get separated, but rarely should be.</p>
+              </div>
+  
+              <!-- Asset 1 (Image): -3500px -->
+              <div class="z-slide z-asset" id="z-asset-1" data-z="-3500">
+                <img src="assets/collage_longevity.jpg" alt="Visual Research" style="width: 45vw; max-width: 500px; height: auto; border-radius: 4px; box-shadow: 0 30px 60px rgba(0,0,0,0.8); opacity: 0.85;">
+              </div>
 
-            <!-- Slide 2 — Lead Background -->
-            <div class="z-slide" id="z-slide-2" data-z="-2500">
-              <span class="z-meta">[ About 02 // BACKGROUND ]</span>
-              <h2 class="z-title">I didn't start<br><span class="z-title-muted">in design.</span></h2>
-              <p class="z-desc">I started in computer science, spent four years thinking in systems and code, then moved into a two-year M.Des program. That shift taught me something important: the best design thinking comes from understanding how things actually work underneath.</p>
-              
-            </div>
+              <!-- Chapter 2 (Text): -5500px -->
+              <div class="z-slide" id="z-slide-2" data-z="-5500">
+                <span class="z-meta">[ About 02 // BACKGROUND ]</span>
+                <h2 class="z-title">I didn't start<br><span class="z-title-muted">in design.</span></h2>
+                <p class="z-desc">I started in computer science, spent four years thinking in systems and code, then moved into a two-year M.Des program. That shift taught me something important: the best design thinking comes from understanding how things actually work underneath.</p>
+              </div>
 
-            <!-- Slide 3 — UX & Columns -->
-            <div class="z-slide" id="z-slide-3" data-z="-5000">
-              <span class="z-meta">[ About 03 // PERSPECTIVE ]</span>
-              <h2 class="z-title">Brand &amp; Product.<br><span class="z-title-accent">Same problem.</span></h2>
-              <div class="z-columns-grid">
-                <div class="z-column">
-                  <h4 class="z-column-header">UX &amp; Decisions</h4>
-                  <p class="z-desc" style="font-size: 0.88rem; max-width: 100%;">Most of my interest in UX comes from watching how people make decisions when the information isn't complete. How they navigate uncertainty. That's more interesting than interface polish.</p>
-                </div>
-                <div class="z-column">
-                  <h4 class="z-column-header">Trust &amp; Transition</h4>
-                  <p class="z-desc" style="font-size: 0.88rem; max-width: 100%;">Now I work across brand and product because I think they're the same problem. A packaging decision and a checkout flow are both answering the same question: does this person trust us enough to take the next step? I'm most useful in the room where those two conversations happen at the same time.</p>
+              <!-- Asset 2 (Specimen): -7000px -->
+              <div class="z-slide z-asset" id="z-asset-2" data-z="-7000">
+                <div style="padding: 3rem; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                  <h3 style="font-family: var(--font-serif); font-size: 2.5rem; margin: 0 0 1rem 0; font-weight: 300;">Systems & Aesthetics</h3>
+                  <p style="font-family: var(--font-mono); font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em;">[ Specimen 01 ]</p>
                 </div>
               </div>
-            </div>
 
+              <!-- Chapter 3 (Text): -9000px -->
+              <div class="z-slide" id="z-slide-3" data-z="-9000">
+                <span class="z-meta">[ About 03 // PERSPECTIVE ]</span>
+                <h2 class="z-title">Brand &amp; Product.<br><span class="z-title-accent">Same problem.</span></h2>
+                <div class="z-columns-grid">
+                  <div class="z-column">
+                    <h4 class="z-column-header">UX &amp; Decisions</h4>
+                    <p class="z-desc" style="font-size: 0.88rem; max-width: 100%;">Most of my interest in UX comes from watching how people make decisions when the information isn't complete. How they navigate uncertainty. That's more interesting than interface polish.</p>
+                  </div>
+                  <div class="z-column">
+                    <h4 class="z-column-header">Trust &amp; Transition</h4>
+                    <p class="z-desc" style="font-size: 0.88rem; max-width: 100%;">Now I work across brand and product because I think they're the same problem. A packaging decision and a checkout flow are both answering the same question: does this person trust us enough to take the next step? I'm most useful in the room where those two conversations happen at the same time.</p>
+                  </div>
+                </div>
+              </div>
           </div><!-- /z-viewport-camera -->
         </div><!-- /z-perspective-container -->
       </div><!-- /hero-about-container -->
@@ -576,7 +587,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <!-- Lenis smooth scroll via CDN -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="main.js?v=19"></script>
+  <script src="main.js?v=20"></script>
 
 </body>
 </html>

@@ -164,23 +164,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (p < 0.22) return;
 
         const phase2 = Math.max(0, (p - 0.25) / 0.75);
-        const cameraZ = phase2 * 8000;
+        const cameraZ = phase2 * 11000;
 
         zSlides.forEach(slide => {
-          const calcZ = slide._spatialZ + cameraZ;
+          const effectiveZ = slide._spatialZ + cameraZ;
 
           // Update 3D position
-          slide.style.transform = `translate(-50%, -50%) translateZ(${calcZ}px)`;
+          slide.style.transform = `translate(-50%, -50%) translateZ(${effectiveZ}px)`;
 
-          // ── Depth-of-field: blur keyed to distance from camera ──
-          const blurAmt = Math.max(0, Math.abs(calcZ) / 180 - 0.8);
+          // Depth-of-field: blur keyed to distance from camera
+          const blurAmt = Math.max(0, Math.abs(effectiveZ) / 150 - 1);
 
-          // ── Opacity: fade when behind camera (>400) or too far away (<-2500) ──
+          // Opacity: fade out as it flies past camera
           let alpha = 1;
-          if (calcZ > 400) {
-            alpha = 1 - Math.max(0, (calcZ - 400) / 400);
-          } else if (calcZ < -2500) {
-            alpha = 1 - Math.abs(calcZ + 2500) / 2500;
+          if (effectiveZ > 400) {
+            alpha = 1 - Math.max(0, (effectiveZ - 500) / 300);
           }
           alpha = Math.max(0, Math.min(1, alpha));
 
