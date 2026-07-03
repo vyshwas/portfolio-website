@@ -269,11 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     headerEl?.classList.remove('nav-expanded');
   }, { passive: true });
 
-  const topMenuToggle = document.querySelector('.menu-toggle');
-  topMenuToggle?.addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent immediate collapse from body click (if any)
-    document.getElementById('siteHeader')?.classList.toggle('nav-expanded');
-  });
+
 
   // ──────────────────────────────────────────────────────────
   // Back to Top CTA
@@ -326,30 +322,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ──────────────────────────────────────────────────────────
-     6. MOBILE NAVIGATION
+     6. NAVIGATION DRAWER (Mobile & Desktop Scrolled)
   ────────────────────────────────────────────────────────── */
   const menuToggle = document.getElementById('menuToggle');
-  const navMenu    = document.getElementById('navMenu');
+  const navDrawer  = document.getElementById('navDrawer');
+  const navDrawerClose = document.querySelector('.nav-drawer-close');
+  const navDrawerBackdrop = document.getElementById('navDrawerBackdrop');
+  const headerElement = document.getElementById('siteHeader');
 
-  if (menuToggle && navMenu) {
-    const closeNav = () => {
+  if (menuToggle) {
+    const closeNavDrawer = () => {
+      navDrawer?.classList.remove('open');
       menuToggle.classList.remove('open');
-      navMenu.classList.remove('open');
       document.body.style.overflow = '';
+      headerElement?.classList.remove('nav-expanded');
     };
 
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = navMenu.classList.toggle('open');
-      menuToggle.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      
+      if (window.innerWidth <= 768) {
+        // Mobile: Use Side Drawer
+        if (navDrawer) {
+          const isOpen = navDrawer.classList.toggle('open');
+          menuToggle.classList.toggle('open', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+      } else {
+        // Desktop: Expand Nav Bar
+        headerElement?.classList.toggle('nav-expanded');
+      }
     });
 
-    document.addEventListener('click', (e) => {
-      if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && e.target !== menuToggle) closeNav();
-    });
+    if (navDrawerClose) navDrawerClose.addEventListener('click', closeNavDrawer);
+    if (navDrawerBackdrop) navDrawerBackdrop.addEventListener('click', closeNavDrawer);
 
-    navMenu.querySelectorAll('.nav-link').forEach((l) => l.addEventListener('click', closeNav));
+    navDrawer.querySelectorAll('a').forEach((l) => l.addEventListener('click', closeNavDrawer));
   }
 
   // Handle About link scroll target in the pinned hero section
