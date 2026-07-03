@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
      – connected to ScrollTrigger via the recommended pattern.
   ────────────────────────────────────────────────────────── */
   let lenis = null;
-  if (!prefersReduced && typeof Lenis !== 'undefined') {
+  if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
       lerp: 0.1,          // 0 = instant, 1 = never arrives. 0.1 = snappy + smooth
       smoothWheel: true,
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainContent     = document.getElementById('main-content');
   let heroTrigger       = null;
 
-  if (heroPinWrapper && heroBg && !prefersReduced) {
+  if (heroPinWrapper && heroBg) {
 
     const scrollDist = window.innerHeight * SCROLL_MULT;
 
@@ -193,11 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
       onEnterBack: () => { heroBg.style.willChange = 'transform'; },
     });
 
-  } else if (heroPinWrapper) {
-    // Reduced motion / no GSAP: static hero
-    heroPinWrapper.style.height = '100vh';
-    if (mainContent) gsap.set(mainContent, { opacity: 1 });
-  }
+
 
   /* ──────────────────────────────────────────────────────────
      4. SECTION CANVAS DOT GRIDS
