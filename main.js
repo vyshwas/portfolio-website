@@ -13,6 +13,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Remove hidden-init once DOM is ready so we don't see FOUC
+  const hiddenEls = document.querySelectorAll('.hidden-init');
+  hiddenEls.forEach(el => el.classList.remove('hidden-init'));
+
   /* ──────────────────────────────────────────────────────────
      0. REDUCED-MOTION CHECK
   ────────────────────────────────────────────────────────── */
