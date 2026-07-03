@@ -269,8 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
     headerEl?.classList.remove('nav-expanded');
   }, { passive: true });
 
-  const menuToggle = document.querySelector('.menu-toggle');
-  menuToggle?.addEventListener('click', (e) => {
+  const topMenuToggle = document.querySelector('.menu-toggle');
+  topMenuToggle?.addEventListener('click', (e) => {
     e.stopPropagation(); // prevent immediate collapse from body click (if any)
     document.getElementById('siteHeader')?.classList.toggle('nav-expanded');
   });

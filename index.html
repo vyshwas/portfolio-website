@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    window.addEventListener('error', function(e) {
+      var err = document.createElement('div');
+      err.style.cssText = 'position:fixed;top:0;left:0;width:100%;background:red;color:white;z-index:999999;padding:20px;font-size:20px;font-family:monospace;';
+      err.innerHTML = 'JS ERROR: ' + e.message + '<br>Line: ' + e.lineno;
+      document.body.appendChild(err);
+    });
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vishwas Mehta — Experience Designer</title>
@@ -546,7 +554,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <!-- Lenis smooth scroll via CDN -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="main.js?v=9"></script>
+  <script src="main.js?v=10"></script>
 
 </body>
 </html>
