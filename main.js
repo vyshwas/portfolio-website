@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 7;    // pin scroll distance = 7 × 100vh — matches reference 5500 px at standard viewport
+  const SCROLL_MULT   = 3.5;    // pin scroll distance reduced for faster scroll
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
@@ -254,6 +254,21 @@ document.addEventListener('DOMContentLoaded', () => {
     clientY = -9999;
     targetOX = 0;
     targetOY = 0;
+  }, { passive: true });
+
+  // ──────────────────────────────────────────────────────────
+  // Nav Bar Scroll shrink & Top-left logo logic
+  // ──────────────────────────────────────────────────────────
+  const siteHeader = document.getElementById('siteHeader');
+  
+  window.addEventListener('scroll', () => {
+    const heroHeight = document.getElementById('hero-pin-wrapper')?.offsetHeight || window.innerHeight;
+    // Shrink nav bar once we pass the hero pin wrapper area
+    if (window.scrollY > heroHeight - 100) {
+      siteHeader.classList.add('scrolled-nav');
+    } else {
+      siteHeader.classList.remove('scrolled-nav');
+    }
   }, { passive: true });
 
   // ──────────────────────────────────────────────────────────

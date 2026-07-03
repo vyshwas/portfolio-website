@@ -241,7 +241,7 @@ section > *:not(.section-bg-canvas) {
 
 .header-container {
     max-width: 100%;
-    padding: 0.6rem 2.5rem;
+    padding: 1.2rem 3.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1155,9 +1155,15 @@ section > *:not(.section-bg-canvas) {
 /* ──────────────────────────────────────────────────────────
    Interaction 04 — Vishwas's Desk
    ────────────────────────────────────────────────────────── */
-.desk-section {
+.work-section {
     position: relative;
     padding: 8rem var(--site-padding) 4rem var(--site-padding);
+    background-color: transparent !important;
+}
+
+.desk-section {
+    position: relative;
+    padding: 8rem var(--site-padding) 8rem var(--site-padding);
     background-color: #141414; /* Darker slate background for table contrast */
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
@@ -2541,6 +2547,18 @@ section > *:not(.section-bg-canvas) {
   align-items: flex-end;
   gap: 15px;
 }
+@keyframes flicker {
+  0% { opacity: 1; color: var(--text-muted); }
+  2% { opacity: 0.1; color: var(--vermilion); }
+  4% { opacity: 1; color: var(--vermilion); }
+  19% { opacity: 1; color: var(--vermilion); }
+  21% { opacity: 0.1; color: var(--text-muted); }
+  23% { opacity: 1; color: var(--text-muted); }
+  80% { opacity: 1; color: var(--text-muted); }
+  83% { opacity: 0.4; color: var(--vermilion); }
+  87% { opacity: 1; color: var(--text-muted); }
+  100% { opacity: 1; color: var(--text-muted); }
+}
 .back-to-top-btn {
   background: none;
   border: none;
@@ -2768,7 +2786,59 @@ section > *:not(.section-bg-canvas) {
 
 #main-content {
   background-color: #101010; /* Solid dark base */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M0 50 L100 50 M50 0 L50 100' stroke='%23ffffff08' stroke-width='1'/%3E%3Cpath d='M0 0 L100 100 M0 100 L100 0' stroke='%23ffffff04' stroke-width='1' stroke-dasharray='4,4'/%3E%3Cpath d='M45 50 L55 50 M50 45 L50 55' stroke='%23ffffff44' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-size: 80px 80px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cGF0aCBkPSdNMCA1MCBMMTAwIDUwIE01MCAwIEw1MCAxMDAnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLW9wYWNpdHk9JzAuMDUnIHN0cm9rZS13aWR0aD0nMScvPjxwYXRoIGQ9J00wIDAgTDEwMCAxMDAgTTAgMTAwIEwxMDAgMCcgc3Ryb2tlPScjZmZmZmZmJyBzdHJva2Utb3BhY2l0eT0nMC4wMycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtZGFzaGFycmF5PSc0LDQnLz48cGF0aCBkPSdNNDUgNTAgTDU1IDUwIE01MCA0NSBMNTAgNTUnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLW9wYWNpdHk9JzAuNicgc3Ryb2tlLXdpZHRoPScxLjUnLz48L3N2Zz4=");
+  background-size: 100px 100px;
   background-attachment: fixed;
+}
+
+#fixed-logo {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 1000;
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+.header-light #fixed-logo { color: #1D1D1D; }
+.site-header.scrolled-nav {
+  width: max-content;
+  padding: 0.5rem;
+}
+.site-header.scrolled-nav .nav-menu {
+  display: none !important;
+}
+.site-header.scrolled-nav .header-container {
+  padding: 0.5rem;
+}
+.site-header.scrolled-nav .menu-toggle {
+  display: flex !important;
+}
+
+@media (max-width: 768px) {
+  .site-header { width: max-content; padding: 0.5rem; }
+  
+  .site-header .menu-toggle { display: flex !important; }
+  .site-header .header-container { padding: 0.5rem; }
+}
+
+@keyframes panGrass {
+  from { background-position: 0 100%; }
+  to { background-position: 64px 100%; }
+}
+.pixel-grass-footer {
+  width: 100%;
+  height: 64px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIj4KICA8cmVjdCB4PSIwIiB5PSIxMiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjQiIGZpbGw9IiMzZTg5NDgiLz4KICA8cmVjdCB4PSIwIiB5PSIxMSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjEiIGZpbGw9IiM2M2M3NGQiLz4KICA8cmVjdCB4PSIxIiB5PSI5IiB3aWR0aD0iMSIgaGVpZ2h0PSIyIiBmaWxsPSIjNjNjNzRkIi8+CiAgPHJlY3QgeD0iNCIgeT0iOCIgd2lkdGg9IjEiIGhlaWdodD0iMyIgZmlsbD0iIzYzYzc0ZCIvPgogIDxyZWN0IHg9IjUiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjM2U4OTQ4Ii8+CiAgPHJlY3QgeD0iOCIgeT0iOSIgd2lkdGg9IjEiIGhlaWdodD0iMiIgZmlsbD0iIzYzYzc0ZCIvPgogIDxyZWN0IHg9IjExIiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSI0IiBmaWxsPSIjNjNjNzRkIi8+CiAgPHJlY3QgeD0iMTIiIHk9IjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjIiIGZpbGw9IiMzZTg5NDgiLz4KICA8cmVjdCB4PSIxNCIgeT0iMTAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiM2M2M3NGQiLz4KPC9zdmc+");
+  background-size: 64px 64px;
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  image-rendering: pixelated;
+  animation: panGrass 3s linear infinite;
+  z-index: 10;
+  pointer-events: none;
 }
