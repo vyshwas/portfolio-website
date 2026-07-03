@@ -2786,21 +2786,6 @@ section > *:not(.section-bg-canvas) {
 
 #main-content {
   background-color: #101010; /* Solid dark base */
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cGF0aCBkPSdNMCA1MCBMMTAwIDUwIE01MCAwIEw1MCAxMDAnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLW9wYWNpdHk9JzAuMDUnIHN0cm9rZS13aWR0aD0nMScvPjxwYXRoIGQ9J00wIDAgTDEwMCAxMDAgTTAgMTAwIEwxMDAgMCcgc3Ryb2tlPScjZmZmZmZmJyBzdHJva2Utb3BhY2l0eT0nMC4wMycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtZGFzaGFycmF5PSc0LDQnLz48cGF0aCBkPSdNNDUgNTAgTDU1IDUwIE01MCA0NSBMNTAgNTUnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLW9wYWNpdHk9JzAuNicgc3Ryb2tlLXdpZHRoPScxLjUnLz48L3N2Zz4=");
-  background-size: 100px 100px;
-  background-attachment: fixed;
-}
-
-#fixed-logo {
-  position: fixed;
-  top: 1.5rem;
-  left: 2rem;
-  z-index: 1000;
-  color: var(--text-primary);
-  font-family: var(--font-serif);
-  text-decoration: none;
-  font-size: 1.25rem;
-}
 .header-light #fixed-logo { color: #1D1D1D; }
 .site-header.scrolled-nav {
   width: max-content;
@@ -2825,7 +2810,7 @@ section > *:not(.section-bg-canvas) {
 
 @keyframes panGrass {
   from { background-position: 0 100%; }
-  to { background-position: 64px 100%; }
+  to { background-position: -128px 100%; }
 }
 .pixel-grass-footer {
   width: 100%;
@@ -2841,4 +2826,21 @@ section > *:not(.section-bg-canvas) {
   animation: panGrass 3s linear infinite;
   z-index: 10;
   pointer-events: none;
+}
+
+#main-content {
+  background-color: #101010; /* Solid dark base */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cGF0aCBkPSdNMCA1MCBMMTAwIDUwIE01MCAwIEw1MCAxMDAnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLW9wYWNpdHk9JzAuMDUnIHN0cm9rZS13aWR0aD0nMScvPjxwYXRoIGQ9J00wIDAgTDEwMCAxMDAgTTAgMTAwIEwxMDAgMCcgc3Ryb2tlPScjZmZmZmZmJyBzdHJva2Utb3BhY2l0eT0nMC4wMycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtZGFzaGFycmF5PSc0LDQnLz48cGF0aCBkPSdNNDUgNTAgTDU1IDUwIE01MCA0NSBMNTAgNTUnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLW9wYWNpdHk9JzAuNicgc3Ryb2tlLXdpZHRoPScxLjUnLz48L3N2Zz4=");
+  background-size: 100px 100px;
+  background-attachment: fixed;
+}
+#fixed-logo {
+  position: fixed;
+  top: 2rem;
+  left: 4rem;
+  z-index: 1000;
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+  text-decoration: none;
+  font-size: 1.25rem;
 }
