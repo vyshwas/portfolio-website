@@ -160,11 +160,13 @@ section > *:not(.section-bg-canvas) {
 .site-header {
     position: fixed;
     top: 2rem;
+    left: 2rem;
     right: 2rem;
+    width: calc(100% - 4rem);
     height: 48px;
     z-index: 1000;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     transition: all var(--transition-smooth);
     pointer-events: none;
@@ -247,6 +249,7 @@ section > *:not(.section-bg-canvas) {
     pointer-events: auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     height: 48px;
+    max-width: 500px;
     transition: all var(--transition-smooth);
     overflow: hidden;
 }
@@ -1172,12 +1175,8 @@ section > *:not(.section-bg-canvas) {
 .desk-section {
     position: relative;
     padding: 8rem var(--site-padding) 8rem var(--site-padding);
-    background-color: var(--accent-red); /* Vermilion Background */
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-color: #141414; /* Darker slate background for table contrast */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
     min-height: 100vh;
     display: flex;
@@ -1198,14 +1197,14 @@ section > *:not(.section-bg-canvas) {
     font-weight: 350;
     line-height: 1.1;
     text-transform: uppercase;
-    color: #111; /* Dark text on Vermilion */
+    color: #FFFFFF;
     margin-bottom: 1.5rem;
 }
 
 .desk-subtext {
     font-size: 1.1rem;
-    color: rgba(17, 17, 17, 0.8);
-    font-weight: 400;
+    color: var(--text-muted);
+    font-weight: 300;
     line-height: 1.6;
 }
 
@@ -1216,8 +1215,8 @@ section > *:not(.section-bg-canvas) {
     max-width: var(--max-width);
     height: 520px;
     margin: 2rem auto;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    background-color: rgba(20, 20, 20, 0.2);
     border-radius: 4px;
     display: block;
     z-index: 20;
@@ -1600,64 +1599,52 @@ section > *:not(.section-bg-canvas) {
     box-shadow: -1px 1px 2px rgba(0,0,0,0.15);
 }
 
-/* 6. Resume / Business card Folder */
-.graphic-contact {
-    width: 240px;
-    height: 170px;
-    background-color: #2D2D2D;
-    padding: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease;
+/* ──────────────────────────────────────────────────────────
+   Sandbox Physics UI
+   ────────────────────────────────────────────────────────── */
+.sandbox-btn {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
 }
-.desk-obj-wrapper:hover .graphic-contact {
-    transform: scale(1.05);
+
+.sandbox-btn:hover {
+    background: var(--text-primary);
+    color: #111;
 }
-.contact-folder {
-    width: 100%;
-    height: 100%;
-    border: 1px solid rgba(255,255,255,0.05);
-    background-color: #1e2420; /* Deep archival folder green */
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 12px;
-    border-radius: 0 4px 2px 2px;
-}
-.folder-tab {
+
+/* Base styles for DOM elements tracking Physics Bodies */
+.physics-word {
     position: absolute;
-    top: -10px;
-    left: 8px;
-    height: 10px;
-    width: 48px;
-    background-color: #1e2420;
-    border-radius: 4px 4px 0 0;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    border-left: 1px solid rgba(255,255,255,0.05);
-    border-right: 1px solid rgba(255,255,255,0.05);
+    top: 0; left: 0;
+    padding: 10px 24px;
+    background: rgba(252, 76, 19, 0.15); /* Tinted with Vermilion */
+    border: 1px solid rgba(252, 76, 19, 0.3);
+    color: #fff;
+    border-radius: 9999px;
     font-family: var(--font-serif);
-    font-size: 0.5rem;
-    color: var(--text-muted);
-    text-align: center;
-    line-height: 10px;
-}
-.folder-content-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.folder-logo-text {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    color: var(--accent-red);
-    font-weight: bold;
-    line-height: 1;
-}
-.folder-name-text {
-    font-family: var(--font-serif);
-    font-size: 0.85rem;
-    color: #F0EDE6;
-    letter-spacing: 0.05em;
+    font-size: 1.5rem;
+    font-weight: 400;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: auto; /* Required for mouse constraint */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    will-change: transform;
+    /* Initially hidden off-screen until Matter.js positions them */
+    transform: translate(-9999px, -9999px);
 }
 
 /* Popover menus */
@@ -2807,7 +2794,7 @@ section > *:not(.section-bg-canvas) {
   background-color: #101010; /* Solid dark base */
 .header-light #fixed-logo { color: #1D1D1D; }
 .site-header.scrolled-nav .header-container {
-  width: 48px;
+  max-width: 48px;
   padding: 0;
   justify-content: center;
   border-radius: 50%;
@@ -2856,12 +2843,10 @@ section > *:not(.section-bg-canvas) {
   background-attachment: fixed;
 }
 #fixed-logo {
-  position: fixed;
-  top: 2.5rem;
-  left: 3.5rem;
-  z-index: 1000;
+  position: static;
   color: var(--text-primary);
   font-family: var(--font-serif);
   text-decoration: none;
   font-size: 1.25rem;
+  pointer-events: auto;
 }

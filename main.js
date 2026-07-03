@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 1.5;    // pin scroll distance reduced for faster scroll
+  const SCROLL_MULT   = 1.1;    // pin scroll distance reduced for faster scroll
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
@@ -159,9 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const p = self.progress;
         if (p < 0.22) return;
 
-        // Map 0.25–1.0 of scroll progress → camera travelling 0–10500 Z units
         const phase2 = Math.max(0, (p - 0.25) / 0.75);
-        const cameraZ = phase2 * 10500;
+        const cameraZ = phase2 * 8000;
 
         zSlides.forEach(slide => {
           const calcZ = slide._spatialZ + cameraZ;
@@ -1048,5 +1047,175 @@ document.addEventListener('DOMContentLoaded', () => {
       startFlicker(buildSequence(FULL, DIM, OFF));
     };
   })();
+
+  /* ──────────────────────────────────────────────────────────
+     6. MATTER.JS PHYSICS SANDBOX
+  ────────────────────────────────────────────────────────── */
+  const initPhysicsSandbox = () => {
+    if (typeof Matter === 'undefined') return;
+
+    const sandbox = document.getElementById('sandbox-flatlay');
+    if (!sandbox) return;
+
+    // Matter.js module aliases
+    const Engine = Matter.Engine,
+          Render = Matter.Render,
+          Runner = Matter.Runner,
+          Bodies = Matter.Bodies,
+          Composite = Matter.Composite,
+          Mouse = Matter.Mouse,
+          MouseConstraint = Matter.MouseConstraint,
+          Events = Matter.Events,
+          Body = Matter.Body;
+
+    // Create engine
+    const engine = Engine.create();
+    const world = engine.world;
+    
+    // Start with normal gravity
+    engine.gravity.y = 1;
+    let isZeroGravity = false;
+
+    // Dimensions
+    let width = sandbox.clientWidth;
+    let height = sandbox.clientHeight;
+
+    // We do NOT use Matter.Render (canvas). We only use the engine to calculate positions,
+    // and we sync the HTML DOM elements to those positions.
+
+    // 1. Create Boundaries (Walls)
+    const wallOptions = { isStatic: true, friction: 0, restitution: 0.8 };
+    const ground = Bodies.rectangle(width / 2, height + 50, width * 2, 100, wallOptions);
+    const ceiling = Bodies.rectangle(width / 2, -50, width * 2, 100, wallOptions);
+    const leftWall = Bodies.rectangle(-50, height / 2, 100, height * 2, wallOptions);
+    const rightWall = Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
+    Composite.add(world, [ground, ceiling, leftWall, rightWall]);
+
+    // 2. Create Physics Bodies from DOM Elements
+    const wordElements = document.querySelectorAll('.physics-word');
+    const wordBodies = [];
+
+    wordElements.forEach((el, index) => {
+      // Temporarily reset transform to get accurate bounds
+      el.style.transform = 'none';
+      const rect = el.getBoundingClientRect();
+      const elWidth = rect.width;
+      const elHeight = rect.height;
+
+      // Start them scattered around the top center
+      const startX = width / 2 + (Math.random() - 0.5) * 200;
+      const startY = 100 + (Math.random() * 100);
+
+      const body = Bodies.rectangle(startX, startY, elWidth, elHeight, {
+        restitution: 0.6, // Bounciness
+        friction: 0.1,
+        frictionAir: 0.02, // Slows down over time, especially in zero-g
+        render: { visible: false },
+        chamfer: { radius: elHeight / 2 } // Pill shape physics boundary
+      });
+
+      // Save DOM element reference on the body
+      body.domElement = el;
+      wordBodies.push(body);
+    });
+
+    Composite.add(world, wordBodies);
+
+    // 3. Add Mouse Constraint for dragging
+    const mouse = Mouse.create(sandbox);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: { visible: false }
+      }
+    });
+    Composite.add(world, mouseConstraint);
+
+    // Keep the mouse in sync with scrolling
+    mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
+    mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+
+    // 4. Sync loop (Update DOM based on Physics)
+    Events.on(engine, 'afterUpdate', () => {
+      wordBodies.forEach((body) => {
+        const el = body.domElement;
+        // Matter.js coordinates are center-based. 
+        // We translate the top-left of the DOM element to the center, then rotate.
+        const x = body.position.x - el.offsetWidth / 2;
+        const y = body.position.y - el.offsetHeight / 2;
+        const angle = body.angle;
+        
+        el.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
+      });
+    });
+
+    // Handle Window Resize
+    window.addEventListener('resize', () => {
+      width = sandbox.clientWidth;
+      height = sandbox.clientHeight;
+      
+      // Update walls
+      Body.setPosition(ground, { x: width / 2, y: height + 50 });
+      Body.setPosition(ceiling, { x: width / 2, y: -50 });
+      Body.setPosition(leftWall, { x: -50, y: height / 2 });
+      Body.setPosition(rightWall, { x: width + 50, y: height / 2 });
+    });
+
+    // Start Engine
+    Runner.run(Runner.create(), engine);
+
+    // 5. Buttons Logic
+    const btnGravity = document.getElementById('btn-gravity');
+    const btnExplode = document.getElementById('btn-explode');
+
+    if (btnGravity) {
+      btnGravity.addEventListener('click', () => {
+        isZeroGravity = !isZeroGravity;
+        if (isZeroGravity) {
+          engine.gravity.y = 0;
+          btnGravity.innerText = 'RESTORE GRAVITY';
+          // Give them a tiny random nudge so they float immediately
+          wordBodies.forEach(b => {
+            Body.applyForce(b, b.position, {
+              x: (Math.random() - 0.5) * 0.05,
+              y: (Math.random() - 0.5) * 0.05
+            });
+          });
+        } else {
+          engine.gravity.y = 1;
+          btnGravity.innerText = 'ZERO GRAVITY';
+        }
+      });
+    }
+
+    if (btnExplode) {
+      btnExplode.addEventListener('click', () => {
+        // Apply a random outward force to all word bodies
+        wordBodies.forEach(b => {
+          // Force origin center
+          const centerX = width / 2;
+          const centerY = height / 2;
+          const dx = b.position.x - centerX || (Math.random() - 0.5);
+          const dy = b.position.y - centerY || (Math.random() - 0.5);
+          
+          // Normalize direction
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const nx = dx / dist;
+          const ny = dy / dist;
+          
+          const forceMagnitude = 0.2 + Math.random() * 0.1;
+          
+          Body.applyForce(b, b.position, {
+            x: nx * forceMagnitude,
+            y: (ny - 0.5) * forceMagnitude // bias slightly upwards
+          });
+        });
+      });
+    }
+  };
+
+  // Give DOM a small moment to paint before calculating bounds
+  setTimeout(initPhysicsSandbox, 100);
 
 });
