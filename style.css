@@ -159,23 +159,19 @@ section > *:not(.section-bg-canvas) {
 /* Header & Navigation — Floating capsule style */
 .site-header {
     position: fixed;
-    top: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 3rem);
-    max-width: 1200px;
-    z-index: 100;
-    background-color: rgba(29, 29, 29, 0.75);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 9999px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    top: 2rem;
+    right: 2rem;
+    height: 48px;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     transition: all var(--transition-smooth);
+    pointer-events: none;
 }
 
 /* Site header light-mode styling when scrolling over light background sections */
-.site-header.header-light {
+.site-header.header-light .header-container {
     background-color: rgba(255, 255, 255, 0.75);
     border-color: rgba(29, 29, 29, 0.08);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -197,7 +193,7 @@ section > *:not(.section-bg-canvas) {
     background-color: #1D1D1D;
 }
 
-.site-header.header-dark {
+.site-header.header-dark .header-container {
     background-color: rgba(29, 29, 29, 0.75);
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
@@ -240,11 +236,19 @@ section > *:not(.section-bg-canvas) {
 }
 
 .header-container {
-    max-width: 100%;
-    padding: 1.2rem 3.5rem;
     display: flex;
-    justify-content: center;
     align-items: center;
+    background-color: rgba(29, 29, 29, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    padding: 0 1.5rem;
+    pointer-events: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    height: 48px;
+    transition: all var(--transition-smooth);
+    overflow: hidden;
 }
 
 .logo {
@@ -1159,13 +1163,21 @@ section > *:not(.section-bg-canvas) {
     position: relative;
     padding: 8rem var(--site-padding) 4rem var(--site-padding);
     background-color: transparent !important;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
 .desk-section {
     position: relative;
     padding: 8rem var(--site-padding) 8rem var(--site-padding);
-    background-color: #141414; /* Darker slate background for table contrast */
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: var(--accent-red); /* Vermilion Background */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
     overflow: hidden;
     min-height: 100vh;
     display: flex;
@@ -1176,6 +1188,8 @@ section > *:not(.section-bg-canvas) {
 .desk-intro {
     max-width: 600px;
     margin-bottom: 3rem;
+    position: relative;
+    z-index: 20;
 }
 
 .desk-lead {
@@ -1184,14 +1198,14 @@ section > *:not(.section-bg-canvas) {
     font-weight: 350;
     line-height: 1.1;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #111; /* Dark text on Vermilion */
     margin-bottom: 1.5rem;
 }
 
 .desk-subtext {
     font-size: 1.1rem;
-    color: var(--text-muted);
-    font-weight: 300;
+    color: rgba(17, 17, 17, 0.8);
+    font-weight: 400;
     line-height: 1.6;
 }
 
@@ -1202,10 +1216,11 @@ section > *:not(.section-bg-canvas) {
     max-width: var(--max-width);
     height: 520px;
     margin: 2rem auto;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    background-color: rgba(20, 20, 20, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
     display: block;
+    z-index: 20;
 }
 
 /* Object wrapper */
@@ -1587,11 +1602,15 @@ section > *:not(.section-bg-canvas) {
 
 /* 6. Resume / Business card Folder */
 .graphic-contact {
-    width: 120px;
-    height: 85px;
+    width: 240px;
+    height: 170px;
     background-color: #2D2D2D;
-    padding: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    padding: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+.desk-obj-wrapper:hover .graphic-contact {
+    transform: scale(1.05);
 }
 .contact-folder {
     width: 100%;
@@ -1602,41 +1621,41 @@ section > *:not(.section-bg-canvas) {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 6px;
+    padding: 12px;
     border-radius: 0 4px 2px 2px;
 }
 .folder-tab {
     position: absolute;
-    top: -6px;
-    left: 4px;
-    height: 6px;
-    width: 32px;
+    top: -10px;
+    left: 8px;
+    height: 10px;
+    width: 48px;
     background-color: #1e2420;
-    border-radius: 2px 2px 0 0;
+    border-radius: 4px 4px 0 0;
     border-top: 1px solid rgba(255,255,255,0.05);
     border-left: 1px solid rgba(255,255,255,0.05);
     border-right: 1px solid rgba(255,255,255,0.05);
     font-family: var(--font-serif);
-    font-size: 0.35rem;
+    font-size: 0.5rem;
     color: var(--text-muted);
     text-align: center;
-    line-height: 6px;
+    line-height: 10px;
 }
 .folder-content-inner {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
 }
 .folder-logo-text {
     font-family: var(--font-serif);
-    font-size: 0.95rem;
+    font-size: 1.8rem;
     color: var(--accent-red);
     font-weight: bold;
     line-height: 1;
 }
 .folder-name-text {
     font-family: var(--font-serif);
-    font-size: 0.45rem;
+    font-size: 0.85rem;
     color: #F0EDE6;
     letter-spacing: 0.05em;
 }
@@ -2787,15 +2806,14 @@ section > *:not(.section-bg-canvas) {
 #main-content {
   background-color: #101010; /* Solid dark base */
 .header-light #fixed-logo { color: #1D1D1D; }
-.site-header.scrolled-nav {
-  width: max-content;
-  padding: 0.5rem;
+.site-header.scrolled-nav .header-container {
+  width: 48px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
 }
 .site-header.scrolled-nav .nav-menu {
   display: none !important;
-}
-.site-header.scrolled-nav .header-container {
-  padding: 0.5rem;
 }
 .site-header.scrolled-nav .menu-toggle {
   display: flex !important;
@@ -2808,9 +2826,11 @@ section > *:not(.section-bg-canvas) {
   .site-header .header-container { padding: 0.5rem; }
 }
 
-@keyframes panGrass {
-  from { background-position: 0 100%; }
-  to { background-position: -128px 100%; }
+@keyframes swayGrass {
+  0% { transform: translateX(0) skewX(0deg); }
+  25% { transform: translateX(-5px) skewX(-5deg); }
+  75% { transform: translateX(5px) skewX(5deg); }
+  100% { transform: translateX(0) skewX(0deg); }
 }
 .pixel-grass-footer {
   width: 100%;
@@ -2823,7 +2843,8 @@ section > *:not(.section-bg-canvas) {
   background-repeat: repeat-x;
   background-position: 0 100%;
   image-rendering: pixelated;
-  animation: panGrass 3s linear infinite;
+  animation: swayGrass 4s ease-in-out infinite;
+  transform-origin: bottom center;
   z-index: 10;
   pointer-events: none;
 }

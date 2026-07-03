@@ -257,7 +257,6 @@
         <div id="screen-statement" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 90%;">
           <span class="screen-tag" style="text-transform: uppercase; font-family: 'Inter', sans-serif; font-size: clamp(0.45rem, 0.9vw, 0.75rem); color: #FC4C13; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 0.6vh;">Strategic Designer</span>
           <h1 class="screen-title" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(0.7rem, 1.4vw, 1.45rem); line-height: 1.15; margin-bottom: 0.8vh; color: #ffffff; text-align: center; text-transform: uppercase;">Helping founders turn ideas into brands and digital experiences people remember.</h1>
-          <p class="screen-sub" style="font-family: 'Inter', sans-serif; font-weight: 300; font-size: clamp(0.5rem, 0.85vw, 0.85rem); line-height: 1.35; color: rgba(240, 237, 230, 0.6); max-width: 92%; margin-bottom: 1.2vh; text-align: center;">I work across brand identity, product design, and storytelling. The parts of design that get separated, but rarely should be.</p>
         </div>
       </div>
 
@@ -266,16 +265,31 @@
         <div class="z-perspective-container">
           <div id="z-viewport-camera">
 
-            <!-- Slide 1 — Lead Overview -->
-            <div class="z-slide" id="z-slide-1" data-z="-1500">
+            <!-- Slide 1 — Relocated Overview -->
+            <div class="z-slide" id="z-slide-1" data-z="-500">
               <span class="z-meta">[ About 01 // OVERVIEW ]</span>
-              <h2 class="z-title">I didn't start<br><span class="z-title-muted">in design.</span></h2>
-              <p class="z-desc">I started in computer science, spent four years thinking in systems and code, then moved into a two-year M.Des program. That shift taught me something important: the best design thinking comes from understanding how things actually work underneath.</p>
+              <h2 class="z-title">Brand, Product,<br><span class="z-title-muted">&amp; Storytelling.</span></h2>
+              <p class="z-desc">I work across brand identity, product design, and storytelling. The parts of design that get separated, but rarely should be.</p>
             </div>
 
-            <!-- Slide 2 — UX & Columns -->
-            <div class="z-slide" id="z-slide-2" data-z="-5000">
-              <span class="z-meta">[ About 01 // PERSPECTIVE ]</span>
+            <!-- Slide 2 — Lead Background -->
+            <div class="z-slide" id="z-slide-2" data-z="-2500">
+              <span class="z-meta">[ About 02 // BACKGROUND ]</span>
+              <h2 class="z-title">I didn't start<br><span class="z-title-muted">in design.</span></h2>
+              <p class="z-desc">I started in computer science, spent four years thinking in systems and code, then moved into a two-year M.Des program. That shift taught me something important: the best design thinking comes from understanding how things actually work underneath.</p>
+              
+              <!-- Floating Discipline Words -->
+              <div class="floating-words" style="position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: -1;">
+                <span style="position: absolute; top: -10%; left: -20%; font-family: var(--font-serif); font-size: 2rem; color: rgba(252,76,19,0.15); transform: rotate(-10deg);">User Research</span>
+                <span style="position: absolute; top: 110%; right: -15%; font-family: var(--font-sans); font-size: 1.2rem; color: rgba(255,255,255,0.05); text-transform: uppercase; letter-spacing: 0.1em; transform: rotate(15deg);">Positioning</span>
+                <span style="position: absolute; top: 50%; left: -30%; font-family: var(--font-serif); font-size: 3rem; color: rgba(252,76,19,0.1); transform: rotate(5deg);">Packaging</span>
+                <span style="position: absolute; top: 20%; right: -25%; font-family: var(--font-serif); font-size: 2.5rem; color: rgba(255,255,255,0.03); transform: rotate(-5deg);">Identity</span>
+              </div>
+            </div>
+
+            <!-- Slide 3 — UX & Columns -->
+            <div class="z-slide" id="z-slide-3" data-z="-5000">
+              <span class="z-meta">[ About 03 // PERSPECTIVE ]</span>
               <h2 class="z-title">Brand &amp; Product.<br><span class="z-title-accent">Same problem.</span></h2>
               <div class="z-columns-grid">
                 <div class="z-column">
@@ -470,9 +484,9 @@
       <!-- Desktop Interaction Zone: Table Flatlay -->
       <div class="desk-flatlay-container" aria-label="Interactive desktop flatlay">
         
-        <!-- Object 6: Resume / Business Card Folder -->
+        <!-- Resume / Business Card Folder -->
         <div class="desk-obj-wrapper obj-contact" data-action="contact" tabindex="0" role="button" aria-label="Open resume and contact options">
-          <div class="obj-label">06 / resume / contact</div>
+          <div class="obj-label">resume / contact</div>
           <div class="obj-graphic graphic-contact">
             <div class="contact-folder">
               <div class="folder-tab">CV</div>
@@ -610,7 +624,7 @@
             </div>
           </div>
 
-          <a href="#" class="launch-btn">LAUNCH WEBSITE ↗</a>
+          <a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="launch-btn">BEHANCE LINK &nearr;</a>
           
           <div class="nav-links">
             <a href="#" id="nextProjectBtn">NEXT PROJECT</a>
