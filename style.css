@@ -2790,9 +2790,8 @@ section > *:not(.section-bg-canvas) {
   }
 }
 
-#main-content {
-  background-color: #101010; /* Solid dark base */
 .header-light #fixed-logo { color: #1D1D1D; }
+
 .site-header.scrolled-nav .header-container {
   max-width: 48px;
   padding: 0;
