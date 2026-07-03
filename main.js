@@ -261,11 +261,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ──────────────────────────────────────────────────────────
   window.addEventListener('scroll', () => {
     const heroHeight = document.getElementById('hero-pin-wrapper')?.offsetHeight || window.innerHeight;
+    const headerEl = document.getElementById('siteHeader');
     // Shrink nav bar once we pass the hero pin wrapper area
     if (window.scrollY > heroHeight - 100) {
-      siteHeader.classList.add('scrolled-nav');
+      headerEl?.classList.add('scrolled-nav');
     } else {
-      siteHeader.classList.remove('scrolled-nav');
+      headerEl?.classList.remove('scrolled-nav');
     }
   }, { passive: true });
 
