@@ -243,7 +243,7 @@ section > *:not(.section-bg-canvas) {
     max-width: 100%;
     padding: 1.2rem 3.5rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -1808,12 +1808,11 @@ section > *:not(.section-bg-canvas) {
 
 /* Desk Footer configuration */
 .desk-footer {
-    width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 2.5rem 0;
-    margin-top: 5rem;
-    position: relative;
-    z-index: 10;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2rem 0 64px 0;
+  position: relative;
+  z-index: 10;
 }
 
 .hidden {
@@ -2565,10 +2564,11 @@ section > *:not(.section-bg-canvas) {
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   cursor: pointer;
   padding: 0;
   transition: color 0.3s ease;
+  animation: flicker 4s infinite;
 }
 .back-to-top-btn:hover {
   color: var(--vermilion);
@@ -2836,8 +2836,8 @@ section > *:not(.section-bg-canvas) {
 }
 #fixed-logo {
   position: fixed;
-  top: 2rem;
-  left: 4rem;
+  top: 2.5rem;
+  left: 3.5rem;
   z-index: 1000;
   color: var(--text-primary);
   font-family: var(--font-serif);

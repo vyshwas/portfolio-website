@@ -259,8 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ──────────────────────────────────────────────────────────
   // Nav Bar Scroll shrink & Top-left logo logic
   // ──────────────────────────────────────────────────────────
-  const siteHeader = document.getElementById('siteHeader');
-  
   window.addEventListener('scroll', () => {
     const heroHeight = document.getElementById('hero-pin-wrapper')?.offsetHeight || window.innerHeight;
     // Shrink nav bar once we pass the hero pin wrapper area
