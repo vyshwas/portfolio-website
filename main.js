@@ -259,10 +259,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Nav Bar Scroll shrink & Top-left logo logic
   // ──────────────────────────────────────────────────────────
   window.addEventListener('scroll', () => {
-    const heroHeight = document.getElementById('hero-pin-wrapper')?.offsetHeight || window.innerHeight;
     const headerEl = document.getElementById('siteHeader');
-    // Shrink nav bar once we pass the hero pin wrapper area
-    if (window.scrollY > heroHeight - 100) {
+    // Navigation scroll effect (shrink to hamburger immediately after scrolling)
+    if (window.scrollY > 50) {
       headerEl?.classList.add('scrolled-nav');
     } else {
       headerEl?.classList.remove('scrolled-nav');
