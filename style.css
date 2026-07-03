@@ -2809,23 +2809,30 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* Expanded state when clicking the hamburger */
-.site-header.scrolled-nav.nav-expanded .header-container {
+.site-header.nav-expanded .header-container {
   max-width: 900px !important;
   padding: 0 1.5rem !important;
   border-radius: 100px !important;
 }
-.site-header.scrolled-nav.nav-expanded .nav-menu {
+.site-header.nav-expanded .nav-menu {
   display: flex !important;
 }
-.site-header.scrolled-nav.nav-expanded .menu-toggle {
+.site-header.nav-expanded .menu-toggle {
   display: none !important;
 }
 
 @media (max-width: 768px) {
-  .site-header { width: max-content; padding: 0.5rem; }
+  .site-header { width: calc(100% - 1rem); padding: 0.5rem; }
   
   .site-header .menu-toggle { display: flex !important; }
-  .site-header .header-container { padding: 0.5rem; }
+  .site-header .header-container { padding: 0.5rem; width: 100%; justify-content: space-between; }
+  
+  /* Stack nav links on mobile */
+  .site-header.nav-expanded .nav-menu ul {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
 }
 
 @keyframes swayGrass {

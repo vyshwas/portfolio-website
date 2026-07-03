@@ -192,8 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
       onLeave:     () => { heroBg.style.willChange = 'auto'; },
       onEnterBack: () => { heroBg.style.willChange = 'transform'; },
     });
-
-
+  }
 
   /* ──────────────────────────────────────────────────────────
      4. SECTION CANVAS DOT GRIDS
