@@ -1168,11 +1168,17 @@ section > *:not(.section-bg-canvas) {
 .work-section {
     position: relative;
     padding: 8rem var(--site-padding) 4rem var(--site-padding);
-    background-color: transparent !important;
-    background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
+    /* Vermilion Grainy Gradient Background */
+    background: 
+      /* 1. Grain overlay (simulated with repeating radial gradient) */
+      repeating-radial-gradient(rgba(255,255,255,0.03) 0, transparent 2px),
+      /* 2. Fade to black at bottom */
+      linear-gradient(to bottom, transparent 60%, #101010 100%),
+      /* 3. Vertical banding/curtain effect */
+      repeating-linear-gradient(to right, rgba(0,0,0,0.1) 0%, transparent 4%, rgba(0,0,0,0.1) 8%),
+      /* 4. Base Vermilion Gradient (Light yellow-orange to deep red to black) */
+      linear-gradient(to bottom, #ffdb99 0%, #fc4c13 25%, #6a0d00 60%, #101010 90%);
+    background-size: 4px 4px, 100% 100%, 100% 100%, 100% 100%;
 }
 
 .desk-section {
