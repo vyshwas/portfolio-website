@@ -2867,3 +2867,54 @@ section > *:not(.section-bg-canvas) {
   font-size: 1.25rem;
   pointer-events: auto;
 }
+
+/* --- Mobile Nav Drawer --- */
+#navDrawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    z-index: 999999;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+#navDrawer.open {
+    transform: translateX(0);
+    pointer-events: auto;
+}
+#navDrawerBackdrop {
+    flex: 1;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+#navDrawerMain {
+    width: 85vw;
+    max-width: 400px;
+    height: 100vh;
+    background-color: #0f0f0f;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 5rem 2.5rem;
+    position: relative;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+}
+
+
+/* Header Logo Responsiveness */
+.header-logo-img {
+    height: 48px;
+    width: auto;
+    display: block;
+    transition: height 0.3s ease;
+}
+@media (max-width: 768px) {
+    .header-logo-img {
+        height: 32px;
+    }
+}
+
