@@ -1168,7 +1168,7 @@ section > *:not(.section-bg-canvas) {
 .work-section {
     position: relative;
     padding: 8rem var(--site-padding) 4rem var(--site-padding);
-    /* Neutral Grainy Gradient Background for better contrast */
+    /* Vermilion Grainy Gradient Background */
     background: 
       /* 1. Grain overlay (simulated with repeating radial gradient) */
       repeating-radial-gradient(rgba(255,255,255,0.03) 0, transparent 2px),
@@ -1176,9 +1176,29 @@ section > *:not(.section-bg-canvas) {
       linear-gradient(to bottom, transparent 60%, #101010 100%),
       /* 3. Vertical banding/curtain effect */
       repeating-linear-gradient(to right, rgba(0,0,0,0.1) 0%, transparent 4%, rgba(0,0,0,0.1) 8%),
-      /* 4. Base Neutral Gradient (Dark slate to black) */
-      linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 40%, #101010 90%);
+      /* 4. Base Vermilion Gradient (Light yellow-orange to deep red to black) */
+      linear-gradient(to bottom, #ffdb99 0%, #fc4c13 25%, #6a0d00 60%, #101010 90%);
     background-size: 4px 4px, 100% 100%, 100% 100%, 100% 100%;
+}
+
+/* Optimize readability on the bright orange gradient */
+.work-section .work-lead {
+    color: #1a1a1a;
+}
+.work-section .work-row-num,
+.work-section .work-row-title,
+.work-section .work-row-tags {
+    color: #1a1a1a !important;
+}
+.work-section .work-row {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+.work-section .work-row:hover .work-row-num,
+.work-section .work-row:hover .work-row-title,
+.work-section .work-row:focus-visible .work-row-title,
+.work-section .work-row:hover .work-row-tags {
+    color: #000000 !important;
+    font-weight: 600;
 }
 
 .desk-section {
