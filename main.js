@@ -1016,10 +1016,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return canvas.toDataURL('image/png');
     }
 
-    // ── Attempt 1: load the actual favicon image (same-origin) ──
+    // Attempt 1: load the actual favicon image
     const img = new Image();
-    // Use relative path — avoids any absolute-URL CORS quirks
-    img.src = 'assets/favicon.png';
+    img.src = 'assets/logo.svg';
 
     img.onload = function () {
       const FULL = bakeFrame(img, 1.00);
