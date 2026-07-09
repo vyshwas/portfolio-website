@@ -3303,21 +3303,15 @@ body.bw-mode .crt-switch-indicator {
 
 
 
-@media (max-width: 768px) {
-  .site-header { justify-content: space-between !important; }
-  .site-header .header-container { width: 48px !important; margin-left: auto !important; margin-right: 0 !important; }
-  .site-header.scrolled-nav { justify-content: flex-end !important; }
-}
+
+
+
 
 @media (max-width: 768px) {
     .site-header {
-        left: 1.5rem !important;
-        width: calc(100% - 3rem) !important;
         justify-content: space-between !important;
-    }
-    .site-header .header-container {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding: 0 !important; /* fix hamburger */
+        left: 1rem !important;
+        right: 1rem !important;
+        width: calc(100% - 2rem) !important;
     }
 }
