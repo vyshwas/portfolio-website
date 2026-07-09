@@ -3006,7 +3006,7 @@ section > *:not(.section-bg-canvas) {
 .header-light #fixed-logo { color: #1D1D1D; }
 
 .site-header.scrolled-nav { justify-content: flex-end; }
-.site-header.scrolled-nav .header-container { width: 48px !important; margin-left: auto !important; margin-right: 0 !important; }
+.site-header.scrolled-nav .header-container { width: 48px; }
 
 /* Expanded state for desktop scrolled nav */
 .site-header.scrolled-nav.nav-expanded { justify-content: center; }
@@ -3302,3 +3302,9 @@ body.bw-mode .crt-switch-indicator {
 
 
 
+
+@media (max-width: 768px) {
+  .site-header { justify-content: space-between !important; }
+  .site-header .header-container { width: 48px !important; margin-left: auto !important; margin-right: 0 !important; }
+  .site-header.scrolled-nav { justify-content: flex-end !important; }
+}
