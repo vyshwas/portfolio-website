@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=66">
+  <link rel="stylesheet" href="style.css?v=68">
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
   <style>
     /* -------------------------------------------------------
@@ -234,7 +234,7 @@
         <ul>
           <li><a href="#about"       class="nav-link">About</a></li>
           <li><a href="#work"        class="nav-link">Work</a></li>
-          <li><a href="#contact"     class="nav-link">Contact</a></li>
+          
           <li class="nav-divider">|</li>
           <li><a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="nav-link">Behance</a></li>
           <li><a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="nav-link">LinkedIn</a></li>
@@ -257,7 +257,7 @@
     <section id="hero-scene" aria-label="Hero introduction">
       <!-- Background elements handled by CSS -->
 
-      <!-- The desert TV photograph - this is what scales during the zoom -->
+      <h1 id="giant-name" style="position: absolute; bottom: 0; left: 0; width: 100vw; text-align: center; font-size: 14vw; line-height: 1; font-family: var(--font-serif); letter-spacing: -0.02em; white-space: nowrap; color: #ffffff; z-index: 1; pointer-events: none;">VISHWAS MEHTA</h1>`n        <!-- The desert TV photograph - this is what scales during the zoom -->
       <div id="hero-bg"></div>
 
       <!-- Overlays -->
@@ -271,7 +271,7 @@
           <h1 class="screen-title" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(0.65rem, 5cqw, 1.55rem); line-height: 1.15; color: #ffffff; text-align: center; text-transform: uppercase;">Helping founders turn ideas into brands and digital experiences people remember.</h1>
         </div>
       </div>
-        <h1 style="text-align: center; font-size: clamp(4rem, 15vw, 15rem); line-height: 1; font-family: var(--font-serif); letter-spacing: -0.02em; white-space: nowrap; color: #ffffff; position: absolute; bottom: -3rem; left: 50%; transform: translateX(-50%); width: 100%; pointer-events: none; opacity: 0.8; z-index: 10;">VISHWAS MEHTA</h1>
+        
 
       <!-- Inside hero-scene: About Z-Scroll slides -->
       <div id="hero-about-container" class="hidden-init">
@@ -554,9 +554,9 @@
   ------------------------------------------ -->
   <div id="navDrawer" aria-hidden="true">
     <div id="navDrawerBackdrop"></div>
-    <div id="navDrawerMain">
+    <div id="navDrawerMain" style="overflow-y: auto; height: 100%; padding-bottom: 3rem;">
       
-      <button class="nav-drawer-close" aria-label="Close menu" style="position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 48px; height: 48px; border-radius: 50%; background-color: rgba(29, 29, 29, 0.75); z-index: 10;">
+      <button class="nav-drawer-close" aria-label="Close menu" style="position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; border-radius: 50%; background-color: rgba(29, 29, 29, 0.75); z-index: 10;">
         <span style="width: 22px; height: 1.5px; background-color: #F0EDE6; transform: translateY(0.75px) rotate(45deg); display: block; position: absolute;"></span>
         <span style="width: 22px; height: 1.5px; background-color: #F0EDE6; transform: translateY(-0.75px) rotate(-45deg); display: block; position: absolute;"></span>
       </button>
@@ -565,7 +565,7 @@
         <ul style="display: flex; flex-direction: column; gap: 2.5rem; align-items: flex-end; width: 100%; list-style: none; padding: 0;">
           <li><a href="#about"       class="nav-link" style="font-size: 2rem; font-family: var(--font-serif); display: block; color: #fff;">About</a></li>
           <li><a href="#work"        class="nav-link" style="font-size: 2rem; font-family: var(--font-serif); display: block; color: #fff;">Work</a></li>
-          <li><a href="#contact"     class="nav-link" style="font-size: 2rem; font-family: var(--font-serif); display: block; color: #fff;">Contact</a></li>
+          
           <li><a href="https://www.behance.net/vishwashmehta" target="_blank" rel="noopener" class="nav-link" style="font-size: 2rem; font-family: var(--font-serif); display: block; color: #fff;">Behance</a></li>
           <li><a href="https://www.linkedin.com/in/vishwas-mehta-319924226" target="_blank" rel="noopener" class="nav-link" style="font-size: 2rem; font-family: var(--font-serif); display: block; color: #fff;">LinkedIn</a></li>
           <li><a href="https://vyshwas.github.io/vyshwas-s-playground/" target="_blank" rel="noopener" class="nav-backyard-btn" style="font-size: 2rem; font-family: var(--font-serif); display: block; color: var(--accent-red);">Backyard</a></li>
@@ -585,9 +585,10 @@
   <!-- Lenis smooth scroll via CDN -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <div id="custom-cursor"></div>
-  <script src="main.js?v=66" defer></script>
+  <script src="main.js?v=68" defer></script>
 </body>
 </html>
+
 
 
 

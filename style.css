@@ -3142,7 +3142,7 @@ body::after {
 
 
 /* --- Black and White Mode --- */
-img, video { filter: grayscale(100%) contrast(1.1); transition: filter 0.3s ease; } .header-logo-img, .preview-media-container img, .preview-media-container video, .drawer-media-item img, .drawer-media-item video { filter: none !important; }
+img, video { filter: grayscale(100%) contrast(1.1); transition: filter 0.3s ease; } .header-logo-img, .preview-media-container img, .preview-media-container video, #drawer-project-image { filter: none !important; }
 
 
 body {
@@ -3299,5 +3299,6 @@ body.bw-mode .crt-switch-indicator {
 @media (max-width: 768px) {
   .site-header.scrolled-nav { justify-content: flex-end !important; }
 }
+
 
 
