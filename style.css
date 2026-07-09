@@ -2909,7 +2909,7 @@ body::after {
 
 
 /* --- Studio Custom Cursor --- */
-@media (pointer: fine) {
+@media (min-width: 769px) {
     body, a, button, .work-row {
         cursor: none !important;
     }

@@ -929,7 +929,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* --- Custom Cursor Logic --- */
 const cursor = document.getElementById("custom-cursor");
-if (cursor && window.matchMedia("(pointer: fine)").matches) {
+if (cursor && window.innerWidth > 768) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     
