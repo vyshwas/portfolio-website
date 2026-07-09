@@ -128,9 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // — Fade TV bg image to black as scale reaches maximum (0.22–0.25)
     tl.to(heroBg, {
-      opacity: 0,
-      duration: 0.03,
-    }, 0.22);
+        opacity: 0,
+        duration: 0.03,
+      }, 0.22);
+
+      tl.to('#giant-name', {
+        opacity: 0,
+        duration: 0.03,
+      }, 0.22);
 
     // ── Phase 2: Z-axis depth-of-field camera engine ──
     // Read each slide's spatial Z from data-z attribute, initialise transform
