@@ -1,4 +1,4 @@
-/* Design System & Core Tokens — Studio Level Palette */
+ï»¿/* Design System & Core Tokens ï¿½ Studio Level Palette */
 :root {
     --text-primary: #ffffff !important;
     --text-muted: #ffffff !important;
@@ -31,7 +31,7 @@
 }
 
 html {
-    /* Lenis handles smooth scroll — native scroll-behavior causes double-smoothing */
+    /* Lenis handles smooth scroll ï¿½ native scroll-behavior causes double-smoothing */
     scroll-behavior: auto;
     font-size: 16px;
     background-color: var(--bg-color);
@@ -93,7 +93,7 @@ section {
     overflow: hidden;
 }
 
-/* Global background override — site is dark by default */
+/* Global background override ï¿½ site is dark by default */
 html, body {
     background-color: #000F08;
 }
@@ -133,7 +133,7 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* ==========================================================================
-   Light contrast sections — alternate background for rhythm
+   Light contrast sections ï¿½ alternate background for rhythm
    ========================================================================== */
 /* Alternating section rhythm: base is dark (Cod Gray), contrast is light (White) */
 .light-section {
@@ -159,8 +159,8 @@ section > *:not(.section-bg-canvas) {
     color: #1D1D1D;
 }
 
-/* Header & Navigation — Translucent background blur */
-/* Header & Navigation — Floating capsule style */
+/* Header & Navigation ï¿½ Translucent background blur */
+/* Header & Navigation ï¿½ Floating capsule style */
 .site-header {
     position: fixed;
     top: 2rem;
@@ -1446,7 +1446,7 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* ----------------------------------------------------------
-   Interaction 04 — Vishwas's Desk
+   Interaction 04 ï¿½ Vishwas's Desk
    ---------------------------------------------------------- */
 .work-section {
     position: relative;
@@ -2808,7 +2808,7 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* ==========================================================================
-   Interaction 02 — Selected Work Drawer
+   Interaction 02 ï¿½ Selected Work Drawer
    ========================================================================== */
 
 /* --- Base Drawer Setup --- */
@@ -3006,14 +3006,7 @@ section > *:not(.section-bg-canvas) {
 .header-light #fixed-logo { color: #1D1D1D; }
 
 .site-header.scrolled-nav { justify-content: flex-end; }
-.site-header.scrolled-nav .header-container {
-  width: 48px;
-  max-width: 48px;
-  height: 48px;
-  padding: 0;
-  justify-content: center;
-  border-radius: 50%;
-}
+.site-header.scrolled-nav .header-container { width: 48px !important; margin-left: auto !important; margin-right: 0 !important; }
 
 /* Expanded state for desktop scrolled nav */
 .site-header.scrolled-nav.nav-expanded { justify-content: center; }
@@ -3149,7 +3142,7 @@ body::after {
 
 
 /* --- Black and White Mode --- */
-html { filter: grayscale(100%) contrast(1.1) !important; }
+img, video { filter: grayscale(100%) contrast(1.1); transition: filter 0.3s ease; } .header-logo-img, .preview-media-container img, .preview-media-container video, .drawer-media-item img, .drawer-media-item video { filter: none !important; }
 
 
 body {
@@ -3298,5 +3291,13 @@ body.bw-mode .crt-switch-indicator {
 
 
 
+
+
+
+
+#hero-bg { filter: grayscale(100%) contrast(1.1) !important; }
+@media (max-width: 768px) {
+  .site-header.scrolled-nav { justify-content: flex-end !important; }
+}
 
 
