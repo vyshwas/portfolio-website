@@ -2933,3 +2933,14 @@ body::after {
     }
 }
 
+
+/* --- Black and White Mode --- */
+body.bw-mode {
+    filter: grayscale(100%) contrast(1.1);
+}
+
+
+body {
+    transition: filter 1s ease, background-color 0.5s ease, color 0.5s ease !important;
+}
+

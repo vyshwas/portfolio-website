@@ -946,3 +946,12 @@ if (cursor && window.matchMedia("(pointer: fine)").matches) {
     });
 }
 
+
+/* --- B/W Mode Toggle --- */
+const bwToggleBtns = document.querySelectorAll("#bw-toggle-btn, .bw-toggle-btn");
+bwToggleBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.body.classList.toggle("bw-mode");
+    });
+});
+
