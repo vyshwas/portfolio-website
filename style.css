@@ -1,5 +1,9 @@
-﻿/* Design System & Core Tokens — Studio Level Palette */
+/* Design System & Core Tokens � Studio Level Palette */
 :root {
+    --text-primary: #ffffff !important;
+    --text-muted: #ffffff !important;
+    --accent-red: #ffffff !important;
+    --vermilion: #ffffff !important;
     --bg-color: #080808;          /* Deepest Studio Dark */
     --bg-contrast: #F5F5F5;       /* Warm Studio White */
     --text-primary: #F0EDE6;      /* Warm Cream - High Contrast */
@@ -27,7 +31,7 @@
 }
 
 html {
-    /* Lenis handles smooth scroll — native scroll-behavior causes double-smoothing */
+    /* Lenis handles smooth scroll � native scroll-behavior causes double-smoothing */
     scroll-behavior: auto;
     font-size: 16px;
     background-color: var(--bg-color);
@@ -89,7 +93,7 @@ section {
     overflow: hidden;
 }
 
-/* Global background override — site is dark by default */
+/* Global background override � site is dark by default */
 html, body {
     background-color: #000F08;
 }
@@ -129,7 +133,7 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* ==========================================================================
-   Light contrast sections — alternate background for rhythm
+   Light contrast sections � alternate background for rhythm
    ========================================================================== */
 /* Alternating section rhythm: base is dark (Cod Gray), contrast is light (White) */
 .light-section {
@@ -155,8 +159,8 @@ section > *:not(.section-bg-canvas) {
     color: #1D1D1D;
 }
 
-/* Header & Navigation — Translucent background blur */
-/* Header & Navigation — Floating capsule style */
+/* Header & Navigation � Translucent background blur */
+/* Header & Navigation � Floating capsule style */
 .site-header {
     position: fixed;
     top: 2rem;
@@ -380,7 +384,7 @@ section > *:not(.section-bg-canvas) {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
-/* ── Backyard capsule CTA ── */
+/* -- Backyard capsule CTA -- */
 @keyframes backyard-flicker {
     0%,  100% { opacity: 1;    box-shadow: 0 0 6px 1px rgba(252, 76, 19, 0.55); }
     8%         { opacity: 0.82; box-shadow: 0 0 3px 0px rgba(252, 76, 19, 0.30); }
@@ -1441,9 +1445,9 @@ section > *:not(.section-bg-canvas) {
     transform: translate(3px, -3px);
 }
 
-/* ──────────────────────────────────────────────────────────
-   Interaction 04 — Vishwas's Desk
-   ────────────────────────────────────────────────────────── */
+/* ----------------------------------------------------------
+   Interaction 04 � Vishwas's Desk
+   ---------------------------------------------------------- */
 .work-section {
     position: relative;
     padding: 8rem var(--site-padding) 4rem var(--site-padding);
@@ -1881,9 +1885,9 @@ section > *:not(.section-bg-canvas) {
     box-shadow: -1px 1px 2px rgba(0,0,0,0.15);
 }
 
-/* ──────────────────────────────────────────────────────────
+/* ----------------------------------------------------------
    Sandbox Physics UI
-   ────────────────────────────────────────────────────────── */
+   ---------------------------------------------------------- */
 .sandbox-btn {
     background: rgba(20, 20, 20, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -2212,7 +2216,7 @@ section > *:not(.section-bg-canvas) {
     transition: opacity 0.5s ease;
   }
 
-/* ── About section: Z-axis depth-of-field camera engine ── */
+/* -- About section: Z-axis depth-of-field camera engine -- */
 .z-perspective-container {
   position: absolute;
   top: 0; left: 0;
@@ -2274,7 +2278,7 @@ section > *:not(.section-bg-canvas) {
     .z-desc { font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6; max-width: 600px; font-family: var(--font-sans); color: var(--text-muted); font-weight: 400; }
 }
 
-/* ── Editorial layout styles for About Z-slides ── */
+/* -- Editorial layout styles for About Z-slides -- */
 .z-columns-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2346,6 +2350,10 @@ section > *:not(.section-bg-canvas) {
 /* Tablet Viewport (max-width: 1024px) */
 @media screen and (max-width: 1024px) {
     :root {
+    --text-primary: #ffffff !important;
+    --text-muted: #ffffff !important;
+    --accent-red: #ffffff !important;
+    --vermilion: #ffffff !important;
         --site-padding: 5vw;
     }
     
@@ -2800,7 +2808,7 @@ section > *:not(.section-bg-canvas) {
 }
 
 /* ==========================================================================
-   Interaction 02 — Selected Work Drawer
+   Interaction 02 � Selected Work Drawer
    ========================================================================== */
 
 /* --- Base Drawer Setup --- */
@@ -3307,5 +3315,7 @@ body.bw-mode .crt-switch-indicator {
         font-size: 1.1rem !important;
     }
 }
+
+
 
 
