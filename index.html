@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=70">
+  <link rel="stylesheet" href="style.css?v=71">
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
   <style>
     /* -------------------------------------------------------
@@ -255,8 +255,6 @@
   <div id="hero-pin-wrapper">
     <section id="hero-scene" aria-label="Hero introduction">
       <!-- Background elements handled by CSS -->
-
-      <h1 id="giant-name" style="position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); width: 100vw; text-align: center; font-size: 14vw; line-height: 1; font-family: var(--font-serif); letter-spacing: -0.02em; white-space: nowrap; color: #ffffff; z-index: 1; pointer-events: none;">VISHWAS MEHTA</h1>
         <!-- The desert TV photograph - this is what scales during the zoom -->
       <div id="hero-bg"></div>
 
@@ -264,7 +262,9 @@
       <div id="hero-grain"></div>
       <div id="hero-vignette"></div>
 
-      <!-- Screen overlay - floats over the real TV screen in the photo -->
+      <h1 id="giant-name" style="position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); width: 100vw; text-align: center; font-size: 14vw; line-height: 1; font-family: var(--font-serif); letter-spacing: -0.02em; white-space: nowrap; color: #ffffff; z-index: 5; pointer-events: none;">VISHWAS MEHTA</h1>
+
+        <!-- Screen overlay - floats over the real TV screen in the photo -->
       <div id="screen-overlay" style="pointer-events: auto; container-type: size;">
         <div id="screen-statement" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 90%;">
           <span class="screen-tag" style="text-transform: uppercase; font-family: 'Inter', sans-serif; font-size: clamp(0.45rem, 3cqw, 0.65rem); color: #ffffff; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 3cqh;">Strategic Designer</span>
@@ -584,7 +584,7 @@
   <!-- Lenis smooth scroll via CDN -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <div id="custom-cursor"></div>
-  <script src="main.js?v=70" defer></script>
+  <script src="main.js?v=71" defer></script>
 </body>
 </html>
 
