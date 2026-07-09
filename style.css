@@ -1170,37 +1170,11 @@ section > *:not(.section-bg-canvas) {
 .work-section {
     position: relative;
     padding: 8rem var(--site-padding) 4rem var(--site-padding);
-    /* Vermilion Grainy Gradient Background */
+    /* Premium Studio Dark Gradient */
     background: 
-      /* 1. Grain overlay (simulated with repeating radial gradient) */
-      repeating-radial-gradient(rgba(255,255,255,0.03) 0, transparent 2px),
-      /* 2. Fade to black at bottom */
-      linear-gradient(to bottom, transparent 60%, #101010 100%),
-      /* 3. Vertical banding/curtain effect */
-      repeating-linear-gradient(to right, rgba(0,0,0,0.1) 0%, transparent 4%, rgba(0,0,0,0.1) 8%),
-      /* 4. Base Vermilion Gradient (Light yellow-orange to deep red to black) */
-      linear-gradient(to bottom, #ffdb99 0%, #fc4c13 25%, #6a0d00 60%, #101010 90%);
-    background-size: 4px 4px, 100% 100%, 100% 100%, 100% 100%;
-}
-
-/* Optimize readability on the bright orange gradient */
-.work-section .work-lead {
-    color: #1a1a1a;
-}
-.work-section .work-row-num,
-.work-section .work-row-title,
-.work-section .work-row-tags {
-    color: #1a1a1a !important;
-}
-.work-section .work-row {
-    border-color: rgba(0, 0, 0, 0.2);
-}
-.work-section .work-row:hover .work-row-num,
-.work-section .work-row:hover .work-row-title,
-.work-section .work-row:focus-visible .work-row-title,
-.work-section .work-row:hover .work-row-tags {
-    color: #000000 !important;
-    font-weight: 600;
+      repeating-radial-gradient(rgba(255,255,255,0.02) 0, transparent 2px),
+      linear-gradient(to bottom, #111111 0%, #050505 100%);
+    background-size: 4px 4px, 100% 100%;
 }
 
 .desk-section {
@@ -2364,6 +2338,7 @@ section > *:not(.section-bg-canvas) {
     
     .footer-right {
         justify-content: center;
+        align-items: center;
     }
     
     /* Dialog padding adjustment */
@@ -2949,12 +2924,12 @@ body::after {
         transform: translate(-50%, -50%);
         transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1), height 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.4s ease;
         will-change: transform;
-        mix-blend-mode: difference;
     }
     #custom-cursor.hover {
         width: 50px;
         height: 50px;
-        background-color: #FFFFFF;
+        background-color: rgba(255, 255, 255, 0.15); /* Soft highlight instead of pure white/difference */
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
 }
 
