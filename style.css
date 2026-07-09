@@ -3037,28 +3037,7 @@ section > *:not(.section-bg-canvas) {
   display: flex !important;
 }
 
-@media (max-width: 768px) {
-  #fixed-logo { position: static; }
-  .site-header { 
-    justify-content: space-between; 
-    width: calc(100% - 2rem); 
-    padding: 0.5rem 1rem; 
-    align-items: flex-start; 
-    transition: all var(--transition-smooth);
-  }
-  
-  .site-header .menu-toggle { display: flex !important; }
-  .site-header .header-container { 
-    padding: 0; 
-    width: 48px; 
-    height: 48px; 
-    border-radius: 50%;
-    justify-content: center;
-    background-color: rgba(29, 29, 29, 0.75); 
-    transition: all var(--transition-smooth);
-  }
 
-}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -3290,7 +3269,7 @@ body.bw-mode .crt-switch-indicator {
 
 
 
-#fixed-logo, .logo-name { color: #ffffff !important; }
+#fixed-logo, .logo-name { color: #FC4C13 !important; }
 
 @media (max-width: 768px) {
     .header-right-controls .crt-switch {
@@ -3315,6 +3294,8 @@ body.bw-mode .crt-switch-indicator {
         font-size: 1.1rem !important;
     }
 }
+
+
 
 
 
