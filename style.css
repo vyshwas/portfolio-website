@@ -1,12 +1,12 @@
 /* Design System & Core Tokens — Studio Level Palette */
 :root {
-    --bg-color: #0A0A0A;          /* Deep Studio Dark */
+    --bg-color: #080808;          /* Deepest Studio Dark */
     --bg-contrast: #F5F5F5;       /* Warm Studio White */
-    --text-primary: #E8E8E8;      /* Soft White */
-    --text-secondary: #999999;    /* Medium Gray */
-    --text-muted: #555555;        /* Darker Gray */
+    --text-primary: #F0EDE6;      /* Warm Cream - High Contrast */
+    --text-secondary: #A39E93;    /* Warm Taupe */
+    --text-muted: #6B665E;        /* Darker Warm Grey */
     --accent-red: #FC4C13;        /* Vermilion */
-    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color: rgba(240, 237, 230, 0.08);
     --border-hover: rgba(252, 76, 19, 0.5);
     
     --font-serif: 'Cormorant Garamond', 'Georgia', serif;
@@ -2944,3 +2944,33 @@ body {
     transition: filter 1s ease, background-color 0.5s ease, color 0.5s ease !important;
 }
 
+/* --- Editorial Giant Heading --- */
+.giant-editorial-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 14vw, 16rem);
+    font-weight: 300;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+/* --- About Side Heading --- */
+.about-side-heading {
+    position: absolute;
+    top: 50%;
+    left: var(--site-padding);
+    transform: translateY(-50%) rotate(180deg);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--accent-red);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    z-index: 100;
+    pointer-events: none;
+}
