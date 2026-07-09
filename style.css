@@ -1,22 +1,22 @@
-/* Design System & Core Tokens — Vermilion & Cod Gray Palette */
+/* Design System & Core Tokens — Studio Level Palette */
 :root {
-    --bg-color: #1D1D1D;          /* Cod Gray */
-    --bg-contrast: #FFFFFF;       /* White for contrast sections */
-    --text-primary: #FFFFFF;      /* White */
-    --text-secondary: #808080;    /* Gray */
-    --text-muted: #808080;        /* Gray */
+    --bg-color: #0A0A0A;          /* Deep Studio Dark */
+    --bg-contrast: #F5F5F5;       /* Warm Studio White */
+    --text-primary: #E8E8E8;      /* Soft White */
+    --text-secondary: #999999;    /* Medium Gray */
+    --text-muted: #555555;        /* Darker Gray */
     --accent-red: #FC4C13;        /* Vermilion */
-    --border-color: rgba(255, 255, 255, 0.12);
-    --border-hover: rgba(252, 76, 19, 0.4);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(252, 76, 19, 0.5);
     
-    --font-serif: 'VT323', monospace;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+    --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
     --font-brush: 'Caveat', cursive;
     
-    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     --transition-fast: all 0.2s ease;
     
-    --site-padding: 6.5vw;
+    --site-padding: 4vw;
 }
 
 /* Reset and Globals */
@@ -560,10 +560,10 @@ section > *:not(.section-bg-canvas) {
 
 .about-lead {
     font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 3.2vw, 3.2rem);
-    font-weight: 350;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
+    font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
 }
 
 .about-columns {
@@ -684,10 +684,12 @@ section > *:not(.section-bg-canvas) {
 
 .work-row-title {
     font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    font-size: clamp(3rem, 7vw, 7rem);
     font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
     color: var(--text-muted); /* Inactive state: Light gray */
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color 0.5s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .work-row-meta {
@@ -707,8 +709,8 @@ section > *:not(.section-bg-canvas) {
 .work-row:hover .work-row-title,
 .work-row:focus-visible .work-row-title {
     color: var(--text-primary); /* Active state: Black/white */
-    transform: translateX(4px); /* Tiny horizontal movement */
-    font-weight: 450;
+    transform: translateX(1vw) skewX(-2deg); /* Dynamic studio movement */
+    font-weight: 500;
 }
 
 .work-row:hover .work-row-num,
@@ -2915,6 +2917,44 @@ section > *:not(.section-bg-canvas) {
 @media (max-width: 768px) {
     .header-logo-img {
         height: 32px;
+    }
+}
+
+
+/* Cinematic Film Grain Overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 999999;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E");
+}
+
+
+/* --- Studio Custom Cursor --- */
+@media (pointer: fine) {
+    body, a, button, .work-row {
+        cursor: none !important;
+    }
+    #custom-cursor {
+        position: fixed;
+        top: 0; left: 0;
+        width: 12px; height: 12px;
+        background-color: var(--accent-red);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999999;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1), height 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.4s ease;
+        will-change: transform;
+        mix-blend-mode: difference;
+    }
+    #custom-cursor.hover {
+        width: 50px;
+        height: 50px;
+        background-color: #FFFFFF;
     }
 }
 
