@@ -132,10 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 0.03,
       }, 0.22);
 
-      tl.to('#giant-name', {
-        opacity: 0,
-        duration: 0.03,
-      }, 0.22);
+      tl.to('#giant-name', { opacity: 0, duration: 0.1 }, 0);
 
     // ── Phase 2: Z-axis depth-of-field camera engine ──
     // Read each slide's spatial Z from data-z attribute, initialise transform
@@ -993,6 +990,7 @@ if (cursor && window.innerWidth > 768) {
         el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
     });
 }
+
 
 
 
