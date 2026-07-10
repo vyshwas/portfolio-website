@@ -1017,6 +1017,33 @@ if (cursor && window.innerWidth > 768) {
     });
   }
 
+
+  // --- FLIP MODE TOGGLE ---
+  const flipToggle = document.getElementById('flipToggle');
+  if (flipToggle) {
+    // Check local storage for preference
+    if (localStorage.getItem('flipMode') === 'enabled') {
+      document.body.classList.add('flip-mode');
+    }
+
+    const toggleFlip = () => {
+      document.body.classList.toggle('flip-mode');
+      if (document.body.classList.contains('flip-mode')) {
+        localStorage.setItem('flipMode', 'enabled');
+      } else {
+        localStorage.removeItem('flipMode');
+      }
+    };
+
+    flipToggle.addEventListener('click', toggleFlip);
+    flipToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFlip();
+      }
+    });
+  }
+
 });
 }
 

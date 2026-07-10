@@ -3585,3 +3585,48 @@ body.bw-mode .crt-switch-indicator {
         margin-right: 0 !important;
     }
 }
+
+/* --- Flip Mode Styles --- */
+body.flip-mode {
+    transform: scaleX(-1);
+    transform-origin: center top;
+}
+
+/* Ensure the cursor doesn't feel backwards on flipped text */
+body.flip-mode * {
+    cursor: auto;
+}
+
+/* Toggle visual state of the switch knob and indicator in flip-mode */
+body.flip-mode .crt-switch-label { 
+    color: #fff !important; 
+}
+body.flip-mode .crt-switch-track { 
+    background: #FC4C13 !important; 
+    border-color: #FC4C13 !important;
+}
+body.flip-mode .crt-switch-knob { 
+    transform: translateX(24px) !important; 
+}
+body.flip-mode .crt-switch-indicator {
+    background: #fff !important;
+    box-shadow: 0 0 6px rgba(255,255,255,0.8) !important;
+}
+
+/* Align switch vertically in the header */
+.site-header .crt-switch {
+    position: absolute !important;
+    right: 2rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    z-index: 1002 !important;
+}
+
+@media (max-width: 1024px) {
+    .site-header .crt-switch {
+        right: 5.5rem !important; /* Move left of the hamburger menu on tablets/mobile */
+    }
+}

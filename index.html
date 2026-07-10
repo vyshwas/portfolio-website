@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=87">
+  <link rel="stylesheet" href="style.css?v=88">
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
   <style>
     /* -------------------------------------------------------
@@ -248,6 +248,17 @@
   
       
       </div>
+  
+      <!-- CRT Flip Switch -->
+      <div class="crt-switch" id="flipToggle" role="button" aria-label="Toggle flip mode" tabindex="0" style="cursor: pointer;">
+        <span class="crt-switch-label" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; transition: color 0.3s ease;">FLIP</span>
+        <div class="crt-switch-track" style="width: 50px; height: 26px; background: #1a1a1a; border-radius: 13px; border: 1px solid #333; padding: 2px; transition: background 0.3s ease; display: flex; align-items: center;">
+          <div class="crt-switch-knob" style="width: 20px; height: 20px; background: linear-gradient(145deg, #444, #222); border-radius: 50%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 2px 5px rgba(0,0,0,0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; justify-content: center;">
+            <div class="crt-switch-indicator" style="width: 4px; height: 4px; border-radius: 50%; background: #555; box-shadow: inset 0 1px 1px rgba(0,0,0,0.5); transition: all 0.3s ease;"></div>
+          </div>
+        </div>
+      </div>
+
   </header>
 
   <!-- ------------------------------------------
@@ -667,7 +678,7 @@
   <!-- Lenis smooth scroll via CDN -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <div id="custom-cursor"></div>
-  <script src="main.js?v=87" defer></script>
+  <script src="main.js?v=88" defer></script>
 </body>
 </html>
 
