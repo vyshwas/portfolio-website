@@ -3587,10 +3587,7 @@ body.bw-mode .crt-switch-indicator {
 }
 
 /* --- Flip Mode Styles --- */
-body.flip-mode {
-    transform: scaleX(-1);
-    transform-origin: center top;
-}
+
 
 /* Ensure the cursor doesn't feel backwards on flipped text */
 body.flip-mode * {
@@ -3629,4 +3626,27 @@ body.flip-mode .crt-switch-indicator {
     .site-header .crt-switch {
         right: 5.5rem !important; /* Move left of the hamburger menu on tablets/mobile */
     }
+}
+
+/* --- Color Inversion (Theme Flip) --- */
+body.flip-mode {
+    filter: invert(1) hue-rotate(180deg) !important;
+    background-color: #ffffff !important;
+}
+
+/* Negate inversion on images and media to keep them looking normal */
+body.flip-mode img,
+body.flip-mode video,
+body.flip-mode #hero-bg,
+body.flip-mode .preview-hero-img,
+body.flip-mode .drawer-main img,
+body.flip-mode .preview-media-container img,
+body.flip-mode .preview-frame img,
+body.flip-mode .collage-img {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* Keep the switch itself dark and consistent (negate body inversion on it) */
+body.flip-mode .crt-switch {
+    filter: invert(1) hue-rotate(180deg) !important;
 }
