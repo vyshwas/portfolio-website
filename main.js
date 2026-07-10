@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    VISHWAS MEHTA PORTFOLIO — main.js  (v3)
    Performance-first cinematic hero zoom.
 
@@ -987,40 +987,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 
-});
 
-/* --- Custom Cursor Logic --- */
-const cursor = document.getElementById("custom-cursor");
-if (cursor && window.innerWidth > 768) {
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    
-    window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-    });
-    
-    const hoverElements = document.querySelectorAll("a, button, .work-row, .menu-toggle");
-    hoverElements.forEach(el => {
-        el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
-        el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
-    
   // --- POST-CREDITS SCROLL REVEAL ---
-  gsap.utils.toArray('.credits-block').forEach((block) => {
-    gsap.fromTo(block,
-      { y: 40, opacity: 0 },
-      {
-        y: 0, opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: block,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        }
-      }
-    );
+  // Trigger all blocks to fade in sequentially (staggered) once the credits section enters the screen
+  gsap.from('.credits-block', {
+    y: 40,
+    opacity: 0,
+    duration: 1.2,
+    stagger: 0.25, // Cinematic staggered reveal
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '#post-credits',
+      start: 'top 85%',
+      toggleActions: 'play none none none',
+    }
   });
 
   // Credits back-to-top button
@@ -1030,18 +1010,23 @@ if (cursor && window.innerWidth > 768) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
 });
-}
 
-
-
-
-
-
-
-
-
-
-
-
+  /* --- Custom Cursor Logic --- */
+  const cursor = document.getElementById("custom-cursor");
+  if (cursor && window.innerWidth > 768) {
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      
+      window.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      });
+      
+      const hoverElements = document.querySelectorAll("a, button, .work-row, .menu-toggle");
+      hoverElements.forEach(el => {
+          el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
+          el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
+      });
+  }

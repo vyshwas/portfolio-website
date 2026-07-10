@@ -3411,8 +3411,7 @@ body.bw-mode .crt-switch-indicator {
     width: 100%;
     max-width: 900px;
     text-align: center;
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 1;
 }
 
 .credits-label {
