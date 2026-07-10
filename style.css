@@ -3437,18 +3437,20 @@ body.bw-mode .crt-switch-indicator {
 /* Title card */
 .credits-title-card .credits-name {
     font-family: var(--font-serif);
-    font-size: clamp(5rem, 18vw, 20rem);
+    font-size: clamp(4rem, 13vw, 15rem);
     font-weight: 800;
     line-height: 0.85;
     letter-spacing: -0.04em;
     text-transform: uppercase;
     margin: 0;
     background: linear-gradient(180deg, #ffffff 20%, rgba(255,255,255,0.75) 100%);
-    display: inline-block;
-    width: 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: inline-block;
+    width: 100%;
+    padding: 0 0.05em;
+    box-sizing: border-box;
 }
 
 /* Summary */
