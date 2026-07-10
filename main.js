@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TV_ORIGIN_X   = 50;   // % from left
   const TV_ORIGIN_Y   = 55.5; // % from top — tuned for new photo
   const FINAL_SCALE   = 9;    // how much to scale (fills viewport)
-  const SCROLL_MULT   = 1.1;    // pin scroll distance reduced for faster scroll
+  const SCROLL_MULT   = 6;    // increased for readable about section
 
   const heroPinWrapper  = document.getElementById('hero-pin-wrapper');
   const heroScene       = document.getElementById('hero-scene');
@@ -133,8 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 0.22);
 
       tl.to('#giant-name', { opacity: 0, duration: 0.1 }, 0);
-
-    // ── Phase 2: Z-axis depth-of-field camera engine ──
+// ── Phase 2: Z-axis depth-of-field camera engine ──
     // Read each slide's spatial Z from data-z attribute, initialise transform
     const zSlides = Array.from(document.querySelectorAll('.z-slide'));
     zSlides.forEach(slide => {
@@ -175,14 +174,18 @@ document.addEventListener('DOMContentLoaded', () => {
           slide.style.transform = `translate(-50%, -50%) translateZ(${effectiveZ}px)`;
 
           // Depth-of-field: blur keyed to distance from camera
-          const blurAmt = Math.max(0, Math.abs(effectiveZ) / 150 - 1);
+          const blurAmt = Math.max(0, Math.abs(effectiveZ) / 600 - 1);
 
           // Opacity: fade out as it flies past camera
           let alpha = 1;
           if (effectiveZ > 400) {
             alpha = 1 - Math.max(0, (effectiveZ - 500) / 300);
           }
-          alpha = Math.max(0, Math.min(1, alpha));
+          // Fade-in: slides still far ahead (negative effectiveZ) fade in gradually
+            if (effectiveZ < -800) {
+              alpha = Math.min(alpha, Math.max(0, 1 - (Math.abs(effectiveZ) - 800) / 1500));
+            }
+            alpha = Math.max(0, Math.min(1, alpha));
 
           slide.style.filter  = `blur(${blurAmt.toFixed(2)}px)`;
           slide.style.opacity = alpha;
@@ -988,7 +991,33 @@ if (cursor && window.innerWidth > 768) {
     hoverElements.forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
+    
+  // --- POST-CREDITS SCROLL REVEAL ---
+  gsap.utils.toArray('.credits-block').forEach((block) => {
+    gsap.fromTo(block,
+      { y: 40, opacity: 0 },
+      {
+        y: 0, opacity: 1,
+        duration: 1.2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: block,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        }
+      }
+    );
+  });
+
+  // Credits back-to-top button
+  const creditsTopBtn = document.getElementById('credits-back-to-top');
+  if (creditsTopBtn) {
+    creditsTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  }
+
+});
 }
 
 
