@@ -3391,7 +3391,7 @@ body.bw-mode .crt-switch-indicator {
     background: #0a0a0a;
     color: #ffffff;
     overflow: hidden;
-    padding: 0;
+    padding: 12vh 0 0 0;
     margin: 0;
 }
 
@@ -3403,7 +3403,7 @@ body.bw-mode .crt-switch-indicator {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2vh 6vw;
+    padding: 2vh 6vw 12vh 6vw;
     gap: 14vh;
 }
 
@@ -3574,7 +3574,7 @@ body.bw-mode .crt-switch-indicator {
 }
 
 @media (max-width: 768px) {
-    .credits-scroll-container { padding: 2vh 5vw; gap: 10vh; }
+    .credits-scroll-container { padding: 2vh 5vw 10vh 5vw; gap: 10vh; }
     .credits-skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .credits-email { font-size: clamp(1.2rem, 5vw, 2rem); }
 }
