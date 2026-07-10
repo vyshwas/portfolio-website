@@ -12,6 +12,10 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Clean up any remaining flipMode local storage states
+  localStorage.removeItem('flipMode');
+  document.documentElement.classList.remove('flip-mode');
+  document.body.classList.remove('flip-mode');
 
   // Remove hidden-init once DOM is ready so we don't see FOUC
   const hiddenEls = document.querySelectorAll('.hidden-init');
@@ -192,8 +196,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       },
 
-      onLeave:     () => { heroBg.style.willChange = 'auto'; },
-      onEnterBack: () => { heroBg.style.willChange = 'transform'; },
+      onLeave:     () => { 
+          heroBg.style.willChange = 'auto'; 
+          const globalGrain = document.getElementById('global-grain');
+          if (globalGrain) globalGrain.style.opacity = '0.04';
+        },
+      onEnterBack: () => { 
+          heroBg.style.willChange = 'transform'; 
+          const globalGrain = document.getElementById('global-grain');
+          if (globalGrain) {
+            globalGrain.style.opacity = heroTrigger ? (heroTrigger.progress >= 0.22 ? '0.04' : '0') : '0';
+          }
+        },
     });
   }
 
@@ -1014,33 +1028,6 @@ if (cursor && window.innerWidth > 768) {
   if (creditsTopBtn) {
     creditsTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-
-  // --- FLIP MODE TOGGLE ---
-  const flipToggle = document.getElementById('flipToggle');
-  if (flipToggle) {
-    // Check local storage for preference
-    if (localStorage.getItem('flipMode') === 'enabled') {
-      document.body.classList.add('flip-mode');
-    }
-
-    const toggleFlip = () => {
-      document.body.classList.toggle('flip-mode');
-      if (document.body.classList.contains('flip-mode')) {
-        localStorage.setItem('flipMode', 'enabled');
-      } else {
-        localStorage.removeItem('flipMode');
-      }
-    };
-
-    flipToggle.addEventListener('click', toggleFlip);
-    flipToggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleFlip();
-      }
     });
   }
 
