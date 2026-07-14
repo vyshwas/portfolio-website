@@ -586,7 +586,19 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ──────────────────────────────────────────────────────────
      9. SELECTED WORK DRAWER (Interaction 02)
   ────────────────────────────────────────────────────────── */
-  const projectsData = [
+    const projectsData = [
+    {
+      title: "Awara",
+      category: "Product Design · UX Research · Systems Thinking",
+      timeline: "Concept",
+      role: "Product Designer",
+      team: "Solo",
+      summary: "A travel app that treats context as the first-class input. The problem: modern travel planners start with a destination input, then generate a timeline that breaks when anything shifts. I designed an app that coordinates everything in real-time, focusing on the dynamic adjust sheet rather than static itineraries.",
+      challenge: "PROBLEM:\nHow do you coordinate a travel plan that shifts dynamically?\n\nAPPROACH:\nTeardown of existing travel apps, user journey mapping, building a prototype centered around the Adjust sheet with dynamic update triggers (like a Johri Bazaar crowd nudge).",
+      outcome: "SYSTEM:\nA full clickable prototype: Welcome through Home, Create (manual vs. AI-assisted), a live three-day Jaipur itinerary, the Adjust sheet with proactive suggestions, and My Trips. Built on a vermilion-and-ink editorial system.\n\nLEARNING:\nTrust in a travel app is won at the moment something goes wrong, not at the moment the plan is generated. Building the Adjust sheet taught me that an itinerary earns confidence by staying honest about disruption.",
+      image: "assets/project_awara.png",
+      proto: "assets/awara-prototype.html"
+    },
     {
       title: "The Whole Fruit",
       category: "Brand Strategy · Packaging · Identity",
@@ -596,29 +608,20 @@ document.addEventListener('DOMContentLoaded', () => {
       summary: "My M.Des dissertation project. The brief I gave myself: build a wellness brand confident enough to look expensive without saying \"premium\" anywhere on the pack. The category is noise. Every competitor uses the same palette, the same kraft paper, the same health claims. I wanted to explore what restraint actually signals on a shelf.",
       challenge: "PROBLEM:\nHow do you stand out in a category where every brand looks identical?\n\nAPPROACH:\nResearch competitor positioning, build a type-led system, test the visual logic against category conventions.",
       outcome: "SYSTEM:\nFull brand identity (mark, palette, packaging), documented as strategic positioning framework.\n\nLEARNING:\nRestraint and clarity are design decisions, not defaults. The work taught me how positioning dictates every visual choice downstream.",
-      image: "assets/project_fruit_full.pdf"
+      image: "assets/project_wholefruit.png",
+      proto: ""
     },
     {
-      title: "Personalised Travel Platform",
-      category: "Product Design · UX Research · Systems Thinking",
+      title: "Nocturne",
+      category: "Product Design · Checkout · Trust",
       timeline: "Concept",
       role: "UX Designer",
       team: "Solo",
-      summary: "A concept project exploring how trip planning actually works. Most platforms ask for dates and destination, then hand you a list. People don't plan that way. They plan around a feeling, a budget, constraints they don't articulate. I designed a constraint-first flow to see what happens when you surface the reasoning instead of hiding it.",
-      challenge: "PROBLEM:\nGeneric itinerary tools ignore how people actually decide.\n\nAPPROACH:\nUser research on travel planning behaviour, constraint mapping, flow redesign.",
-      outcome: "SYSTEM:\nPrototype and documented user flows showing decision architecture.\n\nLEARNING:\nPersonalisation isn't a filter. It's about showing your work. Making the system's reasoning visible builds more trust than a perfect recommendation.",
-      image: "assets/project_travel.jpg"
-    },
-    {
-      title: "Cart Abandonment Audit",
-      category: "UX Audit · E-commerce · Strategy",
-      timeline: "Audit",
-      role: "UX Analyst",
-      team: "Katalyse.ai",
-      summary: "A structured UX audit I completed at Katalyse.ai exploring why checkout flows lose users. The assumption is price or shipping. The audit found something quieter: friction at moments where the interface asks for trust it hasn't earned. I mapped 11 friction points and documented them as a prioritised audit.",
-      challenge: "PROBLEM:\nHigh cart abandonment across e-commerce funnels, cause unclear.\n\nAPPROACH:\nAudit of Shopify checkout experience, friction point mapping, trust analysis.",
-      outcome: "SYSTEM:\nDocumented audit with friction prioritisation and redesign recommendations.\n\nLEARNING:\nAmbiguity costs more than transparency. People don't abandon carts because of price. They abandon because the next step isn't clear.",
-      image: "assets/project_cart.jpg"
+      summary: "A self-initiated quick-commerce checkout concept, and the design follow-on to a cart abandonment audit I ran at Katalyse.ai: the audit found where trust breaks, and this is where I tried to rebuild it. I optimised the returning-user path into a single slide-over drawer and treated the real problem as a tension, not a funnel.",
+      challenge: "PROBLEM:\nIndian quick-commerce already fixed the friction Western cart research targets: saved addresses, saved payment, ETA up front, near-one-screen checkout. What's left is quieter, last-second hesitation at the moment of paying, and recovery after a failed UPI payment.\n\nAPPROACH:\nAn observational teardown of three live checkouts, then a returning-user drawer aimed at the two moments that still lose people. The single surface holds item, total, and destination visible through payment via a receipt metaphor, stabilised by a skeleton loader.",
+      outcome: "SYSTEM:\nA clickable prototype where every state works, built around a first-class payment-failure screen ('the misprint') that absorbs blame and preserves the order, coupons and tips are absent to remove decisions.\n\nLEARNING:\nRecovery is the highest-leverage moment in this market. Absorbing blame on failure and keeping the user inside the flow matters more than shaving another step.",
+      image: "assets/project_nocturne.png",
+      proto: "assets/nocturne-prototype.html"
     }
   ];
 
@@ -719,7 +722,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const img = document.getElementById('drawer-project-image');
     const pdf = document.getElementById('drawer-project-pdf');
     
-    if (data.image.endsWith('.pdf')) {
+    if (data.proto) {
+      if (img) img.style.display = 'none';
+      if (pdf) {
+        pdf.style.display = 'block';
+        pdf.src = data.proto;
+      }
+    } else if (data.image && data.image.endsWith('.pdf')) {
       if (img) img.style.display = 'none';
       if (pdf) {
         pdf.style.display = 'block';
@@ -729,14 +738,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pdf) pdf.style.display = 'none';
       if (img) {
         img.style.display = 'block';
-        img.src = data.image;
+        img.src = data.image || '';
         img.alt = `Case study screenshot for ${data.title}`;
       }
     }
     
     // Preload next image hero
     const nextIdx = (index + 1) % projectsData.length;
-    if (!projectsData[nextIdx].image.endsWith('.pdf')) {
+    if (projectsData[nextIdx].image && !projectsData[nextIdx].image.endsWith('.pdf') && !projectsData[nextIdx].proto) {
       const preloadImg = new Image();
       preloadImg.src = projectsData[nextIdx].image;
     }
