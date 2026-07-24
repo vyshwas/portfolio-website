@@ -622,6 +622,32 @@ document.addEventListener('DOMContentLoaded', () => {
       outcome: "SYSTEM:\nA clickable prototype where every state works, built around a first-class payment-failure screen ('the misprint') that absorbs blame and preserves the order, coupons and tips are absent to remove decisions.\n\nLEARNING:\nRecovery is the highest-leverage moment in this market. Absorbing blame on failure and keeping the user inside the flow matters more than shaving another step.",
       image: "assets/project_nocturne.png",
       proto: "assets/nocturne-prototype.html"
+    },
+    {
+      title: "Munim",
+      category: "Product Design · AI Agents · Fintech",
+      timeline: "Concept",
+      role: "Product Designer",
+      team: "Solo",
+      summary: "The trust interface for a world where an AI agent can spend your money. NPCI's Unified Agent Protocol opens the door for agents to initiate UPI payments on a person's behalf, and that idea has a trust gap no one has designed for yet. I built the merchant-level consent system that closes it, named for the munim, the merchant-house bookkeeper who tracked what left the till and for whom.",
+      challenge: "PROBLEM:\nHow do you let an agent spend money for you without asking permission for everything, or trusting it with everything?\n\nAPPROACH:\nPer-merchant earned autonomy instead of one blanket permission. New merchants start supervised; three clean approvals earn trust under real UPI Circle-style caps (₹5,000 / ₹15,000). Every auto-pay carries a visible 10-minute hold before it fires, never instant, because UPI has no chargeback rail to undo a mistake.",
+      outcome: "SYSTEM:\nA khata-and-mandate interface built around narrated actions instead of a silent audit trail, with failure states designed on purpose: a price anomaly held for review, a WhatsApp payment link refused outright, a mid-hold cancel, a cap breach that asks rather than blocking silently.\n\nLEARNING:\nDelegated trust isn't a toggle, it's earned per relationship and revocable in one tap. A munim leaves; the ledger remains.",
+      image: "assets/project_munim.png",
+      proto: "assets/munim-prototype.html"
+    },
+    {
+      title: "Gamut",
+      category: "Design Tooling · Design Systems · Product",
+      timeline: "Self-Initiated Product",
+      role: "Founder & Designer",
+      team: "Solo",
+      summary: "A color-and-type systems tool built out of my own free resource, The Brand Color Bible. Most palette generators produce colors that look fine and fail contrast, or ignore what a brand category actually needs. I built the one that enforces both: a generator, a fixer, and a design-token layer, all running the Bible's own rules against itself.",
+      challenge: "PROBLEM:\nPalette tools optimise for pretty, not for correct: they don't check contrast, and they don't know what a fintech palette needs versus a wellness one.\n\nAPPROACH:\nEncoded my own methodology directly into the engine, 60-30-10 color roles, ten laws of color, archetype-driven psychology, so every generated palette is contrast-checked in both light and dark before it's ever shown, and a Fixer that diagnoses which law an existing palette breaks.",
+      outcome: "SYSTEM:\nA palette generator and fixer, a live brief-to-palette assistant, and a design-token layer (spacing, radius, elevation, interaction states) exporting as CSS, Tailwind, and JSON.\n\nLEARNING:\nA tool that enforces its own rules is a stronger design-system credential than a case study describing one. Building it also showed me exactly where \"design system\" claims get vague, token export and state definitions, and forced me to make both precise.",
+      image: "assets/project_gamut.png",
+      proto: "",
+      link: "https://vyshwas.github.io/gamut/",
+      linkLabel: "VIEW GAMUT LIVE ↗"
     }
   ];
 
@@ -630,6 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeDrawerBtn = document.getElementById('closeDrawerBtn');
   const prevProjectBtn = document.getElementById('prevProjectBtn');
   const nextProjectBtn = document.getElementById('nextProjectBtn');
+  const drawerLaunchBtn = document.getElementById('drawer-launch-btn');
 
   let currentProjectIndex = 0;
   let lastActiveElement = null;
@@ -717,7 +744,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const outcomeEl = document.getElementById('drawer-project-outcome');
     if (outcomeEl) outcomeEl.textContent = data.outcome || "";
-    
+
+    // Launch link: defaults to Behance, overridden per-project (e.g. Gamut's live site)
+    if (drawerLaunchBtn) {
+      drawerLaunchBtn.href = data.link || "https://www.behance.net/vishwashmehta";
+      drawerLaunchBtn.textContent = data.linkLabel || "BEHANCE LINK ↗";
+    }
+
     // Lazy-load media
     const img = document.getElementById('drawer-project-image');
     const pdf = document.getElementById('drawer-project-pdf');
@@ -930,14 +963,18 @@ document.addEventListener('DOMContentLoaded', () => {
     closeProjectDrawer();
   });
 
-  prevProjectBtn?.addEventListener('click', () => {
+  prevProjectBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
     let prevIndex = currentProjectIndex - 1;
     if (prevIndex < 0) {
       prevIndex = projectsData.length - 1;
     }
     populateProjectDrawer(prevIndex);
     currentProjectIndex = prevIndex;
-    
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#project-" + prevIndex);
+    }
+
     // Reset scroll positions of scroll containers inside the drawer
     const scrollContainers = drawer.querySelectorAll('.drawer-visuals, .drawer-info');
     scrollContainers.forEach(container => {
@@ -945,10 +982,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  nextProjectBtn?.addEventListener('click', () => {
+  nextProjectBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
     let nextIndex = (currentProjectIndex + 1) % projectsData.length;
     populateProjectDrawer(nextIndex);
     currentProjectIndex = nextIndex;
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#project-" + nextIndex);
+    }
 
     // Reset scroll positions of scroll containers inside the drawer
     const scrollContainers = drawer.querySelectorAll('.drawer-visuals, .drawer-info');
