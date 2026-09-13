@@ -37,11 +37,16 @@ export default function Hero() {
         { autoAlpha: 0, y: -30, duration: 0.18 },
         0,
       )
+      // Dive zoom, capped: past ~5x the frame is fully behind the 95%
+      // ink signal veil, so deeper scales buy nothing visible while the
+      // layer (up to ~24,000px at 17x) busts GPU tile limits and tears
+      // into stepped seams on fast scrolls. 5x keeps it inside safe
+      // raster size with the same on-screen read.
       timeline.fromTo(
         stage,
         { scale: 1 },
         {
-          scale: 17,
+          scale: 5,
           transformOrigin: () => origin().x + 'px ' + origin().y + 'px',
           duration: 0.76,
           ease: 'power2.inOut',
