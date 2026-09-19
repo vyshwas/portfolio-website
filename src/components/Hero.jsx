@@ -51,13 +51,15 @@ export default function Hero() {
       // Initial text reveal on load
       gsap.fromTo(
         root.current.querySelectorAll('.reveal-text'),
-        { yPercent: 110 },
+        { y: 50, opacity: 0 },
         {
-          yPercent: 0,
-          stagger: 0.12,
+          y: 0,
+          opacity: 1,
+          stagger: 0.15,
           duration: 1.2,
           ease: 'power3.out',
-          delay: 0.15
+          delay: 0.15,
+          clearProps: 'all',
         }
       )
 
@@ -163,15 +165,11 @@ export default function Hero() {
       {/* ─── 3. Massive Vertical Typography ─── */}
       <div className="hero-editorial-layer">
         <div className="hero-top-text">
-          <p className="hero-role text-neon" style={{ marginBottom: '24px' }}>Strategic Product Designer<br />&amp; Design Engineer</p>
-          <div className="reveal-mask">
-            <h1 className="hero-name-pilowlava reveal-text" style={{ margin: 0, lineHeight: 0.9 }}>Vishwas</h1>
-          </div>
+          <p className="hero-role text-amber-glow" style={{ marginBottom: '24px' }}>Strategic Product Designer<br />&amp; Design Engineer</p>
+          <h1 className="hero-name-pilowlava reveal-text" style={{ margin: 0, lineHeight: 0.9 }}>Vishwas</h1>
         </div>
         <div className="hero-bottom-text">
-          <div className="reveal-mask">
-            <h1 className="hero-name-pilowlava reveal-text" style={{ margin: 0, lineHeight: 0.9 }}>Mehta</h1>
-          </div>
+          <h1 className="hero-name-pilowlava reveal-text" style={{ margin: 0, lineHeight: 0.9 }}>Mehta</h1>
           <div className="hero-telemetry-corner">
             <span>VOL. 1 / NO. 1</span>
             <span className="caption-line-short" />

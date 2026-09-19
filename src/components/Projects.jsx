@@ -19,6 +19,46 @@ const categories = {
   'The Whole Fruit': 'Brand strategy / Packaging',
 }
 
+function ProjectBadge({ title }) {
+  const icons = {
+    Awara: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" />
+      </svg>
+    ),
+    Nocturne: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" />
+      </svg>
+    ),
+    Munim: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+      </svg>
+    ),
+    Gamut: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+      </svg>
+    ),
+    'The Whole Fruit': (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" fill="currentColor" />
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+      </svg>
+    ),
+  }
+  return (
+    <div className="archive-card-center-badge" aria-hidden="true">
+      <span className="archive-badge-icon">{icons[title] || <Icon name="external" />}</span>
+      <span className="archive-badge-text">{title}</span>
+    </div>
+  )
+}
+
 function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
   const [loadedProject, setLoadedProject] = useState(null)
   const [notes, setNotes] = useState(false)
@@ -213,6 +253,7 @@ export default function Projects() {
           scrollTrigger: {
             trigger: '.archive-grid',
             start: 'top 85%',
+            once: true,
           },
         },
       )
@@ -267,7 +308,7 @@ export default function Projects() {
           <h2 id="archive-heading" className="archive-title" style={{ fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: 1, marginBottom: '24px' }}>
             Ideas, made
             <br />
-            <em style={{ color: 'var(--neon)', fontStyle: 'italic' }}>tangible.</em>
+            <em style={{ color: 'var(--cyan-deep)', fontStyle: 'italic' }}>tangible.</em>
           </h2>
           <p className="archive-description">
             The decisions behind the interface.
@@ -304,6 +345,10 @@ export default function Projects() {
                 loading="lazy"
                 decoding="async"
               />
+
+              {/* Centered Brand Badge (Reference Style) */}
+              <ProjectBadge title={project.title} />
+
               {/* Hover-only metadata overlay */}
               <div className="archive-card-overlay">
                 <div className="archive-card-header">

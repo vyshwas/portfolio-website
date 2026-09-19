@@ -52,7 +52,8 @@ export default function LabReveal() {
           tween.current?.kill()
           control.current.morph = self.progress * 3
           scene.current?.setMorph(control.current.morph)
-          setPhase(Math.min(3, Math.round(control.current.morph)))
+          const next = Math.min(3, Math.round(control.current.morph))
+          setPhase((prev) => (prev === next ? prev : next))
         },
       })
       return () => {
