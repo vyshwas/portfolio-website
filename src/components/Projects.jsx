@@ -197,135 +197,172 @@ export default function Projects() {
   const [selected, setSelected] = useState(null)
   const [mode, setMode] = useState('study')
   const calm = useReducedMotion()
+
   useLayoutEffect(() => {
     if (calm) return
     const ctx = gsap.context(() => {
-      root.current.querySelectorAll('.project-art').forEach((art) => {
-        gsap.fromTo(
-          art.querySelector('.project-image'),
-          { yPercent: 7, scale: 1.05 },
-          {
-            yPercent: -3,
-            scale: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: art,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
-          },
-        )
-      })
       gsap.fromTo(
-        '.work-heading em',
-        { xPercent: -8 },
+        '.archive-card',
+        { y: 30, opacity: 0 },
         {
-          xPercent: 0,
-          ease: 'none',
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power2.out',
           scrollTrigger: {
-            trigger: root.current,
-            start: 'top bottom',
-            end: 'top 20%',
-            scrub: true,
+            trigger: '.archive-grid',
+            start: 'top 85%',
           },
         },
       )
     }, root)
     return () => ctx.revert()
   }, [calm])
+
+  const getObjectPosition = (pos) => {
+    if (!pos) return 'center'
+    if (pos === 'object-top') return 'top center'
+    if (pos === 'object-center') return 'center center'
+    if (pos === 'object-[center_12%]') return 'center 12%'
+    if (pos === 'object-[center_42%]') return 'center 42%'
+    return 'center'
+  }
+
   const open = (project, nextMode) => {
     setSelected(project)
     setMode(nextMode)
   }
+
   return (
     <section
       id="experiments"
       tabIndex="-1"
       ref={root}
-      className="work-section page-gutter"
-      aria-labelledby="work-heading"
+      className="archive-section"
+      aria-labelledby="archive-heading"
     >
-      <div className="section-divider">
-        <span>Selected work</span>
-        <span className="meta">
-          {String(ordered.length).padStart(2, '0')} projects / 2024–2025
-        </span>
+      {/* ─── Background Telemetry Graphs Video ─── */}
+      <div className="archive-bg-video-wrap" aria-hidden="true">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="archive-bg-video"
+        >
+          <source src="./assets/awwwards-graphs.mp4" type="video/mp4" />
+        </video>
+        <div className="archive-bg-scrim" />
       </div>
-      <h2 id="work-heading" className="work-heading">
-        Ideas, made
-        <br />
-        <em>tangible.</em>
-      </h2>
-      <p className="work-description">
-        The decisions behind the interface.
-        <br />
-        The prototypes that make them real.
-      </p>
-      <div className="project-grid">
-        {ordered.map((project, i) => (
-          <article
-            key={project.no}
-            className={
-              'project-item project-' +
-              project.title.toLowerCase().replaceAll(' ', '-') +
-              (i === 0 ? ' project-featured' : '')
-            }
-          >
-            <button
-              className="project-art"
-              aria-label={'Read ' + project.title + ' case study'}
+
+      <div className="archive-container">
+        {/* ─── Left Sticky Sidebar ─── */}
+        <aside className="archive-sidebar">
+          <div className="archive-kicker">
+            <span>Selected work</span>
+            <span className="archive-kicker-dot">•</span>
+            <span>2024–2025</span>
+          </div>
+          <h2 id="archive-heading" className="archive-title" style={{ fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: 1, marginBottom: '24px' }}>
+            Ideas, made
+            <br />
+            <em style={{ color: 'var(--neon)', fontStyle: 'italic' }}>tangible.</em>
+          </h2>
+          <p className="archive-description">
+            The decisions behind the interface.
+            <br />
+            The prototypes that make them real.
+          </p>
+          <p className="archive-subtext">
+            A curated series of product systems, interaction design, and working prototypes exploring clarity at moments of high friction.
+          </p>
+        </aside>
+
+        {/* ─── Right 2-Column Projects Grid ─── */}
+        <div className="archive-grid">
+          {ordered.map((project) => (
+            <article
+              key={project.no}
+              className="archive-card"
+              tabIndex={0}
+              role="button"
               onClick={() => open(project, 'study')}
-              data-cursor="view"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  open(project, 'study')
+                }
+              }}
+              aria-label={`View ${project.title} case study`}
             >
-              <span className="project-art-word" aria-hidden="true">
-                {project.title === 'The Whole Fruit'
-                  ? 'Whole.'
-                  : project.title + '.'}
-              </span>
               <img
-                className="project-image"
+                className="archive-card-image"
                 src={project.preview}
                 alt={project.previewAlt}
+                style={{ objectPosition: getObjectPosition(project.previewPos) }}
                 loading="lazy"
                 decoding="async"
               />
-              <span className="art-open" aria-hidden="true">
-                <Icon name="external" />
-              </span>
-            </button>
-            <div className="project-info">
-              <div>
-                <span className="project-category">
-                  {categories[project.title]}
-                </span>
-                <h3>
-                  <button onClick={() => open(project, 'study')}>
-                    {project.title}
-                  </button>
-                </h3>
-                <p>{project.tagline}</p>
+              {/* Hover-only metadata overlay */}
+              <div className="archive-card-overlay">
+                <div className="archive-card-header">
+                  <span className="archive-card-category">
+                    {categories[project.title]}
+                  </span>
+                </div>
+                <div className="archive-card-body">
+                  <h3 className="archive-card-title">{project.title}</h3>
+                  <p className="archive-card-tagline">{project.tagline}</p>
+                  <div className="archive-card-stack">
+                    {project.stack.map((tag) => (
+                      <span key={tag} className="archive-stack-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="archive-card-actions">
+                    <button
+                      type="button"
+                      className="archive-action-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        open(project, 'study')
+                      }}
+                    >
+                      Case study <Icon name="arrow" />
+                    </button>
+                    {project.protoUrl ? (
+                      <button
+                        type="button"
+                        className="archive-action-btn archive-action-btn-highlight"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          open(project, 'prototype')
+                        }}
+                      >
+                        Try prototype <Icon name="external" />
+                      </button>
+                    ) : project.link ? (
+                      <a
+                        className="archive-action-btn"
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {project.linkLabel?.replace(' ↗', '') || 'Explore'}{' '}
+                        <Icon name="external" />
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
               </div>
-              <div className="project-links">
-                <button
-                  className="text-link"
-                  onClick={() => open(project, 'study')}
-                >
-                  Case study <Icon name="arrow" />
-                </button>
-                {project.protoUrl && (
-                  <button
-                    className="text-link"
-                    onClick={() => open(project, 'prototype')}
-                  >
-                    Try prototype <Icon name="external" />
-                  </button>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
+
       {selected && (
         <ProjectWorkspace
           key={selected.no}
@@ -344,3 +381,4 @@ export default function Projects() {
     </section>
   )
 }
+

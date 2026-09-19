@@ -25,3 +25,14 @@ dist-ssr
 
 # Local browser verification artifacts
 .verification/
+
+# Plans and scratch scripts
+plans/
+scripts/apply-redesign.mjs
+scripts/capture-redesign.mjs
+scripts/capture-vertical.mjs
+scripts/debug-navigation.mjs
+scripts/fix-redesign.mjs
+scripts/hero-narrative-test.mjs
+scripts/hero-probes.mjs
+scripts/verify-redesign.mjs

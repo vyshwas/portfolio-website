@@ -18,6 +18,21 @@ export default function Hero() {
           y: (h - 768 * scale) / 2 + 380.5 * scale,
         }
       }
+
+      const setTvX = gsap.quickTo('.crt-tv-center', 'x', { duration: 0.8, ease: 'power2.out' })
+      const setTvY = gsap.quickTo('.crt-tv-center', 'y', { duration: 0.8, ease: 'power2.out' })
+
+      const onPointerMove = (e) => {
+        const nx = (e.clientX / window.innerWidth) * 2 - 1
+        const ny = (e.clientY / window.innerHeight) * 2 - 1
+
+        setTvX(nx * 12)
+        setTvY(ny * 8)
+      }
+
+      window.addEventListener('pointermove', onPointerMove, { passive: true })
+
+      // ScrollTrigger Timeline (Direction 3: Hyperdrive Zoom & Camera Dive)
       const timeline = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: {
@@ -32,27 +47,40 @@ export default function Hero() {
           refreshPriority: 10,
         },
       })
+
+      // Initial text reveal on load
+      gsap.fromTo(
+        root.current.querySelectorAll('.reveal-text'),
+        { yPercent: 110 },
+        {
+          yPercent: 0,
+          stagger: 0.12,
+          duration: 1.2,
+          ease: 'power3.out',
+          delay: 0.15
+        }
+      )
+
+      // Fade out copy, foot, and side caption early in scroll
       timeline.to(
-        '.hero-copy, .hero-foot, .hero-caption',
-        { autoAlpha: 0, y: -30, duration: 0.18 },
+        '.hero-editorial-layer, .hero-foot, .hero-caption',
+        { autoAlpha: 0, y: -40, duration: 0.2 },
         0,
       )
-      // Dive zoom, capped: past ~5x the frame is fully behind the 95%
-      // ink signal veil, so deeper scales buy nothing visible while the
-      // layer (up to ~24,000px at 17x) busts GPU tile limits and tears
-      // into stepped seams on fast scrolls. 5x keeps it inside safe
-      // raster size with the same on-screen read.
+
+      // Dive zoom into the off-center CRT TV
       timeline.fromTo(
         stage,
         { scale: 1 },
         {
-          scale: 5,
-          transformOrigin: () => origin().x + 'px ' + origin().y + 'px',
+          scale: 4.8,
+          transformOrigin: '65% 50%',
           duration: 0.76,
           ease: 'power2.inOut',
         },
         0,
       )
+
       timeline.fromTo(
         '.hero-signal',
         { opacity: 0 },
@@ -75,9 +103,14 @@ export default function Hero() {
         { scaleY: 1, transformOrigin: 'bottom', duration: 0.12 },
         0.88,
       )
+
+      return () => {
+        window.removeEventListener('pointermove', onPointerMove)
+      }
     }, root)
     return () => ctx.revert()
   }, [calm])
+
   return (
     <section
       id="hero"
@@ -85,38 +118,80 @@ export default function Hero() {
       className="hero"
       aria-label="Vishwas Mehta, Strategic Product Designer and Design Engineer"
     >
+      {/* ─── 1. Hero Ambient Backdrop (Video + Mesh) ─── */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="hero-fabrica-video"
+      >
+        <source src="/assets/hero-art-video.mp4" type="video/mp4" />
+      </video>
+      <div className="hero-bg-mesh" aria-hidden="true" />
+
+
+      {/* ─── 2. Zoom Stage (Centered CRT TV) ─── */}
       <div className="hero-zoom-stage" aria-hidden="true">
-        <img
-          src="./assets/hero-tv.jpg"
-          className="hero-image"
-          alt=""
-          fetchPriority="high"
-          width="1376"
-          height="768"
-        />
-        <div className="hero-shade" />
+        <div className="crt-tv-center">
+          <div className="crt-tv-container">
+            <div className="crt-screen-bezel">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="crt-screen-video"
+              >
+                <source src="./assets/crt-placeholder.mp4" type="video/mp4" />
+              </video>
+              <div className="crt-scanlines" />
+              <div className="crt-curvature-glare" />
+            </div>
+            <img
+              src="./assets/new-crt-tv.png"
+              alt="Retro CRT TV"
+              className="crt-tv-body"
+              width="874"
+              height="666"
+              fetchPriority="high"
+            />
+          </div>
+        </div>
       </div>
-      <div className="hero-copy">
-        <p className="hero-role">
-          Vishwas Mehta{' '}
-          <span>Strategic Product Designer & Design Engineer</span>
-        </p>
-        <h1>
-          Design that ships.
-          <br />
-          <em>Code that feels.</em>
-        </h1>
+
+      {/* ─── 3. Massive Vertical Typography ─── */}
+      <div className="hero-editorial-layer">
+        <div className="hero-top-text">
+          <p className="hero-role text-neon" style={{ marginBottom: '24px' }}>Strategic Product Designer<br />&amp; Design Engineer</p>
+          <div className="reveal-mask">
+            <h1 className="hero-name-pilowlava reveal-text" style={{ margin: 0, lineHeight: 0.9 }}>Vishwas</h1>
+          </div>
+        </div>
+        <div className="hero-bottom-text">
+          <div className="reveal-mask">
+            <h1 className="hero-name-pilowlava reveal-text" style={{ margin: 0, lineHeight: 0.9 }}>Mehta</h1>
+          </div>
+          <div className="hero-telemetry-corner">
+            <span>VOL. 1 / NO. 1</span>
+            <span className="caption-line-short" />
+            <span>2024–2025</span>
+          </div>
+        </div>
       </div>
+
+      {/* ─── 4. Telemetry Caption (Right) ─── */}
       <div className="hero-caption" aria-hidden="true">
         <span>IDEA</span>
         <span className="caption-line" />
         <span>INTERFACE</span>
       </div>
+
+      {/* ─── 5. Hero Footer & Actions ─── */}
       <div className="hero-foot">
         <p>
-          I craft interfaces that feel inevitable.
-          <br />
-          Systems thinking. Front-end execution.
+          <span style={{ display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#22c55e', marginRight: '9px', verticalAlign: 'middle', boxShadow: '0 0 8px #22c55e' }} />
+          Available for Product Design Roles
         </p>
         <div className="hero-actions">
           <button
@@ -135,11 +210,13 @@ export default function Hero() {
           </a>
         </div>
         <span className="hero-location">
-          Bengaluru, India
+          BENGALURU, INDIA
           <br />
-          Open to remote & relocation
+          OPEN TO REMOTE &amp; RELOCATION
         </span>
       </div>
+
+      {/* ─── 6. Zoom Reveal Message ─── */}
       <div className="hero-signal" aria-hidden="true">
         <div className="signal-scanlines" />
         <div className="hero-statement">

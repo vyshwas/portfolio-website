@@ -6,35 +6,19 @@ export default function About() {
   const calm = useReducedMotion()
   useLayoutEffect(() => {
     if (calm) return
-    const ctx = gsap.context(() => {
+      const ctx = gsap.context(() => {
       gsap.fromTo(
-        '.about-heading .reveal-ink',
-        { backgroundSize: '0% 100%, 100% 100%' },
+        root.current.querySelectorAll('.reveal-text'),
+        { yPercent: 110 },
         {
-          backgroundSize: '100% 100%, 100% 100%',
-          stagger: 0.35,
-          ease: 'none',
+          yPercent: 0,
+          stagger: 0.1,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: root.current,
-            start: 'top 70%',
-            end: 'center 40%',
-            scrub: true,
+            start: 'top 80%',
           },
-        },
-      )
-      gsap.fromTo(
-        '.about-rule',
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: root.current,
-            start: 'top 85%',
-            end: 'top 30%',
-            scrub: true,
-          },
-        },
+        }
       )
     }, root)
     return () => ctx.revert()
@@ -43,20 +27,38 @@ export default function About() {
     <section
       id="about"
       ref={root}
-      className="about-section page-gutter"
+      className="about-section grid-hairline"
       aria-labelledby="about-heading"
     >
-      <div className="about-rule" aria-hidden="true" />
-      <h2 id="about-heading" className="about-heading">
-        <span className="reveal-ink">An idea is only as good</span>
-        <br />
-        <em className="reveal-ink">as the way it works.</em>
-      </h2>
-      <div className="about-bottom">
-        <p className="about-intro">
-          I’m Vishwas. I work in the space between product strategy and the
-          details you can feel.
+      <div className="about-quadrant about-quadrant-main">
+        <div className="reveal-mask">
+          <h2 id="about-heading" className="about-heading reveal-text" style={{ margin: 0 }}>
+            An idea is only as good
+          </h2>
+        </div>
+        <div className="reveal-mask">
+          <h2 className="about-heading reveal-text" style={{ margin: 0 }}>
+            <em>as the way it works.</em>
+          </h2>
+        </div>
+      </div>
+
+      <div className="about-quadrant about-quadrant-dark">
+        <p className="about-intro" style={{ color: 'var(--neon)', fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.1 }}>
+          I’m Vishwas. I work in the space between product strategy and the details you can feel.
         </p>
+      </div>
+
+      <div className="about-quadrant about-quadrant-meta">
+        <div className="practice-line-vertical">
+          <span>PRODUCT STRATEGY</span>
+          <span>INTERACTION DESIGN</span>
+          <span>SYSTEMS ARCHITECTURE</span>
+          <span>CREATIVE ENGINEERING</span>
+        </div>
+      </div>
+
+      <div className="about-quadrant about-quadrant-copy">
         <div className="about-story">
           <p>
             I started in computer science and moved into design to ask better
@@ -68,12 +70,6 @@ export default function About() {
             interactive prototypes, and front-end execution.
           </p>
         </div>
-      </div>
-      <div className="practice-line">
-        <span>Product strategy</span>
-        <span>Interaction design</span>
-        <span>Systems architecture</span>
-        <span>Creative engineering</span>
       </div>
     </section>
   )
