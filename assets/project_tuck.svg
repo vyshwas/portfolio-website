@@ -1,0 +1,57 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#0d0a05"/>
+  <ellipse cx="400" cy="310" rx="170" ry="190" fill="#f5a623" fill-opacity="0.05"/>
+  <ellipse cx="400" cy="310" rx="90" ry="110" fill="#f5a623" fill-opacity="0.07"/>
+
+  <!-- Phone -->
+  <rect x="308" y="112" width="184" height="376" rx="28" fill="#18130a" stroke="#f5a623" stroke-opacity="0.18" stroke-width="1.5"/>
+  <rect x="366" y="120" width="68" height="9" rx="4.5" fill="#0d0a05"/>
+
+  <!-- Screen -->
+  <rect x="320" y="148" width="160" height="288" rx="10" fill="#130f08"/>
+  <rect x="320" y="148" width="160" height="288" rx="10" fill="url(#glow)"/>
+
+  <!-- Pip body -->
+  <rect x="374" y="272" width="52" height="40" rx="6" fill="#f5a623" fill-opacity="0.82"/>
+  <!-- Pip head -->
+  <rect x="378" y="244" width="44" height="36" rx="12" fill="#f5a623" fill-opacity="0.88"/>
+  <!-- Eyes closed -->
+  <path d="M388 261 Q392 265 396 261" stroke="#0d0a05" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <path d="M404 261 Q408 265 412 261" stroke="#0d0a05" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <!-- Blush -->
+  <circle cx="387" cy="267" r="3.5" fill="#f7c08a" fill-opacity="0.5"/>
+  <circle cx="413" cy="267" r="3.5" fill="#f7c08a" fill-opacity="0.5"/>
+  <!-- Small arms -->
+  <rect x="362" y="278" width="14" height="10" rx="5" fill="#f5a623" fill-opacity="0.7"/>
+  <rect x="424" y="278" width="14" height="10" rx="5" fill="#f5a623" fill-opacity="0.7"/>
+  <!-- z z z -->
+  <text x="430" y="250" font-family="Georgia, serif" font-size="13" fill="#f5a623" fill-opacity="0.45">z</text>
+  <text x="440" y="239" font-family="Georgia, serif" font-size="10" fill="#f5a623" fill-opacity="0.3">z</text>
+  <text x="447" y="231" font-family="Georgia, serif" font-size="8" fill="#f5a623" fill-opacity="0.2">z</text>
+
+  <!-- Home bar -->
+  <rect x="366" y="468" width="68" height="4" rx="2" fill="#f5a623" fill-opacity="0.12"/>
+
+  <!-- Moon -->
+  <path d="M662 76 A50 50 0 1 1 628 152 A34 34 0 1 0 662 76Z" fill="#f5a623" fill-opacity="0.1"/>
+
+  <!-- Stars -->
+  <circle cx="166" cy="74" r="1.8" fill="#f5a623" fill-opacity="0.28"/>
+  <circle cx="210" cy="138" r="1.2" fill="#f5a623" fill-opacity="0.18"/>
+  <circle cx="246" cy="88" r="1" fill="#f5a623" fill-opacity="0.14"/>
+  <circle cx="586" cy="158" r="1.5" fill="#f5a623" fill-opacity="0.22"/>
+  <circle cx="548" cy="96" r="1" fill="#f5a623" fill-opacity="0.16"/>
+  <circle cx="710" cy="186" r="1.2" fill="#f5a623" fill-opacity="0.18"/>
+  <circle cx="130" cy="188" r="1" fill="#f5a623" fill-opacity="0.14"/>
+  <circle cx="692" cy="96" r="2" fill="#f5a623" fill-opacity="0.18"/>
+
+  <!-- Label -->
+  <text x="400" y="542" font-family="Georgia, serif" font-size="12" fill="#f5a623" fill-opacity="0.28" text-anchor="middle" letter-spacing="5">TUCK</text>
+
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="65%" r="55%">
+      <stop offset="0%" stop-color="#f5a623" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#f5a623" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
