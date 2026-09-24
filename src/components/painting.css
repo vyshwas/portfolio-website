@@ -1,0 +1,115 @@
+/* Scoped palette. Layers: landscape 0, foreground 1, copy 2, entrance 3.
+   Radius uses the portfolio's existing small/medium/large/pill tokens. */
+:root {
+  --paint-sky: #d5e6e7;
+  --paint-ink: #183c34;
+  --paint-muted: #2e514b;
+  --paint-paper: #f4f4e9;
+  --paint-poppy: #c6502e;
+  --paint-pollen: #f7ecbd;
+  --paint-rule: color-mix(in srgb, var(--paint-ink) 32%, transparent);
+  --paint-wash: color-mix(in srgb, var(--paint-sky) 86%, transparent);
+}
+.paint-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: max(720px, calc(100dvh - 24px));
+  margin: 12px;
+  overflow: clip;
+  border-radius: var(--radius-lg);
+  background: var(--paint-sky);
+  color: var(--paint-ink);
+}
+.paint-landscape { position: absolute; z-index: 0; inset: -3%; pointer-events: none; }
+.paint-scene, .paint-still, .paint-canvas { position: absolute; width: 100%; height: 100%; inset: 0; }
+.paint-still { object-fit: cover; object-position: 68% 50%; }
+.paint-canvas { opacity: 0; transition: opacity 1s var(--ease); }
+.paint-canvas[data-active='true'] { opacity: 1; }
+.paint-copy {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--gutter));
+  margin-left: var(--gutter);
+  padding-top: clamp(120px, 15dvh, 168px);
+  padding-bottom: 108px;
+}
+.paint-role { font-size: clamp(12px, 1vw, 15px); font-weight: 500; line-height: 1.5; letter-spacing: -.015em; margin-bottom: 26px; }
+.paint-role span { display: block; }
+.paint-title { font-family: 'Pilowlava', sans-serif; font-size: clamp(85px, 9.3vw, 158px); font-weight: 400; line-height: 1.05; letter-spacing: -.035em; margin: 0 0 24px; text-wrap: nowrap; }
+.paint-name { display: block; }
+.paint-name + .paint-name { margin-left: clamp(28px, 4.3vw, 72px); }
+.paint-description { font-size: clamp(14px, 1.15vw, 17px); line-height: 1.6; letter-spacing: -.025em; color: var(--paint-muted); margin-bottom: 24px; }
+.paint-hero .paint-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.paint-actions .button { font-size: 12px; min-height: 50px; padding: 14px 22px; gap: 24px; font-weight: 500; }
+.paint-actions .paint-primary { background: var(--paint-ink); color: var(--paint-paper); border-color: var(--paint-ink); }
+.paint-actions .paint-primary:hover { background: var(--paint-muted); }
+.paint-actions .paint-secondary { color: var(--paint-ink); background: var(--paint-wash); border-color: var(--paint-rule); }
+.paint-actions .paint-secondary:hover { background: var(--paint-paper); }
+.paint-actions .icon { width: 18px; height: 18px; transition: transform .35s var(--ease); }
+.paint-actions .button:hover .icon { transform: translate(3px, -1px); }
+.paint-flora-depth { position: absolute; z-index: 1; right: -2.5%; bottom: -9%; width: clamp(280px, 32vw, 560px); pointer-events: none; }
+.paint-flora { display: block; width: 100%; height: auto; transform-origin: 78% 100%; }
+.paint-petals { position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none; }
+.paint-petals i {
+  --drift-time: 16s;
+  --drift-delay: -5s;
+  position: absolute; right: 8%; bottom: 18%; width: 11px; height: 7px;
+  background: var(--paint-poppy); border-radius: 70% 20% 60% 30%; opacity: 0;
+}
+.paint-petals i:nth-child(2) { --drift-time: 21s; --drift-delay: -13s; right: 21%; bottom: 26%; }
+.paint-petals i:nth-child(3) { --drift-time: 18s; --drift-delay: -9s; right: 3%; bottom: 35%; }
+.paint-petals i:nth-child(4) { --drift-time: 25s; --drift-delay: -2s; right: 32%; bottom: 15%; }
+.paint-petals i:nth-child(5) { --drift-time: 20s; --drift-delay: -16s; right: 17%; bottom: 28%; }
+.paint-petals i:nth-child(6) { --drift-time: 23s; --drift-delay: -11s; right: 5%; bottom: 39%; }
+.paint-petals i:nth-child(7) { --drift-time: 19s; --drift-delay: -7s; right: 36%; bottom: 10%; }
+.paint-petals i:nth-child(even) { width: 6px; height: 5px; background: var(--paint-pollen); }
+.paint-wipe { position: absolute; z-index: 3; inset: -2px; display: grid; grid-template-rows: repeat(6, 1fr); opacity: 0; pointer-events: none; }
+.paint-wipe span { background: var(--paint-sky); transform-origin: right center; margin-block: -2px; }
+.site-header.on-cover { background: var(--paint-wash); color: var(--paint-ink); border-color: transparent; }
+.on-cover .wordmark img { filter: none; }
+.on-cover .desktop-nav a, .on-cover .nav-contact { font-size: 13px; font-weight: 500; }
+.on-cover .motion-toggle { font-size: 11px; }
+@media (prefers-reduced-motion: no-preference) {
+  .paint-hero:not(.is-calm) .paint-flora { animation: painted-wind 7s ease-in-out infinite alternate; }
+  .paint-hero:not(.is-calm) .paint-petals i { animation: painted-petal var(--drift-time) var(--drift-delay) linear infinite; }
+}
+@keyframes painted-wind {
+  0% { transform: rotate(-2deg) skewX(-.8deg); }
+  60% { transform: rotate(1.8deg) skewX(.5deg); }
+  100% { transform: rotate(-.4deg) skewX(-.25deg); }
+}
+@keyframes painted-petal {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  12% { opacity: .8; }
+  42% { transform: translate3d(-17vw, -14dvh, 0) rotate(160deg); }
+  78% { opacity: .6; }
+  100% { transform: translate3d(-46vw, -33dvh, 0) rotate(370deg); opacity: 0; }
+}
+.paint-hero[data-visible='false'] .paint-flora, .paint-hero[data-visible='false'] .paint-petals i { animation-play-state: paused; }
+.paint-hero.is-calm .paint-wipe, .paint-hero.is-calm .paint-petals { display: none; }
+@media (min-width: 1600px) { .paint-copy { padding-top: 16dvh; } }
+@media (max-width: 1023px) {
+  .paint-copy { padding-top: 136px; }
+  .paint-title { font-size: clamp(75px, 10.5vw, 106px); }
+  .paint-flora-depth { width: 40vw; }
+}
+@media (max-width: 767px) {
+  .paint-hero { min-height: max(690px, calc(100dvh - 16px)); margin: 8px; }
+  .paint-copy { margin-left: 24px; max-width: calc(100% - 48px); padding-top: 110px; padding-bottom: 260px; }
+  .paint-role { font-size: 12px; margin-bottom: 23px; }
+  .paint-title { font-size: clamp(42px, calc(17.5vw - 12px), 96px); line-height: 1.12; margin-bottom: 22px; }
+  .paint-name + .paint-name { margin-left: 24px; }
+  .paint-description { font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+  .paint-hero .paint-actions { width: auto; max-width: none; gap: 8px; }
+  .paint-actions .button { width: auto; padding: 12px 16px; min-height: 48px; gap: 16px; font-size: 11px; }
+  .paint-flora-depth { width: 270px; right: -42px; bottom: -35px; }
+  .paint-petals i:nth-child(n + 5) { display: none; }
+}
+@media (max-height: 760px) and (min-width: 768px) {
+  .paint-hero { min-height: calc(100dvh - 24px); }
+  .paint-copy { padding-top: 112px; padding-bottom: 80px; }
+  .paint-role { margin-bottom: 16px; }
+  .paint-title { font-size: clamp(72px, 8.4vw, 118px); margin-bottom: 16px; }
+  .paint-description { margin-bottom: 20px; }
+}

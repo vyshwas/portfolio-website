@@ -66,7 +66,7 @@ function ProjectBadge({ title }) {
   )
 }
 
-function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
+export function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
   const [loadedProject, setLoadedProject] = useState(null)
   const [notes, setNotes] = useState(false)
   const frameCleanup = useRef(null)
@@ -191,7 +191,7 @@ function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
                 >
                   Run live prototype <Icon name="external" />
                 </button>
-              ) : (
+              ) : project.link ? (
                 <a
                   className="button button-light"
                   href={project.link}
@@ -201,7 +201,7 @@ function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
                   {project.linkLabel?.replace(' ↗', '') || 'Explore project'}
                   <Icon name="external" />
                 </a>
-              )}
+              ) : null}
               <span className="meta">{project.stack.join(' / ')}</span>
             </div>
           </div>

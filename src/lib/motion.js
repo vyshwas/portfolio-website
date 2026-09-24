@@ -24,25 +24,25 @@ export function toggleMotion() {
 }
 export function scrollToTarget(target) {
   const element =
-    typeof target === 'string' ? document.querySelector(target) : null
+    typeof target === 'string'
+      ? document.querySelector(target)
+      : target instanceof Element ? target : null
   const scene = element && ScrollTrigger.getById(element.id + '-scene')
-  const destination =
-    target === '#hero' ? 0 : scene ? scene.start : element || target
-  if (typeof destination !== 'number' && !(destination instanceof Element))
-    return
+  // Resolve once so Lenis cannot also subtract the element's scroll-margin.
+  // Native and animated navigation now share the same header clearance.
+  const destination = target === '#hero'
+    ? 0
+    : scene ? scene.start
+      : element ? element.getBoundingClientRect().top + window.scrollY - 88
+        : target
+  if (typeof destination !== 'number' || !Number.isFinite(destination)) return
   if (window.__lenis)
     window.__lenis.scrollTo(destination, {
       duration: 1.35,
-      offset: element && !scene ? -88 : 0,
-    })
-  else if (typeof destination === 'number')
-    window.scrollTo({
-      top: destination,
-      behavior: reducedMotion() ? 'instant' : 'smooth',
     })
   else
     window.scrollTo({
-      top: destination.getBoundingClientRect().top + window.scrollY - 88,
+      top: destination,
       behavior: reducedMotion() ? 'instant' : 'smooth',
     })
 }
