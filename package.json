@@ -9,7 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",
-    "verify": "npm run build && node scripts/verify.mjs"
+    "verify": "npm run build && node scripts/verify.mjs",
+    "verify:painting": "npm run build && node scripts/verify-painting.mjs",
+    "verify:gallery": "npm run build && node scripts/verify-gallery.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
