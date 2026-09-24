@@ -10,6 +10,7 @@ const ordered = [
   projects[1],
   projects[4],
   projects[3],
+  projects[5],
 ]
 const categories = {
   Awara: 'Research / Product systems',
@@ -17,6 +18,7 @@ const categories = {
   Munim: 'Agentic finance / Product systems',
   Gamut: 'Design tooling / Engineering',
   'The Whole Fruit': 'Brand strategy / Packaging',
+  Tuck: 'Behaviour design / Mobile',
 }
 
 function ProjectBadge({ title }) {
@@ -48,6 +50,11 @@ function ProjectBadge({ title }) {
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" fill="currentColor" />
         <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+      </svg>
+    ),
+    Tuck: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
       </svg>
     ),
   }
@@ -283,7 +290,7 @@ export default function Projects() {
       className="archive-section"
       aria-labelledby="archive-heading"
     >
-      {/* ─── Background Telemetry Graphs Video ─── */}
+      {/* ─── Background Telemetry / Celestial Pirouette Video ─── */}
       <div className="archive-bg-video-wrap" aria-hidden="true">
         <video
           autoPlay
@@ -292,7 +299,7 @@ export default function Projects() {
           playsInline
           className="archive-bg-video"
         >
-          <source src="./assets/awwwards-graphs.mp4" type="video/mp4" />
+          <source src="/assets/selected-work-pirouette.mp4" type="video/mp4" />
         </video>
         <div className="archive-bg-scrim" />
       </div>

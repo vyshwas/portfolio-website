@@ -98,6 +98,29 @@ export const projects = [
     linkLabel: 'See Brand System ↗',
   },
   {
+    no: '06',
+    title: 'Tuck',
+    tagline: 'Why the right bedtime app doesn\'t feel like a wall.',
+    year: '2026',
+    role: 'PERSONAL · PRODUCT STRATEGY + MOBILE ENGINEERING',
+    context:
+      'Doomscrolling at night is a well-documented problem. The tools built to address it — screen-time blockers, app timers, parental controls repurposed for adults — are widely available and widely ignored.',
+    problem:
+      'I built two versions of a bedtime app to test the same core idea: a screen overlay that interrupts scrolling and invites you to put the phone down. Both felt like walls. Every existing blocker treats the behaviour as a rule violation. The emotional output is resentment, not relief. An app cannot fix a problem it makes the user feel guilty for having.',
+    approach:
+      'The insight came from reframing who is asking. Instead of the app saying "stop," the mascot says "I\'m tired. Will you help me sleep?" The user becomes the caretaker — not the one being controlled. The overlay should arrive slowly: the screen warms, dims, slows. Not snap in like a lock. The second insight is that the gratitude moment belongs the next morning, not at the point of interruption: "You put me to bed at 10:47. You slept 7 hours. Good call." Charge for the morning insight and the identity it creates. Not the nighttime restriction.',
+    outcome: [
+      'Emotional framing flip: caretaker role vs. punitive block',
+      'Ceremony-first overlay design: dim, warm, slow',
+      'Monetise the morning insight, not the restriction',
+    ],
+    stack: ['React Native', 'Kotlin', 'Jetpack Compose', 'Product Strategy'],
+    protoUrl: '',
+    preview: './assets/project_tuck.svg',
+    previewAlt: 'Tuck — Pip mascot sleeping on a warm dark phone screen',
+    previewPos: 'object-center',
+  },
+  {
     no: '05',
     title: 'Gamut',
     tagline:
