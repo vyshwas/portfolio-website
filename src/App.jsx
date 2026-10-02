@@ -10,6 +10,7 @@ import About from './components/About.jsx'
 import Projects from './components/SelectedWork.jsx'
 import LabReveal from './components/LabReveal.jsx'
 import Bento from './components/Bento.jsx'
+import HowIWork from './components/HowIWork.jsx'
 import FooterExit from './components/FooterExit.jsx'
 import MagneticCursor from './components/MagneticCursor.jsx'
 
@@ -73,14 +74,15 @@ export default function App() {
         Skip to selected work
       </a>
       <div className="reading-progress" ref={progress} aria-hidden="true" />
-      <MagneticCursor />
+      {/* <MagneticCursor /> - Disabled for clarity/performance */}
       <Nav />
       <main id="main">
         <Hero />
         <About />
         <Projects />
-        <LabReveal />
-        <Bento />
+        <HowIWork />
+        {/* <LabReveal /> - Disabled for clarity/performance */}
+        {/* <Bento /> - Disabled for clarity/performance */}
       </main>
       <FooterExit />
     </>

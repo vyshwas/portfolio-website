@@ -168,7 +168,7 @@ export function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
                 <Icon name="close" />
               </button>
               <h3>The design decision</h3>
-              <p>{project.approach}</p>
+              {Array.isArray(project.approach) ? project.approach.map((p, i) => <p key={i} style={{marginBottom: "1rem"}}>{p}</p>) : <p>{project.approach}</p>}
               <button className="text-link" onClick={() => onMode('study')}>
                 Read the case study <Icon />
               </button>
@@ -219,7 +219,7 @@ export function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
             </section>
             <section className="case-approach">
               <h4>The design decision</h4>
-              <p>{project.approach}</p>
+              {Array.isArray(project.approach) ? project.approach.map((p, i) => <p key={i} style={{marginBottom: "1rem"}}>{p}</p>) : <p>{project.approach}</p>}
             </section>
             <section>
               <h4>What the work demonstrates</h4>

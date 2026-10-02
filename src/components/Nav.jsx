@@ -7,12 +7,14 @@ import {
 } from '../lib/motion.js'
 import Dialog from './Dialog.jsx'
 import Icon from './Icon.jsx'
+
 const links = [
   { id: 'experiments', label: 'Work' },
   { id: 'about', label: 'About' },
-  { id: 'lab', label: 'Lab' },
+  { id: 'how-i-work', label: 'How I Work' },
   { id: 'contact', label: 'Contact' },
 ]
+
 export default function Nav() {
   const [active, setActive] = useState('hero')
   const [menu, setMenu] = useState(false)
@@ -20,8 +22,9 @@ export default function Nav() {
   const systemCalm = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
   ).matches
+
   useEffect(() => {
-    const ordered = ['hero', 'about', 'experiments', 'lab', 'system', 'contact']
+    const ordered = ['hero', 'about', 'experiments', 'how-i-work', 'contact']
     let offsets = []
     const update = () => {
       const position = window.scrollY + window.innerHeight * 0.3
@@ -29,13 +32,18 @@ export default function Nav() {
       setActive(current?.id || 'hero')
     }
     const measure = () => {
-      offsets = ordered.map((id) => ({
-        id,
-        top:
-          ScrollTrigger.getById(id + '-scene')?.start ??
-          document.getElementById(id).getBoundingClientRect().top +
-            window.scrollY,
-      }))
+      offsets = ordered
+        .map((id) => {
+          const el = document.getElementById(id)
+          if (!el) return null
+          return {
+            id,
+            top:
+              ScrollTrigger.getById(id + '-scene')?.start ??
+              el.getBoundingClientRect().top + window.scrollY,
+          }
+        })
+        .filter(Boolean)
       update()
     }
     const tracker = ScrollTrigger.create({
@@ -50,10 +58,12 @@ export default function Nav() {
       ScrollTrigger.removeEventListener('refresh', measure)
     }
   }, [calm])
+
   const go = (id) => {
     setMenu(false)
     requestAnimationFrame(() => scrollToTarget('#' + id))
   }
+
   return (
     <header className={'site-header ' + (active === 'hero' ? 'on-cover' : '')}>
       <a
@@ -152,7 +162,7 @@ export default function Nav() {
           >
             View résumé <Icon name="external" />
           </a>
-          <p>Bengaluru · Open to remote & relocation</p>
+          <p>Bengaluru • Open to remote & relocation</p>
         </Dialog>
       )}
     </header>

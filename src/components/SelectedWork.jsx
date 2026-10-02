@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Flip } from 'gsap/Flip'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useReducedMotion } from '../lib/motion.js'
 import { projects } from '../data/projects.js'
@@ -8,83 +7,49 @@ import { ProjectWorkspace } from './Projects.jsx'
 import Icon from './Icon.jsx'
 import './selected-work.css'
 
-gsap.registerPlugin(Flip, ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger)
 
 const presentation = {
-  Awara: { slug: 'awara', category: 'Research & product systems', group: 'product', format: 'phone', width: 760, height: 1648 },
-  Nocturne: { slug: 'nocturne', category: 'Trust & interaction design', group: 'product', format: 'phone', width: 780, height: 1600 },
-  Munim: { slug: 'munim', category: 'Agentic finance & product systems', group: 'product', format: 'screen', width: 890, height: 667 },
-  Tuck: { slug: 'tuck', category: 'Behaviour design & mobile', group: 'product', format: 'screen', width: 800, height: 600 },
-  'The Whole Fruit': { slug: 'whole-fruit', category: 'Brand strategy & packaging', group: 'brand', format: 'photo', width: 1070, height: 1470, image: './assets/painting/whole-fruit.webp' },
-  Gamut: { slug: 'gamut', category: 'Design tooling & engineering', group: 'brand', format: 'screen', width: 860, height: 640 },
+  Awara: { slug: 'awara', category: 'Research & product systems', format: 'mockup', width: 1600, height: 1000 },
+  Nocturne: { slug: 'nocturne', category: 'Trust & interaction design', format: 'mockup', width: 1600, height: 1000 },
+  Munim: { slug: 'munim', category: 'Agentic finance & product systems', format: 'mockup', width: 1600, height: 1000 },
+  Tuck: { slug: 'tuck', category: 'Behaviour design & mobile', format: 'mockup', width: 1600, height: 1000 },
+  'The Whole Fruit': { slug: 'whole-fruit', category: 'Brand strategy & packaging', format: 'photo', width: 1070, height: 1470, image: './assets/painting/whole-fruit.webp' },
+  Gamut: { slug: 'gamut', category: 'Design tooling & engineering', format: 'screen', width: 860, height: 640 },
 }
-const ordered = [projects[2], projects[0], projects[1], projects[4], projects[3], projects[5]]
-const filters = [
-  { id: 'all', label: 'All work' },
-  { id: 'product', label: 'Product design' },
-  { id: 'brand', label: 'Brand & tools' },
-]
 
-const refreshLayout = () => {
-  ScrollTrigger.refresh()
-  window.__lenis?.resize()
-}
+const mainProjects = projects.slice(0, 4)
+const secondaryProjects = projects.slice(4)
+// Numbers follow the order on the page, so they can never drift from the data order.
+const numberOf = project => String(projects.indexOf(project) + 1).padStart(2, '0')
 
 export default function SelectedWork() {
   const root = useRef(null)
   const grid = useRef(null)
-  const previousLayout = useRef(null)
-  const [filter, setFilter] = useState('all')
   const [selected, setSelected] = useState(null)
   const [mode, setMode] = useState('study')
   const calm = useReducedMotion()
-  const visible = ordered.filter(project => filter === 'all' || presentation[project.title].group === filter)
 
   useLayoutEffect(() => {
-    const state = previousLayout.current
-    previousLayout.current = null
+    if (calm) return
     const context = gsap.context(() => {
-      if (calm) return
-      if (state) {
-        Flip.from(state, {
-          targets: grid.current.children,
-          duration: .65,
-          ease: 'power3.inOut',
-          scale: true,
-          stagger: .035,
-          onEnter: elements => gsap.fromTo(elements,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: .5, delay: .15, clearProps: 'opacity,transform' },
-          ),
-          onComplete: refreshLayout,
-        })
-      } else {
-        for (const piece of grid.current.children) {
-          gsap.timeline({ scrollTrigger: { trigger: piece, start: 'top 90%', once: true } })
-            .from(piece.querySelector('.work-art'), {
-              y: 42, opacity: 0, rotation: -.6, duration: .9,
-              ease: 'power3.out', clearProps: 'opacity,transform',
-            })
-            .from(piece.querySelector('.work-caption'), {
-              y: 16, opacity: 0, duration: .65,
-              ease: 'power3.out', clearProps: 'opacity,transform',
-            }, .12)
-        }
+      for (const piece of grid.current.children) {
+        gsap.timeline({ scrollTrigger: { trigger: piece, start: 'top 90%', once: true } })
+          .from(piece.querySelector('.work-art'), {
+            y: 42, opacity: 0, rotation: -.6, duration: .9,
+            ease: 'power3.out', clearProps: 'opacity,transform',
+          })
+          .from(piece.querySelector('.work-caption'), {
+            y: 16, opacity: 0, duration: .65,
+            ease: 'power3.out', clearProps: 'opacity,transform',
+          }, .12)
       }
     }, root)
-    const frame = requestAnimationFrame(refreshLayout)
     return () => {
-      cancelAnimationFrame(frame)
       context.revert()
     }
-  }, [filter, calm])
+  }, [calm])
 
-  const chooseFilter = next => {
-    if (next === filter) return
-    Flip.killFlipsOf(grid.current.children)
-    previousLayout.current = calm ? null : Flip.getState(grid.current.children)
-    setFilter(next)
-  }
   const open = (project, nextMode) => {
     setSelected(project)
     setMode(nextMode)
@@ -98,30 +63,11 @@ export default function SelectedWork() {
           <p>The ideas, the decisions, and the things I brought to life.</p>
         </header>
 
-        <div className="work-toolbar">
-          <div className="work-filters" role="group" aria-label="Filter selected work">
-            {filters.map(item => (
-              <button
-                key={item.id}
-                type="button"
-                aria-pressed={filter === item.id}
-                aria-controls="work-gallery"
-                onClick={() => chooseFilter(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-          <p className="work-count" role="status" aria-live="polite" aria-atomic="true">
-            {visible.length} projects
-          </p>
-        </div>
-
-        <div id="work-gallery" ref={grid} className={'work-grid' + (filter !== 'all' ? ' is-filtered' : '')}>
-          {visible.map(project => {
+        <div id="work-gallery" ref={grid} className="work-grid">
+          {mainProjects.map(project => {
             const detail = presentation[project.title]
             return (
-              <article key={project.no} className={'work-piece work-piece--' + detail.slug} data-project={detail.slug} data-flip-id={project.no} aria-labelledby={'work-title-' + detail.slug}>
+              <article key={project.no} className={'work-piece work-piece--' + detail.slug} data-project={detail.slug} aria-labelledby={'work-title-' + detail.slug}>
                 <button
                   className={'work-art work-art--' + detail.format}
                   type="button"
@@ -133,27 +79,36 @@ export default function SelectedWork() {
                   </span>
                 </button>
                 <div className="work-caption">
-                  <p className="work-category">{detail.category}</p>
+                  <p className="work-category"><span className="work-no">{numberOf(project)}</span>{detail.category}</p>
                   <h3 id={'work-title-' + detail.slug}>{project.title}</h3>
                   <p className="work-summary">{project.tagline}</p>
                   <div className="work-actions">
                     <button className="work-study" type="button" onClick={() => open(project, 'study')} aria-label={'Read the ' + project.title + ' case study'}>
                       Case study <Icon name="arrow" />
                     </button>
-                    {project.protoUrl ? (
+                    {project.protoUrl && (
                       <button className="work-demo" type="button" onClick={() => open(project, 'prototype')} aria-label={'Try the ' + project.title + ' prototype'}>
                         Try prototype <Icon name="external" />
                       </button>
-                    ) : project.link ? (
-                      <a className="work-demo" href={project.link} target="_blank" rel="noopener noreferrer">
-                        {project.title === 'Gamut' ? 'Open Gamut' : 'Brand system'} <Icon name="external" />
-                      </a>
-                    ) : null}
+                    )}
                   </div>
                 </div>
               </article>
             )
           })}
+        </div>
+        
+        <div className="secondary-work" style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(0,0,0,0.1)' }}>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 600 }}>Brand &amp; Tooling</h3>
+          <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {secondaryProjects.map(project => (
+              <li key={project.no}>
+                <a href={project.link || '#'} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'inherit', textDecoration: 'none', fontWeight: 500 }}>
+                  <span className="work-no">{numberOf(project)}</span><span>{project.title} — <span style={{ opacity: 0.7, fontWeight: 400 }}>{project.tagline}</span></span> <Icon name="external" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -164,7 +119,7 @@ export default function SelectedWork() {
           mode={mode}
           onMode={setMode}
           onClose={() => setSelected(null)}
-          onNext={() => open(visible[(visible.indexOf(selected) + 1) % visible.length], 'study')}
+          onNext={() => open(mainProjects[(mainProjects.indexOf(selected) + 1) % mainProjects.length], 'study')}
         />
       )}
     </section>

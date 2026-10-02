@@ -1,9 +1,12 @@
-import { useLayoutEffect, useRef } from 'react'
+import { Fragment, useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useReducedMotion, scrollToTarget } from '../lib/motion.js'
 import Icon from './Icon.jsx'
 import Painting from './Painting.jsx'
 import './painting.css'
+
+// Positioning statement. A trailing * marks the word set in italic.
+const STATEMENT = 'I make high-stakes moments feel calm.*'.split(' ')
 
 export default function PainterlyHero() {
   const root = useRef(null)
@@ -25,9 +28,12 @@ export default function PainterlyHero() {
           scaleX: 0, duration: 1.35, stagger: 0.075, ease: 'power3.inOut',
         })
         .set('.paint-wipe', { display: 'none' })
+        .from('.paint-word', {
+          yPercent: 60, opacity: 0, rotation: 2, duration: 1, stagger: 0.07, clearProps: 'all',
+        }, 0.45)
         .from('.paint-reveal', {
           y: 24, opacity: 0, duration: 1.05, stagger: 0.11, clearProps: 'all',
-        }, 0.5)
+        }, 0.6)
         .from('.paint-flora-depth', {
           y: 70, rotation: 4, opacity: 0, duration: 1.6, clearProps: 'all',
         }, 0.65)
@@ -62,15 +68,19 @@ export default function PainterlyHero() {
       </div>
       <div className="paint-copy">
         <p className="paint-role paint-reveal">
-          Strategic product designer <span>&amp; design engineer</span>
+          Vishwas Mehta <span>Product designer, Bengaluru</span>
         </p>
-        <h1 id="paint-title" className="paint-title" aria-label="Vishwas Mehta">
-          <span className="paint-name paint-reveal" aria-hidden="true">Vishwas</span>
-          <span className="paint-name paint-reveal" aria-hidden="true">Mehta</span>
+        <h1 id="paint-title" className="paint-title">
+          {STATEMENT.map((word, index) => (
+            <Fragment key={index}>
+              <span className={'paint-word' + (word.endsWith('*') ? ' is-key' : '')}>{word.replace('*', '')}</span>
+              {index < STATEMENT.length - 1 ? ' ' : ''}
+            </Fragment>
+          ))}
         </h1>
         <p className="paint-description paint-reveal">
-          Thoughtful products. Expressive interfaces.<br />
-          Ideas brought to life.
+          Systems thinking before visual polish.<br />
+          Design that ships. Code that feels.
         </p>
         <div className="hero-actions paint-actions paint-reveal">
           <button className="button paint-primary" onClick={() => scrollToTarget('#experiments')}>
