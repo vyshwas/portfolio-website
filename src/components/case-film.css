@@ -1,0 +1,57 @@
+/* A project's film in its case study: a panel like the mockup figure below it, native controls, plays only on request. */
+.case-film {
+  margin: 48px 0 0;
+  background: var(--panel);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+.case-film video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: calc(var(--radius-md) - 6px);
+  background: #e5e9ed; /* the film's own paper, so the box is never black while the poster loads */
+}
+.case-film figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 6px 4px;
+  color: var(--inverse-muted);
+}
+.case-film-transcript {
+  padding: 6px 6px 8px;
+  color: var(--inverse-muted);
+}
+.case-film-transcript summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+.case-film-transcript summary:hover,
+.case-film-transcript summary:focus-visible {
+  color: var(--paper);
+}
+.case-film-transcript p {
+  margin: 12px 0 0;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.case-film + .case-figure {
+  margin-top: 28px;
+}
+@media (max-width: 640px) {
+  .case-film {
+    margin-top: 32px;
+    padding: 8px;
+  }
+  .case-film figcaption {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

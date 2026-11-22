@@ -53,27 +53,45 @@ export const projects = [
   {
     no: '03',
     title: 'Munim',
-    tagline: 'Making agentic finance understandable without hiding control.',
-    year: '2024',
-    role: 'ACADEMIC • PRODUCT SYSTEMS + PROTOTYPING',
+    tagline: 'Designing the interface for an AI that spends your money over UPI.',
+    year: '2026',
+    role: 'SOLO CONCEPT • RESEARCH + PRODUCT SYSTEMS + PROTOTYPING',
     context:
-      'As Lead System Designer, I addressed how small businesses safely delegate digital payments without handing over full banking access.',
+      'As the sole designer on this speculative concept (July 2026), I responded to NPCI\'s proposed Unified Agent Protocol: a standard that would let verified AI agents initiate UPI payments within user-defined limits, built on UPI Circle\'s delegated-payments framework (Business Standard, Jul 8 2026). Not affiliated with NPCI. I framed the problem around the munim, the merchant house\'s bookkeeper: he is not handed full authority on day one, he earns it account by account, and every rupee he moves is written in the bahi-khata where the owner can read it. All statistics are from public sources (Business Standard and Outlook Business on the NPCI protocol, NPCI\'s UPI Circle rules, PYMNTS 2026).',
     problem:
-      'Current delegation relies on insecure workarounds like sharing OTPs or physical cards, forcing users to choose between convenience and security.',
+      'A UPI push payment has no chargeback rail. On a card network an AI agent\'s mistake becomes a dispute; on UPI it is gone money. And 95 percent of consumers report at least one concern about AI-driven purchasing (PYMNTS, 2026). How does a person grant, supervise, and take back an AI agent\'s authority to spend, when every payment is final?',
     approach: [
-      'Decision 1: Supervised Delegation over Hard Limits. I considered strict spend limits, but rejected them because business needs are too fluid. I chose a "supervised delegation" model inspired by a traditional ledger (bahi-khata), allowing staff to spend freely while triggering a live countdown hold mechanism for high-risk transactions.',
-      'Decision 2: Transparent Ledger Loops. I rejected standard transaction feeds in favor of a dual-view ledger. It clearly separates "cleared" from "pending supervision", ensuring real-time auditability without visual clutter.'
+      'Decision 1: Per-merchant earned autonomy over day-one full delegation. Every merchant starts supervised: Munim asks, and you approve with your UPI PIN. After three approved payments to the same merchant, Munim proposes upgrading that one merchant to trusted, auto-pay under a cap you set. Blanket autonomy is a hard sell when 95 percent of consumers have at least one concern about AI-driven purchasing, and blanket per-payment approval recreates the notification fatigue that makes delegation pointless. UPI Circle already teaches this split (₹5,000 per payment, ₹15,000 monthly ceiling), so the design extends a mental model Indian users already have, and the prototype keeps NPCI\'s real caps.',
+      'Decision 2: A visible 10-minute hold over instant auto-payment. Auto-approved payments sit in a countdown before they execute, with a cancel button. Because UPI payments cannot be reversed, the hold turns the "wait, did it just spend?" anxiety into an undo. The cost is ten minutes of latency on payments that are by definition routine: bills and reorders are never urgent to the minute. I chose latency over irreversibility.',
+      'Decision 3: Narrated actions over a silent audit trail. Every ask, hold, and ledger entry leads with a one-line reason in the agent\'s own voice, set in italic serif so its speech has a typographic identity: "This came from a link, not a merchant I know. I did not pay." An unexplained debit from software you authorized is indistinguishable from fraud, and fraud-shaped moments are where delegation dies. Explanations also make refusals legible, which is how the user learns what the agent\'s judgment looks like.',
+      'The failure states are the product. The prototype designs the bad days, not just the happy path: a trusted merchant\'s price jumping 33 percent (held, because anomaly beats trust), a payment link arriving over WhatsApp (refused, with the reason in the ledger), a cancel inside the hold window, a cap breach downgrading to an ask, and a one-tap pause plus full revoke. The revoke screen is the thesis in one line: a munim leaves, the ledger remains.',
     ],
     outcome: [
-      'Trusted merchant price jumps are automatically held',
-      'Mid-hold cancellation prevents unauthorized clearing',
-      'Transparent ledger loops for real-time auditability',
+      'A clickable prototype of the whole delegation loop: mandate, asks, holds, anomaly, trust ladder, pause and revoke',
+      'Every rupee explained, in the agent\'s own words',
+      'Maps onto UPI Circle\'s shipped rails, so it is buildable today',
+      'A bahi-khata visual system: ledger paper, rule lines, stamp chips, and IBM Plex Mono for every number',
     ],
-    stack: ['Figma', 'Protopie'],
+    stack: ['Research', 'Product thinking', 'Interface design', 'Working prototype'],
     protoUrl: './assets/munim-prototype.html',
     preview: './assets/mockup_munim.png',
     previewAlt: 'Three Munim screens: a BigBasket price jump held for approval, the khata home with spend against the NPCI ceiling, and a payment counting down in the hold window',
     previewPos: 'object-center',
+    // The 33-second film (narrated, subtitles burned in). Plays only on request: no autoplay, nothing preloaded.
+    film: './assets/munim-film.mp4',
+    filmPoster: './assets/munim-film-poster.jpg',
+    filmLabel: 'The 33-second film',
+    filmAlt:
+      'A short film on a paper desk: a coin slams onto a UPI card that reads FINAL with UNDO crossed out, then a small pixel bookkeeper earns trust at one merchant, waits out a ten-minute hold, refuses a price jump and a WhatsApp link, and is revoked, leaving the ledger behind.',
+    filmTranscript: [
+      'A UPI payment has no undo.',
+      'So how do you let an AI agent spend your money?',
+      'Every merchant starts supervised. Three approvals earn its trust.',
+      'Even then, each payment waits ten minutes. Cancel any time.',
+      'A price jump gets held. A WhatsApp link gets refused, with a reason.',
+      'And one tap revokes it all.',
+      'A munim leaves. The ledger remains.',
+    ],
   },
   {
     no: '04',

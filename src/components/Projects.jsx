@@ -4,6 +4,7 @@ import { useReducedMotion } from '../lib/motion.js'
 import { projects } from '../data/projects.js'
 import Dialog from './Dialog.jsx'
 import Icon from './Icon.jsx'
+import './case-film.css'
 const ordered = [
   projects[2],
   projects[0],
@@ -205,6 +206,31 @@ export function ProjectWorkspace({ project, mode, onMode, onClose, onNext }) {
               <span className="meta">{project.stack.join(' / ')}</span>
             </div>
           </div>
+          {project.film && (
+            <figure className="case-film">
+              <video
+                key={project.film}
+                src={project.film}
+                poster={project.filmPoster}
+                controls
+                playsInline
+                preload="none"
+                width="1920"
+                height="1080"
+                aria-label={project.filmAlt}
+              />
+              <figcaption>
+                <span className="meta">{project.filmLabel}</span>
+                <span className="meta">Narrated · captions in the picture</span>
+              </figcaption>
+              {project.filmTranscript && (
+                <details className="case-film-transcript">
+                  <summary>Read the film as text</summary>
+                  <p>{project.filmTranscript.join(' ')}</p>
+                </details>
+              )}
+            </figure>
+          )}
           <figure className="case-figure">
             <img src={project.preview} alt={project.previewAlt} />
           </figure>
