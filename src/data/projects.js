@@ -146,6 +146,21 @@ export const projects = [
     preview: './assets/mockup_tuck.png',
     previewAlt: 'Three Tuck screens: the bedtime dashboard with Momo, Momo asleep at bedtime, and the morning report',
     previewPos: 'object-center',
+    // The 39-second film (narrated, subtitles burned in). Plays only on request: no autoplay, nothing preloaded.
+    film: './assets/tuck-film.mp4',
+    filmPoster: './assets/tuck-film-poster.jpg',
+    filmLabel: 'The 39-second film',
+    filmAlt:
+      "A crayon picture-book film on toothy paper: a red STOP screen-time wall is crossed out, then a small sleepy mascot, Momo, yawns and asks \"I'm tired. Will you help me sleep?\", a watercolour night with stars tucks him under a patchwork quilt, and a sunny morning card reads \"You put me to bed at 10:47. Good call.\"",
+    filmTranscript: [
+      "Screen-time blockers fail because they rely on restriction. You can't fix a habit by making the user feel guilty.",
+      "So Tuck rejects the wall. Instead of an app saying stop, a mascot asks for help: I'm tired. Will you help me sleep?",
+      "The user becomes the caretaker, removing the emotional block.",
+      "A ceremony-first overlay dims, warms, and slows over time, easing the transition into sleep.",
+      "The moment of gratitude isn't at night, it's the morning after.",
+      "Celebrating the good decision, not penalizing the impulse.",
+      "Why the right bedtime app doesn't feel like a wall.",
+    ],
   },
   {
     no: '05',
