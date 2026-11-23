@@ -24,6 +24,19 @@ export const projects = [
     preview: './assets/mockup_awara.png',
     previewAlt: 'Three Awara screens: the welcome route, the live Jaipur itinerary with a crowd nudge, and the adjust sheet offering a quieter alternative',
     previewPos: 'object-center',
+    // The 33-second film (narrated, subtitles burned in). Plays only on request: no autoplay, nothing preloaded.
+    film: './assets/awara-film.mp4',
+    filmPoster: './assets/awara-film-poster.jpg',
+    filmLabel: 'The 33-second film',
+    filmAlt:
+      "A transit-map film: a three-day Jaipur itinerary drawn as coloured routes. When Johri Bazaar peaks in crowds at 17:30 a live healing card offers one swap to Tapri Central, and the route bends instead of recalculating.",
+    filmTranscript: [
+      "Travel itineraries break the moment you land. Plans change, and schedules shatter.",
+      "How do you build a companion that adapts, without the anxiety of recalculation?",
+      "Awara heals the day instead. When crowds peak or it rains, it silently absorbs delays, suggesting a single alternative.",
+      "Calm daylight colors guide the eye: sand ground, forest routes, sun for the next step, clay for live changes.",
+      "Tested across 3 days in Jaipur. Plans that bend with the day.",
+    ],
   },
   {
     no: '02',
@@ -49,6 +62,21 @@ export const projects = [
     preview: './assets/mockup_nocturne.png',
     previewAlt: 'Three Nocturne screens: the late-night store, the misprint receipt after a failed payment, and the payment step',
     previewPos: 'object-center',
+    // The 34-second film (narrated, subtitles burned in). Plays only on request: no autoplay, nothing preloaded.
+    film: './assets/nocturne-film.mp4',
+    filmPoster: './assets/nocturne-film-poster.jpg',
+    filmLabel: 'The 34-second film',
+    filmAlt:
+      "A Swiss-grid film in midnight colours: late-night checkout fees shown up front with waived fees highlighted, then a failed payment that reads \"Our link to the bank timed out\" with the cart held safe for 8 minutes and a retry button.",
+    filmTranscript: [
+      "At 1:40 in the morning, checkout is where food delivery carts die.",
+      "Sudden surcharges turn midnight hesitation into cart abandonment.",
+      "Nocturne leads with fee transparency: waived fees shown upfront, not hidden at the end.",
+      "When bank rails drop, generic red alarms are rejected.",
+      "Instead, a blame-absorbing interface takes the fault: our link timed out, your cart is held.",
+      "Calm recovery replaces panic, keeping the order alive.",
+      "Trust is won at the point of highest hesitation.",
+    ],
   },
   {
     no: '03',
